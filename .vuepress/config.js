@@ -2,7 +2,7 @@ module.exports = {
   // 文档标题
   title: "iZph",
   // 文档说明
-  base: "./blog/",
+  base: "/blog/",
   description: 'Stick to your original intention and become a better self.',
   dest: "public",
   head: [
@@ -132,9 +132,13 @@ module.exports = {
     startYear: "2020",
     subSidebar: 'auto'//在所有页面中启用自动生成子侧边栏，原 sidebar 仍然兼容
   },
-  // 代码行号
-  "markdown": {
-    "lineNumbers": true
+  // md设置
+  markdown: {
+    // ......
+    lineNumbers: true, // 代码行号
+    extendMarkdown: md => {
+      md.use(require("markdown-it-disable-url-encode"));
+    }
   },
   plugins: {
     // 自动生成侧边栏

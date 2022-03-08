@@ -13,6 +13,7 @@
   },
   "description": "",
   "dependencies": {
+    "markdown-it-disable-url-encode": "^1.0.1",
     "vuepress-plugin-auto-sidebar": "^2.3.2"
   }
 }
