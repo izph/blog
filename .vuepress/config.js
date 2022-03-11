@@ -25,7 +25,7 @@ module.exports = {
         items:[
           { text: 'HTML', link: '/前端/HTML/HTMLNoteOne.md' },
           { text: 'CSS', link: '/前端/CSS/CSSNoteOne.md' },
-          { text: 'JavaScript', link: '/前端/JavaScript/高质量的JS代码.md' },
+          { text: 'JavaScript', link: '/前端/JavaScript/01-初识V8底层.md' },
           { text: 'TypeScript', link: '/前端/TypeScript' },
           { text: 'React', link: '/前端/React/React常用生命周期.md' },
         ]
