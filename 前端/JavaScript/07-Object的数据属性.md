@@ -58,19 +58,12 @@ function keys(object) {
     return result;
 }
 ```
-
 ## Object.values
-
 获取对象的value值，以数组存放返回
-
 ## Object.entries
-
 获取对象的[key, value]值，以数组存放返回
-
 ## Object.getOwnPropertyDescriptor
-
 获取对象的数据属性描述
-
 ```javascript
 var o = { a: 1 };
 o.b = 2;
@@ -80,13 +73,9 @@ Object.getOwnPropertyDescriptor(o,"a")
 Object.getOwnPropertyDescriptor(o,"b") 
 // {value: 2, writable: true, enumerable: true, configurable: true}
 ```
-
 ## Object.create
-
 根据指定的原型创建新对象，原型可以是null
-
 ### 手动实现Object.create
-
 ```javascript
 Object.create = function(prototype){
     var cls = function(){};
@@ -95,11 +84,9 @@ Object.create = function(prototype){
     return new cls();
 }
 ```
-
 ## Object.getPrototypeOf
-
 获取一个对象的原型
-
 ## Object.setPrototypeOf
-
 设置一个对象的原型
+## Object.freeze
+Object.freeze(obj)，冻结的对象是只读的。不能修改、不能添加新的属性。

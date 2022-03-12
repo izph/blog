@@ -23,12 +23,13 @@ tags:
 
 5、利用 !!a，将变量a 转化为布尔值
 
-6、typeof a即使a是未定义，typeof a 的结果是“undefined”。typeof(+)  => Uncaught SyntaxError是语法错误，加号不属于任何类型。只要typeof获取的不是特殊字符的类型，typeof的返回值一定是字符串。
+6、typeof
+typeof a即使a是未定义，typeof a 的结果是“undefined”。typeof(+)  => Uncaught SyntaxError是语法错误，加号不属于任何类型。只要typeof获取的不是特殊字符的类型，typeof的返回值一定是字符串。
 
-7、switch括号中的结果和case之间的比较是用，全等符号=== 比较的，如果当前的case里面没有break，则不会退出switch ，而是继续执行下一个case。
+7、switch
+括号中的结果和case之间的比较是用，全等符号=== 比较的，如果当前的case里面没有break，则不会退出switch ，而是继续执行下一个case。
 
 8、只要有声明，就会有变量提升，不看if括号中是真是假
-
 ```javascript
 if(false){
     var b = 3;
@@ -36,14 +37,13 @@ if(false){
 console.log(b); // undefined 
 ```
 
-9、(1, 2, 3)的返回是3，括号()最终返回的最后一个元素的结果
+9、()运算
+(1, 2, 3)的返回是3，括号()最终返回的最后一个元素的结果
 
-10、编程：高内聚，低耦合 -> 模块单一责任制（独立的模块）
-
+10、高内聚和低耦合
 低耦合：其实就是降低重复的代码，高内聚：某个模块只负责某个功能，降低各模块的依赖
 
 11、new Function(str) 同样可以执行JavaScript字符串
-
 ```javascript
 let func = new Function(`console.log(1)`);
 func();  // 输出1，new Function(str)中的str是可以执行JavaScript字符串
@@ -52,14 +52,11 @@ func();  // 输出1，new Function(str)中的str是可以执行JavaScript字符�
 12、null是一个表示"无"的对象（空对象指针），转为数值时为0；undefined是一个表示"无"的原始值，转为数值时为NaN。
 
 13、[] + {} 和 {} + [] 结果
-
 ```javascript
 [] + {} // "[object Object]"
 {} + [] // 0
 ```
-
 - 先看第一个表达式，[ ] + { } , 因为[]会被强制转换为"", 然后+运算符 链接一个{ }, { }强制转换为字符串就是
-
   "[object Object]"。 最终结果就是后者。
 - 在看第二个表达式，表达式第一个就是{ }，这时候编译器只会把这个{ } 当作一个空代码块。（es6之前还没有块级作用，只有函数作用域和全局作用域，可以就理解为全局作用域下面一个多余的{ } 符号而已），{ } + [ ] 就可以当作是+ [ ], 而 + [ ]是强制将[ ]转换为number ，转换的过程是 + [ ] -->  +"" --> 0最终的结果就是0。
 
@@ -71,7 +68,7 @@ func();  // 输出1，new Function(str)中的str是可以执行JavaScript字符�
 同步：执行js代码时，执行完某个方法或者函数，才继续向下执行。
 异步：会将异步代码放到任务队列，继续执行同步代码，不会阻塞
 
-17、Commonjs  和 Es Module区别
+17、Commonjs 和 ES Module区别
 使用方式: Commonjs 引入是require，导出是exports、module.exports
          ES: 引入是import form，导出是export、export default
 ES输出的是值的引用（其实就是拿到是对象、数组、函数在堆内存的地址），而CommonJS输出的是值的拷贝
@@ -80,7 +77,6 @@ ES输出的是值的引用（其实就是拿到是对象、数组、函数在堆
 this === window ? 'browser' : 'node';
 
 19、JS如何判断一个对象是否为空对象:  是否还有属性
-
 ```javascript
 function checkNullObj(obj) {
   return Object.keys(obj).length === 0;
@@ -89,7 +85,6 @@ function checkNullObj(obj) {
 
 20、函数内this指向问题
 this的指向，是当我们调用函数的时候确定的，调用方式不同，决定了this指向不同
-
 |   调用方式   |     this指向     |
 | :----------: | :--------------: |
 | 普通函数调用 |      window      |
@@ -99,10 +94,11 @@ this的指向，是当我们调用函数的时候确定的，调用方式不同�
 |  定时器函数  |      window      |
 | 立即执行函数 |      window      |
 
-21、var a = b = c = 1; 等价于  var  a  = 1; b = 1; c = 1; b 和 c 直接赋值，没有var 声明，当 全局变量看。
+21、连续声明
+var a = b = c = 1; 等价于  var  a  = 1; b = 1; c = 1; b 和 c 直接赋值，没有 var 声明，当全局变量看。
 
-22、预解析(预编译)，JS引擎会在正式执行代码之前进行一次预编译，预编译简单理解就是在内存中开辟一些空间，存放一些变量和函数，并检查的语法错误。
-
+22、预解析(预编译)
+JS引擎会在正式执行代码之前进行一次预编译，预编译简单理解就是在内存中开辟一些空间，存放一些变量和函数，并检查的语法错误。
 1. 我们js引擎运行js 分为两步：  预解析  代码执行
    (1) 预解析 js引擎会把js 里面所有的 var  还有 function 提升到当前作用域的最前面
    (2) 代码执行  按照代码书写的顺序从上往下执行，解释一行，执行一行
@@ -112,14 +108,55 @@ this的指向，是当我们调用函数的时候确定的，调用方式不同�
    函数提升 比 变量提升 要高(函数表达式除外)
 
 23、严格模式
-
 this 是 undefined、函数的参数不能重复、var a = b= 1会报错、callee不能使用
 
 24、前端下载文件
-
 - 本窗口下载
   window.location.href = "url";
 - 新开窗口下载
   window.open(url, '_blank');
 - 利用 a 标签下载，href为下载地址，download属性为文件名称
   `<a href="url" download="文件名">`点击下载`</a>`
+
+25、并行和串行
+并行和串行指的是任务的执行方式。
+-串行是指多个任务时，各个任务按顺序执行，完成一个之后才能进行下一个。
+-并行指的是多个任务可以同时执行，异步是多个任务并行的前提条件。
+```javascript
+// p1, p2, p3分别是Promise对象，p1, p2, p3属于并行
+const res = Promise.all[p1, p2, p3];
+// 如果p4 依赖前面res的结果，res => p4 则可以看成是一个串行过程
+```
+26、JS进制转化
+利用内置函数实现，toString可以把一个数转换为指定进制的数，parseInt是把数按照指定进制解析成十进制的数
+```javascript
+// toString用法，其中数前面加0默认为8进制，加0x默认为16进制。
+var a = 10;
+a.toString(2);	//输出 "1010"
+(10).toString(2);	//输出 "1010"
+(10).toString(16);	//输出 "A"
+(010).toString(10);	//输出 "8"
+(0x10).toString(10);	//输出 "16"
+
+// parseInt用法: 把参数，按照指定进制解析成十进制的数。
+parseInt("10", 2);	//返回 2   二进制的10转化为十进制
+parseInt("10", 8);	//返回 8   八进制的10转化为十进制
+parseInt("10", 10);	//返回 10
+parseInt("AF", 16);	//返回 175
+```
+27、栈内存和堆内存
+1. 栈内存
+- 基本类型
+- 按值访问
+- 存储的值大小固定
+- 系统会自动分配内存空间
+- 空间小，运行效率高
+- 先进后出
+
+2. 堆内存：
+- 引用类型
+- 按照引用访问
+- 存储大小不固定
+- 内存分配：由代码进行分配
+- 空间大，运行效率较低
+- 无序存储（根据引用直接获取）

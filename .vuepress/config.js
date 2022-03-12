@@ -27,7 +27,7 @@ module.exports = {
           { text: 'CSS', link: '/前端/CSS/CSSNoteOne.md' },
           { text: 'JavaScript', link: '/前端/JavaScript/01-初识V8底层.md' },
           { text: 'TypeScript', link: '/前端/TypeScript' },
-          { text: 'React', link: '/前端/React/React常用生命周期.md' },
+          { text: 'React', link: '/前端/React/01-React常用生命周期.md' },
         ]
       },
       {
@@ -35,7 +35,7 @@ module.exports = {
         // link: "/前端",
         icon: "reco-home",
         items:[
-          { text: 'Node', link: '/后端/Node' },
+          { text: 'Node', link: '/后端/Node/观察者模式.md' },
           { text: 'Koa', link: '/后端/Koa' },
         ]
       },
@@ -48,6 +48,7 @@ module.exports = {
           { text: '浏览器', link: '/其他/浏览器' },
           { text: 'webpack', link: '/其他/webpack' },
           { text: 'git', link: '/其他/git' },
+          { text: 'git', link: '/其他/性能优化/01-性能优化.md' },
         ]
       },
       {
