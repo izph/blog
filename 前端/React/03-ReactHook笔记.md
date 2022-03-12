@@ -1,7 +1,7 @@
 ---
 title: ReactHook笔记
 date: 2022-01-13 21:57:42
-permalink: /pages/ea9791/
+permalink: /前端/React/ReactHook笔记
 categories:
   - 前端
   - React
