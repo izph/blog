@@ -42,6 +42,9 @@ Object.defineProperty =  function(target, key, descriptor) {
     return target;
 }
 ```
+## Object.hasOwnProperty
+检测一个对象是否含有attr的属性，不会去原型查找
+obj.hasOwnProperty(attr)
 ## Object.assgin
 Object.assgin({}, obj) 和 扩展运算符(...)一样是单层深拷贝, 多层浅拷贝。
 单层是深拷贝，会开辟一个新的内存空间和地址。

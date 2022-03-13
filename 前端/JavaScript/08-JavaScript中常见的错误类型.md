@@ -1,7 +1,7 @@
 ---
 title: JavaScript中常见的错误类型
 date: 2022-01-14 20:53:16
-permalink: /前端/JavaScript/记录我所了解的JS函数
+permalink: /前端/JavaScript/JavaScript中常见的错误类型
 categories:
   - 前端
   - JavaScript

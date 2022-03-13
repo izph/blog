@@ -90,7 +90,43 @@ f a(){} // 传入2给参数a，但是由于函数和变量的提升，改变了�
 1
 f (){}  // 为什么是匿名函数？ var b = function(){}，函数字面量就是一个匿名函数
 ```
+## 记录函数被调用的次数
+给函数定义一个count属性，用来跟踪函数的调用次数
+```javascript
+// 1、 函数属性计数
+function test() {
+  console.log("Hi");
+  // 计算调用次数
+  test.count++;
+}
+test.count = 0;  // 初始值
+test(); // Hi
+test(); // Hi
+test(); // Hi
+console.log(test.count); // 3
 
+
+// 2、 闭包
+function makeCounter() {
+  function counter() {
+    counter.count++;
+  };
+  counter.count = 0;
+
+  return counter;
+}
+let counter = makeCounter();
+counter();
+counter();
+counter();
+console.log(counter.count) // 3
+
+
+// 属性是绑定到函数的，很容易访问到这个属性
+counter.count = 10;       // 将 count 设置为 10
+console.log(counter());   // 输出10  加完之后就是11
+
+```
 ## 构造函数
 ### 1、new构造函数时会发生下面这几步
 1. 首先创建一个新对象，这个新对象的__proto__属性指向构造函数的prototype属性

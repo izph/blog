@@ -118,3 +118,73 @@ function guid(){
 // 测试
 guid(); // '5c93b0e0-549b-24d7-9a03-576227bfb6c1'
 ```
+## 4、用setTimeout 实现 setInterval
+```javascript
+function mySetInterval(fn, time) {
+    timer = setTimeout(function () {
+        fn();
+        clearTimeout(timer);
+        mySetInterval(fn, time);
+    }, time)
+		// 返回timer，用于取消
+    return timer;
+}
+mySetInterval(function(){ console.log(1) }, 1000); 
+```
+## 5、手写 instanceof
+- 作用：instanceof 用于判断对象 是否出现在 构造函数的prototype属性的原型链中
+- 用法：(对象) instanceof (构造函数)
+```javascript
+//  Object.getPrototypeOf(obj) 方法用于获取obj的原型对象(obj.__proto__)
+function myInstanceof(obj, func) { 
+  // 获取对象的原型
+  let objproto = Object.getPrototypeOf(obj), 
+  // 获取构造函数的 prototype 对象
+  prototype = func.prototype;  
+  // 判断构造函数的 prototype 对象是否在对象的原型链上 
+  while (true) { 
+    if (!objproto) { 
+      return false; 
+    }
+    if (objproto === prototype) { 
+      return true;
+    } 
+    objproto = Object.getPrototypeOf(objproto); 
+  } 
+}
+```
+## 6、封装一个通用的javascript类型判断函数
+```javascript
+function getType(value) { 
+  // 判断数据是 null 的情况 
+  if (value === null) { 
+    return value + ""; 
+  }
+  // 判断数据是引用类型的情况 
+  if (typeof value === "object") { 
+    return Object.prototype.toString.call(value).match(/^\[object ([a-zA-Z]*)\]$/)[1];
+  } else { 
+    // 判断数据是基本数据类型的情况和函数的情况 
+    return typeof value; 
+  } 
+}
+```
+## 7、结合Promise封装Ajax
+```javascript
+function ajax(){
+  return new Promise(function(resolve, reject){
+   var req = new XMLHttpRequest();
+   req.open("POST", "url", true);
+   req.onload = function(){
+     if(req.readyState === 4 && req.status === 200){
+       resolve(req.response);
+     } else {
+       reject(req.statusText);
+     }
+   }
+   req.onerror = function(){
+     reject(Error("网络异常"));
+   }
+ });
+}
+```

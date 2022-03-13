@@ -160,3 +160,61 @@ parseInt("AF", 16);	//返回 175
 - 内存分配：由代码进行分配
 - 空间大，运行效率较低
 - 无序存储（根据引用直接获取）
+
+28、js 获取原型的方法（p为对象）
+- p.__proto__ (浏览器才有的属性，node中没有这个属性)
+- p.constructor.prototype
+- Object.getPrototypeOf(p)
+
+29、js 脚本延迟加载的方式有哪些？
+- 1、js 脚本放在文档的底部，来使 js 脚本尽可能的在最后来加载执行
+- 2、defer 属性、async 属性
+- 3、动态创建 DOM方式、动态创建script标签
+```javascript
+var srcipt = document.createElement('script')
+script.src = 'url'
+scritp.type = 'type/javascript'
+document.body.appendChild(script)
+```
+- 4、使用setTimeout延迟方法
+
+30、documen.write 和 innerHTML 的区别？
+- document.write的内容会替代整个document文档内容，会重写整个页面。
+- innerHTML 的内容只是替代指定元素的内容
+
+31、类数组转换为数组的方法
+- Array.prototype.slice.call(arrayLike)
+- Array.from(arrayLike)
+- [...arrayLike]
+
+32、哪些操作会造成内存泄漏？
+- 未定义的全局变量（var a = b = c = 1，b和c都是全局变量）
+- 设置的定时器没有清理
+- 闭包（需要合理使用闭包）
+
+33、0.1 + 0.2 为什么不等于0.3?
+计算机是通过二进制的方式存储数据的，所以计算机计算0.1 + 0.2的时候，
+实际上是计算的两个数的二进制的和。这两个数的二进制都是无限循环的数
+JavaScript是处理无限循环的二进制小数是遵循了IEEE 754标准（某个标准），使用64位固定长度来表示。也就是标准的double双精度浮点数。
+在二进制科学表示法中，最多保留53位有效数字，剩余的需要舍去，遵从“0舍1入”的原则。根据这个原则，0.1和0.2的二进制数相加，再转化为十进制数就是：0.30000000000000004
+
+34、Content-Type常见类型
+- 表单默认编码方式：application/x-www-form-urlencoded
+- json字符串：application/json
+- 二进制文件：multipart/form-data
+- 图片image/webp、文本text/plain、text/html、text/css、text/xml XML格式
+
+35、图片懒加载原理
+- 利用自定义的属性(data-src，dataset获取)存储图片url，图片的真实src 为空或者用其他代替
+监听 body 或者其他存放图片且滚动的元素的 scroll 事件
+如果显示就将真实URL填到src属性中，加载图片 
+- 当滚动的高度scrollTop + 可视区的高度clientHeight 大于需要懒加载图片距离顶部的高度 offsetTop 就把图片的src的替换为 真正的图片url
+
+36、Map、Set、WeakMa和WeakSet
+1. Set 和 WeakSet 结构
+- ES6 提供了新的数据结构 Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。
+- WeakSet 结构与 Set 类似，也是不重复的值的集合。但是 WeakSet 的成员只能是对象，而不能是其他类型的值。WeakSet 中的对象都是弱引用，并且这些弱引用的对象不可遍历（弱引用：如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存）
+
+2. Map 和 WeakMap 结构
+- Map 数据结构。它类似于对象，也是键值对的集合，但是"键"的范围不限于字符串，各种类型的值（包括对象）都可以当作键。
+- WeakMap 结构与 Map 结构类似，但是 WeakMap 只接受对象作为键名（ null 除外），不接受其他类型的值作为键名。而且 WeakMap 的键名所指向的对象，不计入垃圾回收机制。
