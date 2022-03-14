@@ -104,13 +104,18 @@ console.log(compute.div()); // 0.5
 随机生成由32个字符组成的随机码（32位Guid字符串）
 ```javascript
 function guid(){
-   var res = "";
-   for (var i = 1; i <= 32; i++) {
-     var n = Math.floor(Math.random() * 16.0).toString(16);
+   let res = "";
+   const arr = [8, 12, 16, 20]
+   for (let i = 1; i <= 32; i++) {
+     let n = Math.floor(Math.random() * 16.0).toString(16);
      res += n;
-     // 8-4-4-4-12
-     if ((i == 8) || (i == 12) || (i == 16) || (i == 20))
-       	res += "-";
+      // 8-4-4-4-12
+      //  if ((i == 8) || (i == 12) || (i == 16) || (i == 20)){
+      //      	res += "-";
+      //  }
+      if (arr.includes(i)){
+         	res += "-";
+      }
    }
    return res;
 }
@@ -187,4 +192,38 @@ function ajax(){
    }
  });
 }
+```
+## 7、对比两个JSON对象是否相等
+```javascript
+// notCompare: string [] 将不需要对比的属性放到数组中
+function compareJsonEqual(obj1 = {}, obj2 = {}, notCompare) {
+    var flag = true;
+    // 排除 notCompare 的干扰
+    for(let i = 0; i < notCompare.length; i++){
+        delete obj1[`${notCompare[i]}`];
+        delete obj2[`${notCompare[i]}`];
+    }
+    function compre(obj1, obj2) {
+        if (Object.keys(obj1).length != Object.keys(obj2).length) {
+            flag = false;
+        } else {
+            for (let key in obj1) {
+                if (obj2.hasOwnProperty(key)) {
+                    // 当前属性为 引用类型
+                    if (obj1[key] !== obj2[key]) {
+                        compre(obj1[key], obj2[key]);
+                    }
+                } else {
+                    flag = false;
+                }
+            }
+        }
+        // if (flag === false) {
+        //     return false;
+        // } else {
+        //     return true;
+        // }
+        return flag;
+    }
+    return compre(obj1, obj2);
 ```
