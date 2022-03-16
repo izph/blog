@@ -35,7 +35,7 @@ module.exports = {
             ]
           },
           { text: 'TypeScript', link: '/前端/TypeScript' },
-          { text: 'React', link: '/前端/React/01-React常用生命周期.md' },
+          { text: 'React', link: '/前端/React/01-React基础知识笔记.md' },
         ]
       },
       {
@@ -56,7 +56,7 @@ module.exports = {
           { text: '浏览器', link: '/其他/浏览器' },
           { text: 'webpack', link: '/其他/webpack' },
           { text: 'git', link: '/其他/git' },
-          { text: 'git', link: '/其他/性能优化/01-性能优化.md' },
+          { text: '性能优化', link: '/其他/性能优化/01-性能优化.md' },
         ]
       },
       {
