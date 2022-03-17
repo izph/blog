@@ -30,7 +30,7 @@ const data = [
     { id: 14, name: "高新区", pid: 10 },
 ];
 ```
-需要将以上数据转化成树形结构：
+需要将以上数据转化成树形结构：id与pid之间的对应关系，当pid不存在或pid:0的时候，这一项，应该为树的顶端。
 - 广东
   - 广州
     - 天河区
@@ -45,7 +45,7 @@ const data = [
   - 济南
     - 历下区
     - 高新区
-id与pid之间的对应关系，当pid不存在或pid:0的时候，这一项，应该为树的顶端。
+
 ```javascript
 function toTree(data) {
    // 将数据存储为 以 id 为 KEY 的 map 索引数据列

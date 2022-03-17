@@ -97,10 +97,10 @@ Person.defaultProps = {
 ## 6、受控组件与非受控组件
 
 - 受控组件：组件的展示完全由传入的属性决定。比如说，如果一个输入框中的值完全由传入的 value 属性决定，而不是由用户输入决定，那么就是受控组件，写法是：
-  ``< input value={value} onChange={handleChange} />``
+  ```< input value={value} onChange={handleChange} />```
   这也是为什么只给 < input/> 传了一个 value 值但是没有传 onChange 事件，那么键盘怎么输入都没有反应。
 - 非受控组件：表单组件可以有自己的内部状态，而且它的展示值是不受控的。比如 input 在非受控状态下的写法是：
-  ``< input onChange={handleChange}/>``
+  ```< input onChange={handleChange}/>```
   也就是说，父组件不会把 value 直接传递给 input 组件。在日常开发中，大部分的表单元素其实都是受控组件，我们会通过外部的状态完全控制当前组件的行为。
 
 ## 7、高阶函数
@@ -153,7 +153,7 @@ render(){
 ```
 
 ## 8、类组件的生命周期
-
+[React生命周期](./02-ReactLifeCycle.md)
 ## 9、key的作用
 
 1. key是新、旧虚拟DOM对象的标识，diff算法比较中发挥着重要作用
@@ -270,3 +270,38 @@ const OtherComponent = React.lazy(() => import('./OtherComponent'));
 ```
 
 ## 13、React Router
+[React-Router](./04-React-Router.md)
+
+## 14、react-create-app脚手架配置代理
+### 在package.json中追加如下配置
+"proxy":"http://localhost:8888"
+1. 优点：配置简单，前端请求资源时可以不加任何前缀。
+2. 缺点：不能配置多个代理。
+3. 工作方式：上述方式配置代理，当请求了3000不存在的资源时，那么该请求会转发给5000(优先匹配前端资源)
+
+### 创建代理配置文件setupProxy
+1. 优点：可以配置多个代理，可以灵活的控制请求是否走代理。
+2. 缺点：配置繁琐，前端请求资源时必须加前缀。
+```javascript
+// 在src下创建配置文件：src/setupProxy.js
+const proxy = require('http-proxy-middleware')
+module.exports = function(app) {
+  app.use(
+    proxy('/api1', {  //api1是需要转发的请求(所有带有/api1前缀的请求都会转发给5000)
+      target: 'http://localhost:5000', //配置转发目标地址(能返回数据的服务器地址)
+      changeOrigin: true, //控制服务器接收到的请求头中host字段的值
+      /*
+      	changeOrigin设置为true时，服务器收到的请求头中的host为：localhost:5000
+      	changeOrigin设置为false时，服务器收到的请求头中的host为：localhost:3000
+      	changeOrigin默认值为false，但我们一般将changeOrigin值设为true
+      */
+      pathRewrite: {'^/api1': ''} //去除请求前缀，保证交给后台服务器的是正常请求地址(必须配置)
+    }),
+    proxy('/api2', { 
+      target: 'http://localhost:5001',
+      changeOrigin: true,
+      pathRewrite: {'^/api2': ''}
+    })
+  )
+}
+```
