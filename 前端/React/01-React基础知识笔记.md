@@ -35,8 +35,21 @@ ReactDOM.render(VDOM, document.getElementById('root'))
 - 在原生事件、setTimeout，Promise.then等事件中，setState是同步的。
 - 状态不可直接更改
   - this.state.conut = this.state.conut + 1，状态(state)不可直接更改，是错误的写法
-  - this.setState((state) => { return { count: state.count + 1 } });
+  - this.setState((state) => { return { count: state.count + 1 } });（依赖于原状态）
+#### setState更新状态的2种写法
+1. setState(stateObject, [callback])————对象式的setState
+- stateObject为状态改变对象(该对象可以体现出状态的更改)；
+- callback是可选的回调函数, 它在状态更新完毕、界面也更新后(render调用后)才被调用，setState引起react后续动作是异步更新的；
 
+2. setState(stateFunction, [callback])————函数式的setState
+- stateFunction为返回stateObject对象的函数；
+- stateFunction可以接收到state和props；
+- callback是可选的回调函数, 它在状态更新、界面也更新后(render调用后)才被调用；
+
+3. 总结：对象式的setState是函数式的setState的简写方式(语法糖)
+- 如果新状态不依赖于原状态 ===> 使用对象方式
+- 如果新状态依赖于原状态 ===> 使用函数方式
+- 如果需要在setState()执行后获取最新的状态数据，要在第二个callback函数中读取
 ### props
 
 #### constructor方法中super，传递的参数props是否有必要写？
@@ -171,7 +184,7 @@ render(){
 
 - 父 -> 子通信：props
 - 子 -> 父通信：父组件将自己的某个方法传递给子组件，通过props拿到方法后修改（状态提升）
-- 跨组件通信：redux、mobx、pubsub、context
+- 跨组件通信：Redux、mobx、pubsub、Context
 
 ### PubSubJS的基本使用
 
@@ -256,13 +269,14 @@ const CopyrightApp = withCopyright(App)
 
 ```javascript
 //使用React.lazy导入OtherComponent组件
+ import React from 'react';
 const OtherComponent = React.lazy(() => import('./OtherComponent'));
 // 但是这样页面会报错。这个报错提示我们，在React使用了lazy之后，会存在一个加载中的空档期，React不知道在这个空档
 // 期中该显示什么内容，所以需要我们指定。接下来就要使用到Suspense
 
 // 在 App 渲染完成后，包含 OtherComponent 的模块还没有被加载完成，可以使用加载指示器为此组件做优雅降级。
 // 使用 Suspense 组件来解决
-<Suspense fallback={<div>Loading...</div>}>
+<Suspense fallback={<div style={{backgroundColor:'gray',color:'orange'}}>Loading...</div>}>
   { this.state.visible ? <OtherComponent /> : null }
 </Suspense>
 // 我们指定了空档期使用Loading展示在界面上面，等OtherComponent组件异步加载完毕，
@@ -272,7 +286,7 @@ const OtherComponent = React.lazy(() => import('./OtherComponent'));
 ## 13、React Router
 [React-Router](./04-React-Router.md)
 
-## 14、react-create-app脚手架配置代理
+## 14、create-react-app脚手架配置代理
 ### 在package.json中追加如下配置
 "proxy":"http://localhost:8888"
 1. 优点：配置简单，前端请求资源时可以不加任何前缀。
@@ -305,3 +319,29 @@ module.exports = function(app) {
   )
 }
 ```
+## 15、Fragment
+放在最外层，包裹其他标签
+```javascript
+import React, { Component, Fragment } from 'react'
+<Fragment key={1}>
+	<input type="text" />
+	<input type="text" />
+</Fragment>
+```
+## 16、Context
+Context可以实现组件通信，但是在应用开发中，一般不用Context通信传递数据,  一般用它来实现换肤功能、多语功能、封装react插件。
+
+## 17、类组件优化
+Component的2个问题
+- 只要执行setState()，即使不改变状态数据，组件也会重新render()  ==> 效率低 
+- 当前组件重新render()，就会自动更新子组件的render，即使子组件没有用到父组件的任何数据 ==> 效率低
+那如何才能使得只有当组件的state或props数据发生改变时才重新render()
+- 办法1: 重写shouldComponentUpdate()方法，比较新旧state或props数据, 如果有变化才返回true，如果没有返回false
+- 办法2: 使用PureComponent，PureComponent重写了shouldComponentUpdate(), 只有state或props数据有变化才返回true。
+只是进行state和props数据的浅比较, 如果只是数据对象内部数据变了, 返回false。不要直接修改state数据, 而是要产生新数据。项目中一般使用PureComponent来优化
+## 18、render props
+[React组件逻辑复用](https://juejin.cn/post/6844904162472247304#heading-12)
+
+## 19、Portal
+
+## 20、Immutable.js

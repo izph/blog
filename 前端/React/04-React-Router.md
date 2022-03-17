@@ -10,6 +10,9 @@ tags:
   - React
 ---
 # React-Router
+- React Router甚至大部分的前端路由都是依赖于history.js的，它是一个独立的第三方js库。可以用来兼容在不同浏览器、不同环境下对历史记录的管理，拥有统一的API。
+- 老浏览器的history: 通过hash来存储在不同状态下的history信息，对应createHashHistory，通过检测location.hash的值的变化，使用location.replace方法来实现url跳转。通过注册监听window对象上的hashChange事件来监听路由的变化，实现历史记录的回退。
+- 高版本浏览器: 利用HTML5里面的history，对应createBrowserHistory, 使用包括pushState， replaceState方法来进行跳转。通过注册监听window对象上的popstate事件来监听路由的变化，实现历史记录的回退。
 ## 1、路由的基本使用
 ### 导航Link
 ```javascript
