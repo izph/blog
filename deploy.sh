@@ -12,7 +12,7 @@ cd ./public
 
 git init
 git add .
-git commit -m 'deployupdate'
+git commit -m 'deploy update'
 
 # 如果发布到 https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master

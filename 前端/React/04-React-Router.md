@@ -9,7 +9,7 @@ tags:
   - 前端
   - React
 ---
-# React-Router
+# React路由
 
 - React Router甚至大部分的前端路由都是依赖于history.js的，它是一个独立的第三方js库。可以用来兼容在不同浏览器、不同环境下对历史记录的管理，拥有统一的API。
 - 老浏览器的history: 通过hash来存储在不同状态下的history信息，对应createHashHistory，通过检测location.hash的值的变化，使用location.replace方法来实现url跳转。通过注册监听window对象上的hashChange事件来监听路由的变化，实现历史记录的回退。
@@ -48,8 +48,8 @@ import { Link } from 'react-router-dom';
 
 ```javascript
 // 封装NavLink
-import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export default class MyNavLink extends Component {
 	render() {
@@ -111,7 +111,10 @@ ReactDOM.render(
 
 ### 严格匹配
 
-开启严格匹配：<Route exact={true} path="/about" component={About}/>
+开启严格匹配：
+```js
+<Route exact={true} path="/about" component={About}/>
+```
 
 ### Redirect的使用
 
@@ -134,13 +137,17 @@ ReactDOM.render(
 ### 向路由组件传递参数
 
 1. params参数:直接在路由传参数，刷新页面参数还在，不丢失（用的多）
-   - 路由链接(携带参数)：<Link to='/demo/test/tom/18'}>详情 `</Link>`
-   - 注册路由(声明接收)：`<Route path="/demo/test/:name/:age" component={Test}/>`
+   - 路由链接(携带参数)：
+   ```<Link to='/demo/test/tom/18'}>详情 </Link>```
+   - 注册路由(声明接收)：
+   ```<Route path="/demo/test/:name/:age" component={Test}/>```
    - 路由组件内接收参数：const{ name, age} = this.props.match.params;
      再用filter或者find找对应数据
 2. search参数，有点类似 ajax的query参数，刷新页面参数还在，不丢失
-   - 路由链接(携带参数)：<Link to='/demo/test?name=tom&age=18'}>详情 `</Link>`
-   - 注册路由(无需声明，正常注册即可)：`<Route path="/demo/test" component={Test}/>`
+   - 路由链接(携带参数)：
+   ```<Link to='/demo/test?name=tom&age=18'}>详情</Link>```
+   - 注册路由(无需声明，正常注册即可)：
+   ```<Route path="/demo/test" component={Test}/>```
    - 路由组件内接收参数：this.props.location.search
      备注：获取到的search是urlencoded编码字符串，需要借助querystring解析
 
@@ -156,15 +163,15 @@ import qs from 'querystring';
 3. state参数,属于路由组件的state属性，不同于状态state，不会把参数放在地址栏里，刷新页面参数还在，不丢失
 
 - 路由链接(携带参数)：
-  ``<Link to={{pathname:'/demo/test', state:{name:'tom', age:18}}}>详情</Link>``
+  ```<Link to={{pathname:'/demo/test', state:{name:'tom', age:18}}}>详情</Link>```
 - 注册路由(无需声明，正常注册即可)：
-  ``<Route path="/demo/test" component={Test}/>``
+  ```<Route path="/demo/test" component={Test}/>```
 - 组件内接收参数：this.props.location.state
 
 4. query参数
 
-- ``<Link to={{ pathname:'/demo/test', state, query:{data} }}>详情</Link>``
-- 接收参数：``this.props.location.query.data``
+- ```<Link to={{ pathname:'/demo/test', state, query:{data} }}>详情</Link>```
+- 接收参数：```this.props.location.query.data```
 
 ### 编程式路由导航
 
@@ -179,39 +186,31 @@ import qs from 'querystring';
 
 ```javascript
 replaceShow = (id,title)=>{
-      //replace跳转+携带params参数
-      //this.props.history.replace(`/home/message/detail/${id}/${title}`)
+  //replace跳转+携带params参数
+  //this.props.history.replace(`/home/message/detail/${id}/${title}`)
+  //replace跳转+携带search参数
+  // this.props.history.replace(`/home/message/detail?id=${id}&title=${title}`)
+  //replace跳转+携带state参数
+  this.props.history.replace(`/home/message/detail`,{id,title})
+}
 
-      //replace跳转+携带search参数
-      // this.props.history.replace(`/home/message/detail?id=${id}&title=${title}`)
-
-      //replace跳转+携带state参数
-      this.props.history.replace(`/home/message/detail`,{id,title})
-	}
-
-	pushShow = (id,title)=>{
-		//push跳转+携带params参数
-		// this.props.history.push(`/home/message/detail/${id}/${title}`)
-
-		//push跳转+携带search参数
-		// this.props.history.push(`/home/message/detail?id=${id}&title=${title}`)
-
-		//push跳转+携带state参数
-		this.props.history.push(`/home/message/detail`,{id,title})
-
-	}
-
-	back = ()=>{
-		this.props.history.goBack()
-	}
-
-	forward = ()=>{
-		this.props.history.goForward()
-	}
-
-	go = ()=>{
-		this.props.history.go(-2)
-	}
+pushShow = (id,title)=>{
+	//push跳转+携带params参数
+	// this.props.history.push(`/home/message/detail/${id}/${title}`)
+	//push跳转+携带search参数
+	// this.props.history.push(`/home/message/detail?id=${id}&title=${title}`)
+	//push跳转+携带state参数
+	this.props.history.push(`/home/message/detail`,{id,title})
+}
+back = ()=>{
+	this.props.history.goBack()
+}
+forward = ()=>{
+	this.props.history.goForward()
+}
+go = ()=>{
+	this.props.history.go(-2)
+}
 ```
 
 ### withRouter的适用场景
@@ -236,11 +235,11 @@ export default withRouter(connect(mapStateToProps)(Something));
 import React from "react";
 import {withRouter} from "react-router-dom";
 class MyComponent extends React.Component {
-  ...
+  // ...
   myFunction() {
     this.props.history.push("/some/Path");
   }
-  ...
+  // ...
 }
 export default withRouter(MyComponent);
 // 如果我们不使用withRouter来处理(MyComponent)，

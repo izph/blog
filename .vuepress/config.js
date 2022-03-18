@@ -7,7 +7,7 @@ module.exports = {
   dest: "public",
   head: [
     ['link', { rel: 'shortcut icon', type: "image/x-icon", href: `/favicon.ico` }],
-    ["meta", {name: "viewport",  content: "width=device-width,initial-scale=1,user-scalable=no"}]
+    ["meta", {name: "viewport",  content: "width=device-width, initial-scale=1, user-scalable=no"}]
   ],
   port: '8888',
   theme: "reco",
