@@ -245,3 +245,6 @@ class Index extends React.Component<any,any>{
 
 ```
 setTimeout 可以用 window.requestAnimationFrame() 代替，会有更好的渲染效果。我们demo使用列表做的，实际对于列表来说，最佳方案是虚拟列表。而时间分片，更适合热力图，地图点位比较多的情况。
+
+#### 参考
+[React性能优化的8种方式](https://juejin.cn/post/6844903924302888973)
