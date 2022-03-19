@@ -12,8 +12,8 @@ tags:
 # React路由
 
 - React Router甚至大部分的前端路由都是依赖于history.js的，它是一个独立的第三方js库。可以用来兼容在不同浏览器、不同环境下对历史记录的管理，拥有统一的API。
-- 老浏览器的history: 通过hash来存储在不同状态下的history信息，对应createHashHistory，通过检测location.hash的值的变化，使用location.replace方法来实现url跳转。通过注册监听window对象上的hashChange事件来监听路由的变化，实现历史记录的回退。
-- 高版本浏览器: 利用HTML5里面的history，对应createBrowserHistory, 使用包括pushState， replaceState方法来进行跳转。通过注册监听window对象上的popstate事件来监听路由的变化，实现历史记录的回退。
+- 老浏览器的history: 通过hash来存储在不同状态下的history信息，对应createHashHistory，通过检测location.hash的值的变化，使用location.replace方法来实现url跳转。通过注册监听window对象上的hashChange事件来监听路由的变化，实现历史记录的回退。改变 hash 可以直接通过 location.hash=xxx
+- 高版本浏览器: 利用HTML5里面的history，对应createBrowserHistory, 使用包括history.pushState， history.replaceState方法来进行跳转。通过注册监听window对象上的popstate事件来监听路由的变化，实现历史记录的回退。
 
 ## 导航Link
 
@@ -137,54 +137,69 @@ ReactDOM.render(
 
 1. params参数:直接在路由传参数，刷新页面参数还在，不丢失（用的多）
    - 路由链接(携带参数)：
+
 ```javascript
 <Link to='/demo/test/tom/18'>详情</Link>
 ```
-   - 注册路由(声明接收)：
+
+- 注册路由(声明接收)：
+
 ```javascript
 <Route path="/demo/test/:name/:age" component={Test}/>
 ```
-   - 路由组件内接收参数：const{ name, age} = this.props.match.params;
-     再用filter或者find找对应数据
+
+- 路由组件内接收参数：const{ name, age} = this.props.match.params;
+  再用filter或者find找对应数据
+
 2. search参数，有点类似 ajax的query参数，刷新页面参数还在，不丢失
    - 路由链接(携带参数)：
+
 ```js
 <Link to='/demo/test?name=tom&age=18'>详情</Link>
 ```
-   - 注册路由(无需声明，正常注册即可)：
+
+- 注册路由(无需声明，正常注册即可)：
+
 ```js
 <Route path="/demo/test" component={Test}/>
 ```
-   - 路由组件内接收参数：this.props.location.search
-     备注：获取到的search是urlencoded编码字符串，需要借助querystring解析
+
+- 路由组件内接收参数：this.props.location.search
+  备注：获取到的search是urlencoded编码字符串，需要借助querystring解析
 
 ```javascript
 import qs from 'querystring';
 // ?name=tom&age=18是 urlencoded 编码方式
-1、let obj={name:'tom',age:'18'}
+// 1、let obj={name: 'tom', age: '18'}
   qs.stringify(obj) //  字符串'name=tom&age=18'
-2、let str='name=tom&age=18'
-  qs.parse(str) //  对象{name:'tom',age:'18'}
+// 2、let str='name=tom&age=18'
+  qs.parse(str) //  对象{name: 'tom', age: '18'}
 ```
 
 3. state参数,属于路由组件的state属性，不同于状态state，不会把参数放在地址栏里，刷新页面参数还在，不丢失
 
 - 路由链接(携带参数)：
+
 ```js
 <Link to={{pathname:'/demo/test', state:{name:'tom', age:18}}}>详情</Link>
 ```
+
 - 注册路由(无需声明，正常注册即可)：
+
 ```js
 <Route path="/demo/test" component={Test}/>
 ```
+
 - 组件内接收参数：this.props.location.state
 
 4. query参数
 
 - 传递参数
+
 ```js
 <Link to={{ pathname:'/demo/test', state, query:{data} }}>详情</Link>
 ```
+
 - 接收参数: this.props.location.query.data
 
 ## 编程式路由导航

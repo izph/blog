@@ -11,7 +11,14 @@ tags:
 ---
 # Redux笔记
 
+用户（通过View）发出Action，触发方式就用到了dispatch方法
+
+然后，Store自动调用Reducer，并且传入两个参数：当前State和收到的Action，Reducer会返回新的State
+
+State—旦有变化，Store就会调用监听函数，来更新View
+
 ## Redux例子（一）
+
 ```javascript
 // 目录结构，src下建立
 	-redux
@@ -66,7 +73,9 @@ ReactDOM.render(<App/>, document.getElementById('root'))
 store.dispatch({ type: 'increment', data: value * 1 })
 store.dispatch({ type: 'decrement', data: value * 1 })
 ```
+
 ## 异步actions例子
+
 ```javascript
 // store.js
 //引入为Count组件服务的reducer
@@ -103,7 +112,15 @@ store.dispatch(createIncrementAsyncAction(value * 1, 500));
 			// 3).异步任务有结果后，分发一个同步的action去真正操作数据。
 // (4).备注：异步action不是必须要写的，完全可以自己等待异步任务的结果了再去分发同步action。
 ```
+
 ## react-redux基本使用
+
+connect的作用：负责连接 React 和 Redux
+
+- （1）获取 state：connect 通过 context 获取 Provider 中的 store，通过 store.getState() 获取整个store tree 上所有state
+- （2）包装原组件：将 state 和 action 通过props的方式传入到原组件内部 wrapWithConnect 返回—个 ReactComponent 对 象 Connect，Connect 重新 render 外部传入的原组件 WrappedComponent ，并把 connect 中传入的 mapStateToProps，mapDispatchToProps与组件上原有的 props合并后，通过属性的方式传给WrappedComponent
+- （3）监听store tree变化：connect缓存了store tree中state的状态，通过当前state状态 和变更前 state 状态进行比较，从而确定是否调用 this.setState()方法触发Connect及其子组件的重新渲染。
+
 ```javascript
 // (1).明确两个概念：
 // 		1).UI组件: 不使用任何redux的api，只负责页面的呈现、交互等。
@@ -185,8 +202,11 @@ this.props.jia(value * 1)
 this.props.jian(value * 1)
 this.props.jiaAsync(value * 1, 500)
 ```
+
 ### react-redux数据共享版
+
 ![image.png](images/redux/redux01.png)
+
 ```javascript
 // (1).定义一个Pserson组件，和Count组件通过redux共享数据。
 // (2).为Person组件编写：reducer、action，配置constant常量。
@@ -205,7 +225,8 @@ import {createStore, applyMiddleware, combineReducers} from 'redux'
 import countReducer from './reducers/count'
 //引入为Count组件服务的reducer
 import personReducer from './reducers/person'
-//引入redux-thunk，用于支持异步action
+//引入redux-thunk或者redux-saga中间件，用于支持异步action
+// redux-thunk优点:  体积小，使用简单。
 import thunk from 'redux-thunk'
 //汇总所有的reducer变为一个总的reducer
 const allReducer = combineReducers({
@@ -231,4 +252,67 @@ export default connect(
 	state => ({ yiduiren: state.rens, he:state.he}),  //映射状态
 	{jiaYiRen: createAddPersonAction}  //映射操作状态的方法
 )(Person)
+```
+## React 数据持久化实践
+在React项目中，通过redux存储全局数据时，会有一个问题，如果用户刷新了网页，那么通过redux存储的全局数据就会被全部清空，比如登录信息等。这时就会有全局数据持久化存储的需求。首先想到的就是localStorage，localStorage是没有时间限制的数据存储，可以通过它来实现数据的持久化存储。
+```js
+// 封装 数据持久化组件
+let storage={
+    // 增加
+    set(key, value){
+        localStorage.setItem(key, JSON.stringify(value));
+    },
+    // 获取
+    get(key){
+        return JSON.parse(localStorage.getItem(key));
+    },
+    // 删除
+    remove(key){
+        localStorage.removeItem(key);
+    }
+};
+export default Storage;
+```
+但是在我们已经使用redux来管理和存储全局数据的基础上，再去使用localStorage来读写数据，这样不仅是工作量巨大，还容易出错。那么有没有结合redux来达到持久数据存储功能的框架呢？当然，它就是redux-persist。redux-persist会将redux的store中的数据缓存到浏览器的localStorage中。
+```js
+// $ npm install redux-persist --save
+// 对于reducer和action的处理不变，只需修改store的生成代码
+
+/*
+	该文件专门用于暴露一个store对象，整个应用只有一个store对象
+*/
+//引入createStore，专门用于创建redux中最为核心的store对象
+import { createStore, applyMiddleware ,combineReducers} from 'redux'
+//引入redux-persist持久化
+import { persistStore, persistReducer } from 'redux-persist'
+// import localStorage from 'redux-persist/lib/storage'
+import storage from 'redux-persist/lib/storage/index'
+//引入为Count组件服务的reducer
+import incrementReducer from './incrementReducer';
+import personReducer from './personReducer';
+//引入中间件 可传入action为函数
+import thunk from 'redux-thunk';
+// 引入redux-devtools-extension 第三方可视化redux的工具
+import {composeWithDevTools} from 'redux-devtools-extension'
+// import {composeWithDevTools} from 'redux-devtools-extension'
+
+//实现persist数据持久化
+const config = {
+  key: 'root',
+  storage:storage, //引入的storage是存在local或session
+}
+
+//里面保存的是redux完整的key和value 在mapStateToProps调动key
+const allReducer = combineReducers({
+  incrementReducer,
+  personReducer
+})
+
+const store = createStore(persistReducer(config, allReducer), composeWithDevTools(applyMiddleware(thunk)));
+persistStore(store);
+export default store;
+
+//正常版暴露store,thunk是保证action可以接收函数
+// export default createStore(reducer, applyMiddleware(thunk))
+
 ```

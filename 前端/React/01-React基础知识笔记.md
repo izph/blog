@@ -65,7 +65,7 @@ ReactDOM.render(VDOM, document.getElementById('root'))
 可以的，react在除了constructor之外的生命周期已经传入了this.props了，完全不受super(props)的影响。
 
 #### 对标签属性进行类型、必要性的限制(propTypes 来自prop-types )
-
+PropTypes可以检验props
 ```javascript
 import propTypes from 'prop-types';
 //  ...
@@ -97,7 +97,7 @@ Person.defaultProps = {
 - ```<input ref={ c => { this.input2 = c }} type="text"/>```
 
 #### React.createRef创建ref
-
+- React通过ref，获取组件对应的DOM元素
 - 创建，myRef = React.createRef()，使用this.myRef.current.value
 - ```<input ref={this.myRef} type="text" />```
 
@@ -345,3 +345,31 @@ Component的2个问题
 ## 19、Portal
 
 ## 20、Immutable.js
+
+## 21、对React-Fiber的理解
+Fiber是React16 对 React 一些核心算法的一次重写吧，主要是使用Fiber有助于性能优化。
+React V15 在渲染时，会递归比对 VirtualDOM 树，找出需要变动的节点，然后同步更新它们， 一气呵成。
+整个过程， React 会占据浏览器资源，这会导致用户触发的事件得不到响应，并且会导致掉帧，导致用户感觉到卡顿。React 通过Fiber 架构，让这个执行过程变成可被中断，让CPU 能在这段时间执行其他的操作。渲染的过程可以被中断，可以将控制权交回浏览器，执行优先级高的任务，浏览器空闲后再恢复渲染。
+分批延时对DOM进行操作，避免一次性操作大量 DOM 节点，进而避免同步渲染带来的卡顿，打断渲染线程的“一次大量的同步渲染”。
+
+## 22、类组件和函数组件的区别
+### 类组件（有状态组件）
+- 内部使用state，维护自身状态的变化
+- 可以使用this
+- 可以使用react的生命周期
+
+### 函数组件
+- 没有自己的state
+- 没有this关键字
+- 不能使用生命周期钩子
+
+## 23、 useState 为什么要使用数组而不是对象解构
+数组的话可以直接根据顺序解构，而对象解构是根据属性的key
+
+## 24、React 中的高阶组件运用了什么设计模式？
+使用了装饰模式，装饰模式的特点是不需要改变 被装饰对象 本身，而只是在外面套一个外壳接口。用法如下：
+```js
+@testable
+   class MyTestableClass {
+}
+```
