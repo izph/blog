@@ -115,7 +115,24 @@ store.dispatch(createIncrementAsyncAction(value * 1, 500));
 
 ## react-redux基本使用
 
-connect的作用：负责连接 React 和 Redux
+在 react-redux 的实现中，为了确保需要绑定的组件能够访问到全局唯一的 Redux Store，利用了 React 的 Context 机制去存放 Store 的信息。通常我们会将这个 Context 作为整个 React 应用程序的根节点。因此，作为 Redux 的配置的一部分，我们通常需要如下的代码：
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import App from './App';
+const rootElement = document.getElementById('root')
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  rootElement
+)
+```
+这里使用了 Provider 这样一个组件来作为整个应用程序的根节点，并将 Store 作为属性传给了这个组件，这样所有下层的组件就都能够使用 Redux 了。
+
+### connect的作用：负责连接 React 和 Redux
 
 - （1）获取 state：connect 通过 context 获取 Provider 中的 store，通过 store.getState() 获取整个store tree 上所有state
 - （2）包装原组件：将 state 和 action 通过props的方式传入到原组件内部 wrapWithConnect 返回—个 ReactComponent 对 象 Connect，Connect 重新 render 外部传入的原组件 WrappedComponent ，并把 connect 中传入的 mapStateToProps，mapDispatchToProps与组件上原有的 props合并后，通过属性的方式传给WrappedComponent
@@ -316,3 +333,236 @@ export default store;
 // export default createStore(reducer, applyMiddleware(thunk))
 
 ```
+## 如何在函数组件中使用 Redux
+在函数组件中使用 Redux : 利用 react-redux提供的 useSelector 和 useDispatch 这两个 Hooks。
+Hooks 的本质就是提供了让 React 组件能够绑定到某个可变的数据源的能力。在这里，当 Hooks 用到 Redux 时可变的对象就是 Store，而 useSelector 则让一个组件能够在 Store 的某些数据发生变化时重新 render。
+```js
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+export function Counter() {
+  // 从 state 中获取当前的计数值
+  const count = useSelector(state => state.value);
+
+  // 获得当前 store 的 dispatch 方法
+  const dispatch = useDispatch();
+
+  // 在按钮的 click 时间中去分发 action 来修改 store
+  return (
+    <div>
+      <button
+        onClick={() => dispatch({ type: 'counter/incremented' })}
+      >+</button>
+      <span>{count}</span>
+      <button
+        onClick={() => dispatch({ type: 'counter/decremented' })}
+      >-</button>
+    </div>
+  )
+}
+
+```
+## 异步处理：如何向服务器端发送请求？
+实现自己的 API Client无论大小项目，在开始实现第一个请求的时候，通常我们要做的第一件事应该都是创建一个自己的 API Client，之后所有的请求都会通过这个 Client 发出去。而不是上来就用 fetch 或者是 axios 去直接发起请求，因为那会造成大量的重复代码。
+
+实现这样一个 Client 之后，你就有了一个统一的地方，去对你需要连接的服务端做一些通用的配置和处理，比如 Token、URL、错误处理等等
+
+通常来说，会包括以下几个方面：
+- 一些通用的 Header。比如 Authorization Token。
+- 服务器地址的配置。前端在开发和运行时可能会连接不同的服务器，比如本地服务器或者测试服务器，此时这个 API Client 内部可以根据当前环境判断该连接哪个 URL。
+- 请求未认证的处理。比如如果 Token 过期了，需要有一个统一的地方进行处理，这时就会弹出对话框提示用户重新登录。
+```js
+import axios from "axios";
+// 定义相关的 endpoint
+const endPoints = {
+  test: "https://60b2643d62ab150017ae21de.mockapi.io/",
+  prod: "https://prod.myapi.io/",
+  staging: "https://staging.myapi.io/"
+};
+
+// 创建 axios 的实例
+const instance = axios.create({
+  // 实际项目中根据当前环境设置 baseURL
+  baseURL: endPoints.test,
+  timeout: 30000,
+  // 为所有请求设置通用的 header
+  headers: { Authorization: "Bear mytoken" }
+});
+
+// axios 定义拦截器预处理所有请求
+instance.interceptors.response.use(
+  (res) => {
+    // 可以假如请求成功的逻辑，比如 log
+    return res;
+  },
+  (err) => {
+    if (err.response.status === 403) {
+      // 统一处理未授权请求，跳转到登录界面
+      document.location = '/login';
+    }
+    return Promise.reject(err);
+  }
+);
+
+export default instance;
+// 所有的请求都可以通过 Client 连接到指定的服务器，从而不再需要单独设置 Header，或者处理未授权的请求了
+```
+## 使用Hooks思考异步请求：封装远程资源
+对于一个 Get 类型的 API，我们完全可以将它看成一个远程的资源。只是和本地数据不同的地方在于，它有三个状态，分别是：
+1. Data: 指的是请求成功后服务器返回的数据；
+2. Error: 请求失败的话，错误信息将放到 Error 状态里；
+3. Pending: 请求发出去，在返回之前会处于 Pending 状态。
+```js
+
+import { useState, useEffect } from "react";
+import apiClient from "./apiClient";
+
+// 将获取文章的 API 封装成一个远程资源 Hook
+const useArticle = (id) => {
+  // 设置三个状态分别存储 data, error, loading
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    // 重新获取数据时重置三个状态
+    setLoading(true);
+    setData(null);
+    setError(null);
+    apiClient
+      .get(`/posts/${id}`)
+      .then((res) => {
+        // 请求成功时设置返回数据到状态
+        setLoading(false);
+        setData(res.data);
+      })
+      .catch((err) => {
+        // 请求失败时设置错误状态
+        setLoading(false);
+        setError(err);
+      });
+  }, [id]); // 当 id 变化时重新获取数据
+
+  // 将三个状态作为 Hook 的返回值
+  return {
+    loading,
+    error,
+    data
+  };
+};
+```
+那么要显示一篇文章的时候，你的脑子里就不再是一个具体的 API 调用，而可以把它看作一个数据，只不过是个远程数据，于是很自然就有加载状态或者错误状态这些数据了。使用的时候，我们就可以把组件的表现层逻辑写得非常简洁：
+```js
+import useArticle from "./useArticle";
+const ArticleView = ({ id }) => {
+  // 将 article 看成一个远程资源，有 data, loading, error 三个状态
+  const { data, loading, error } = useArticle(id);
+  if (error) return "Failed.";
+  if (!data || loading) return "Loading...";
+  return (
+    <div className="exp-09-article-view">
+      <h1>
+        {id}. {data.title}
+      </h1>
+      <p>{data.content}</p>
+    </div>
+  );
+};
+```
+可以看到，有了这样一个 Hook，React 的函数组件几乎不需要有任何业务的逻辑，而只是把数据映射到 JSX 并显示出来就可以了，在使用的时候非常方便。
+
+事实上，在我们的项目中，可以把每一个 Get 请求都做成这样一个 Hook。数据请求和处理逻辑都放到 Hooks 中，从而实现 Model 和 View 的隔离，不仅代码更加模块化，而且更易于测试和维护。
+
+## 多个API调用：如何处理并发或串行请求？
+在刚才讲的文章显示的例子中，我们只是简单显示了文章的内容，要知道，实际场景肯定比这个更复杂。比如，还需要显示作者、作者头像，以及文章的评论列表。那么，作为一个完整的页面，就需要发送三个请求：
+- 获取文章内容；
+- 获取作者信息，包括名字和头像的地址；
+- 获取文章的评论列表；
+这三个请求同时包含了并发和串行的场景：文章内容和评论列表是两个可以并发的请求，它们都通过 Article ID 来获取；用户的信息需要等文章内容返回，这样才能知道作者的 ID，从而根据用户的 ID 获取用户信息，这是一个串行的场景。
+如果用传统的思路去实现，可能会写下这样一段代码，或者类似的代码：
+```js
+// 并发获取文章和评论列表
+const [article, comments] = await Promise.all([
+  fetchArticle(articleId),
+  fetchComments(articleId)
+]);
+// 得到文章信息后，通过 userId 获取用户信息
+const user = await fetchUser(article.userId);
+```
+但是我们知道，React 函数组件是一个同步的函数，没有办法直接使用 await 这样的同步方法，而是要把请求通过副作用去触发。因此如果按照上面这种传统的思维，是很难把逻辑理顺的。
+
+函数组件的每一次 render，其实都提供了我们根据状态变化执行不同操作的机会，我们思考的路径，就是利用这个机制，通过不同的状态组合，来实现异步请求的逻辑。那么刚才这个显示作者和评论列表的业务需求，主要的实现思路就包括下面这么四点：
+
+- 组件首次渲染，只有文章 ID 这个信息，产生两个副作用去获取文章内容和评论列表；
+- 组件首次渲染，作者 ID 还不存在，因此不发送任何请求；
+- 文章内容请求返回后，获得了作者 ID，然后发送请求获取用户信息；
+- 展示用户信息。
+
+可以看到，这里的任何一个副作用，也就是异步请求，都是基于数据的状态去进行的。只有当文章的数据返回之后，我们才能得到作者 ID，从而再发送另外一个请求来获取作者信息。这样基于一个数据状态的变化，我们就实现了串行发送请求这个功能。
+
+所以，在代码层面，我们首先需要对 useUser 这个 Hook 做一个改造，使得它在没有传入 ID 的情况下，就不发送请求。对比上面的 useArticle 这个 Hook，唯一的变化就是在 useEffect 里加入了ID 是否存在的判断：
+```js
+import { useState, useEffect } from "react";
+import apiClient from "./apiClient";
+
+export default (id) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    // 当 id 不存在，直接返回，不发送请求
+    if (!id) return;
+    setLoading(true);
+    setData(null);
+    setError(null);
+    apiClient
+      .get(`/users/${id}`)
+      .then((res) => {
+        setLoading(false);
+        setData(res.data);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(err);
+      });
+  }, [id]);
+  return {
+    loading,
+    error,
+    data
+  };
+};
+```
+那么，在文章的展示页面，我们就可以使用下面的代码来实现：
+```js
+
+import { useState } from "react";
+import CommentList from "./CommentList";
+import useArticle from "./useArticle";
+import useUser from "./useUser";
+import useComments from "./useComments";
+
+const ArticleView = ({ id }) => {
+  const { data: article, loading, error } = useArticle(id);
+  const { data: comments } = useComments(id);
+  const { data: user } = useUser(article?.userId);
+  if (error) return "Failed.";
+  if (!article || loading) return "Loading...";
+  return (
+    <div className="exp-09-article-view">
+      <h1>
+        {id}. {article.title}
+      </h1>
+      {user && (
+        <div className="user-info">
+          <img src={user.avatar} height="40px" alt="user" />
+          <div>{user.name}</div>
+          <div>{article.createdAt}</div>
+        </div>
+      )}
+      <p>{article.content}</p>
+      <CommentList data={comments || []} />
+    </div>
+  );
+};
+```
+这里，结合代码我们再理一下其中并发和串行请求的思路。因为文章的 ID 已经传进来了，因此 useArticle 和 useComments 这两个 Hooks 会发出两个并发的请求，来分别获取信息。而 userUser 这个 Hook 则需要等 article 内容返回后，才能获得 userId 信息，所以这是一个串行的请求：需要等文章内容的请求完成之后才能发起。

@@ -225,7 +225,14 @@ componentWillUnmount() {
 ## 11、HOC(高阶组件)
 
 高阶组件：接受组件作为参数，对已有组件的一个封装，返回新的组件。新的组件会有它的应用逻辑，产生新的状态，将新的状态传给 参数组件，以便让该 参数组件使用。实现一些通用的逻辑，被不同的组件所使用，它本身并不存在任何UI的展现
-
+```javascript
+// 高阶组件
+const withWindowSize = Component => { 
+// 产生一个高阶组件 WrappedComponent，只包含监听窗口大小的逻辑 
+    class WrappedComponent extends React.PureComponent {}
+    return WrappedComponent;
+};
+```
 ```javascript
 const NewComponent = higherOrderComponent(YourComponent)
 
@@ -265,11 +272,16 @@ const CopyrightApp = withCopyright(App)
 
 ## 12、React.lazy
 
-懒加载原理就是利用es6 import()函数，当Webpack解析到该语法时，它会自动地开始进行代码分割(Code Splitting)，分割成一个文件，当使用到这个文件的时候会这段代码才会被异步加载。
+懒加载原理就是Webpack 利用es6动态 import()函数，当Webpack解析到该语法时，它会自动地开始进行代码分割(Code Splitting)，分割成一个文件，当使用到这个文件的时候会这段代码才会被异步加载。
+
+### 使用React.lazy实现懒加载
 
 ```javascript
 //使用React.lazy导入OtherComponent组件
  import React from 'react';
+ // import 是作为一个函数动态运行的，这个 import() 函数会返回一个 Promise
+ // import() 这个语句完全是由 Webpack 进行处理的
+ // Webpack 会将以OtherComponent模块为起点的所有依赖模块，单独打成一个包。并且，Webpack // 还会生成代码，用于按需加载这个模块。
 const OtherComponent = React.lazy(() => import('./OtherComponent'));
 // 但是这样页面会报错。这个报错提示我们，在React使用了lazy之后，会存在一个加载中的空档期，React不知道在这个空档
 // 期中该显示什么内容，所以需要我们指定。接下来就要使用到Suspense
@@ -282,6 +294,31 @@ const OtherComponent = React.lazy(() => import('./OtherComponent'));
 // 我们指定了空档期使用Loading展示在界面上面，等OtherComponent组件异步加载完毕，
 // 把OtherComponent组件的内容替换掉Loading上
 ```
+### react-lodable
+使用 react-lodable，实现组件的异步加载
+1. 定义一个加载器组件，在使用的地方依赖于这个加载器组件而不是原组件；
+2. 在加载器组件的执行过程中，使用 import 去动态加载真实的实现代码；
+3. 处理加载过程，和加载出错的场景，确保用户体验。
+react-loadable，正是这样一个开源的 npm 模块，专门用于 React 组件的按需加载。在实际的项目开发中，我们一般都会直接使用 react-loadable 来完成按需加载，而不用自己去实现。
+```js
+import Loadable from "react-loadable";
+
+// 创建一个显示加载状态的组件
+function Loading({ error }) {
+  return error ? 'Failed' : 'Loading';
+}
+// 创建加载器组件
+const HelloLazyLoad = Loadable({
+  loader: () => import("./RealHelloLazyLoad"),
+  loading: Loading,
+});
+```
+react-lodable 本身是通过高阶组件来实现的，这个高阶组件实现了模块加载、loading 状态以及错误处理的功能。你只要通过它提供的简单 API，就可以很容易实现组件的动态加载。
+
+在代码中，我们可以看到 Loadable 这个高阶组件主要就是两个 API。
+loader：用于传入一个加载器回调，在组件渲染到页面时被执行。在这个回调函数中，我们只需要直接使用 import 语句去加载需要的模块就可以了。
+loading：表示用于显示加载状态的组件。在模块加载完成之前，加载器就会渲染这个组件。如果模块加载失败，那么 react-loadable 会将 errors 属性传递给 Loading 组件，方便你根据错误状态来显示不同的信息给用户。
+
 
 ## 13、ReactRouter
 [React-Router](04-React-Router.md)
