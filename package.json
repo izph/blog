@@ -1,13 +1,14 @@
 {
   "name": "iZph",
   "version": "1.0.0",
-  "author": "reco_luan",
+  "author": "iZph",
   "scripts": {
     "dev": "vuepress dev . --open --host \"localhost\"",
     "build": "vuepress build .",
     "bash": "bash deploy.sh"
   },
   "devDependencies": {
+    "vue-template-compiler": "^2.6.14",
     "vuepress": "1.8.2",
     "vuepress-theme-reco": "1.6.10"
   },

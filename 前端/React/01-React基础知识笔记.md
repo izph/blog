@@ -89,17 +89,17 @@ Person.defaultProps = {
 #### 字符串ref
 
 - 获取ref：const { input1 } = this.refs;
-- <input ref="input1" type="text"/>
+- ```<input ref="input1" type="text"/>```
 
 #### 回调函数ref
 
 - 获取ref：const { input2 } = this;
-- <input ref={ c => { this.input2 = c }} type="text"/>
+- ```<input ref={ c => { this.input2 = c }} type="text"/>```
 
 #### React.createRef创建ref
 
 - 创建，myRef = React.createRef()，使用this.myRef.current.value
-- <input ref={this.myRef} type="text" />
+- ```<input ref={this.myRef} type="text" />```
 
 ## 5、事件处理
 
@@ -166,7 +166,7 @@ render(){
 ```
 
 ## 8、类组件的生命周期
-[React生命周期](./02-ReactLifeCycle.md)
+[React生命周期](02-ReactLifeCycle.md)
 ## 9、key的作用
 
 1. key是新、旧虚拟DOM对象的标识，diff算法比较中发挥着重要作用
@@ -283,8 +283,8 @@ const OtherComponent = React.lazy(() => import('./OtherComponent'));
 // 把OtherComponent组件的内容替换掉Loading上
 ```
 
-## 13、React Router
-[React-Router](./04-React-Router.md)
+## 13、ReactRouter
+[React-Router](04-React-Router.md)
 
 ## 14、create-react-app脚手架配置代理
 ### 在package.json中追加如下配置
