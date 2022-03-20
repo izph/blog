@@ -52,7 +52,7 @@ module.exports = {
         // link: "/前端",
         icon: "reco-home",
         items:[
-          { text: '计网', link: '/工程化/计网' },
+          { text: '计网', link: '/工程化/计网/http.md' },
           { text: '浏览器', link: '/工程化/浏览器' },
           { text: 'webpack', link: '/工程化/webpack' },
           { text: 'git', link: '/工程化/git' },
