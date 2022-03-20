@@ -52,11 +52,11 @@ module.exports = {
         // link: "/前端",
         icon: "reco-home",
         items:[
-          { text: '计网', link: '/其他/计网' },
-          { text: '浏览器', link: '/其他/浏览器' },
-          { text: 'webpack', link: '/其他/webpack' },
-          { text: 'git', link: '/其他/git' },
-          { text: '性能优化', link: '/其他/性能优化/01-性能优化.md' },
+          { text: '计网', link: '/工程化/计网' },
+          { text: '浏览器', link: '/工程化/浏览器' },
+          { text: 'webpack', link: '/工程化/webpack' },
+          { text: 'git', link: '/工程化/git' },
+          { text: '性能优化', link: '/工程化/性能优化/01-性能优化.md' },
         ]
       },
       {

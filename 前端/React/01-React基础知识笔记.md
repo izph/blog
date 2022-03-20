@@ -118,7 +118,8 @@ Person.defaultProps = {
 
 ## 7、高阶函数
 
-高阶函数：参数的回调函数或者返回值是一个函数
+### 高阶函数
+参数的回调函数或者返回值是一个函数
 
 ```javascript
 // 表单提交例子
@@ -163,6 +164,22 @@ render(){
 		</form>
 	)
 }
+```
+### 函数作为子组件
+children 是 React 组件的一个特殊内置属性，```<Comp>xxx</Comp>``` 里的 xxx 部分会作为 children 传递给 Comp 组件，如果 xxx 是函数，那么 Comp 里主动调用它去得到结果。
+```js
+class MyComponent extends React.Component{
+		render(){
+    		<div>
+        		{this.props.children("yoyo")}
+        </div>
+    }
+}
+
+// 使用
+<MyComponent>
+    {(name) => (<div>{ name }</div>)}
+</MyComponent>
 ```
 
 ## 8、类组件的生命周期
