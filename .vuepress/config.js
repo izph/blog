@@ -34,8 +34,8 @@ module.exports = {
               { text: 'BOM', link: '/前端/JavaScript/BOM/01-bom笔记.md' },
             ]
           },
-          { text: 'TypeScript', link: '/前端/TypeScript' },
           { text: 'React', link: '/前端/React/01-React基础知识笔记.md' },
+          { text: 'TypeScript', link: '/前端/TypeScript/01-ts-basics.md' },
         ]
       },
       {
