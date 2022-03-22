@@ -44,7 +44,7 @@ module.exports = {
         icon: "reco-home",
         items:[
           { text: 'Node', link: '/后端/Node/观察者模式.md' },
-          { text: 'Koa', link: '/后端/Koa' },
+          { text: 'Koa', link: '/后端/Koa/01-koa-basics.md' },
         ]
       },
       {

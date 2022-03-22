@@ -1,5 +1,5 @@
 ---
-title: CSSNote-One
+title: CSS笔记（一）
 date: 2020-12-26 11:38:51
 permalink: /前端/CSS/cssnote01
 categories:
@@ -89,5 +89,6 @@ tags:
     - 元素的 border-width，不支持百分比
     - 元素的 translateX、translateY，基准为分别为自身的 height、width
 16. 伪类和伪元素的区别
+
 - 伪类：基于DOM，不产生新的对象，用来修改元素的某种状态、对DOM进行修饰
 - 伪元素：产生一个不存在与DOM的新对象，可以对这个对象进行添加样式
