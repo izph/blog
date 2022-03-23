@@ -57,6 +57,7 @@ module.exports = {
           { text: 'webpack', link: '/工程化/webpack' },
           { text: 'git', link: '/工程化/git' },
           { text: '性能优化', link: '/工程化/性能优化/01-性能优化.md' },
+          { text: 'SQL', link: '/工程化/SQL/01-sqlbasics.md' },
         ]
       },
       {
