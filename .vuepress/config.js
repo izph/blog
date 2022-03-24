@@ -7,7 +7,7 @@ module.exports = {
   dest: "public",
   head: [
     ['link', { rel: 'shortcut icon', type: "image/x-icon", href: `/favicon.ico` }],
-    ["meta", {name: "viewport",  content: "width=device-width, initial-scale=1, user-scalable=no"}]
+    ["meta", { name: "viewport", content: "width=device-width, initial-scale=1, user-scalable=no" }]
   ],
   port: '8888',
   theme: "reco",
@@ -22,13 +22,13 @@ module.exports = {
         text: "前端",
         // link: "/前端",
         icon: "reco-home",
-        items:[
+        items: [
           { text: 'HTML', link: '/前端/HTML/HTMLNoteOne.md' },
           { text: 'CSS', link: '/前端/CSS/CSSNoteOne.md' },
-          { 
-            text: 'JavaScript', 
+          {
+            text: 'JavaScript',
             link: '/前端/JavaScript/01-初识V8底层.md',
-            items:[
+            items: [
               { text: 'ECMAScript', link: '/前端/JavaScript/01-初识V8底层.md' },
               { text: 'DOM', link: '/前端/JavaScript/DOM/01-dom笔记.md' },
               { text: 'BOM', link: '/前端/JavaScript/BOM/01-bom笔记.md' },
@@ -42,7 +42,7 @@ module.exports = {
         text: "后端",
         // link: "/前端",
         icon: "reco-home",
-        items:[
+        items: [
           { text: 'Node', link: '/后端/Node/观察者模式.md' },
           { text: 'Koa', link: '/后端/Koa/01-koa-basics.md' },
         ]
@@ -51,10 +51,10 @@ module.exports = {
         text: "其他",
         // link: "/前端",
         icon: "reco-home",
-        items:[
+        items: [
           { text: '计网', link: '/工程化/计网/http.md' },
-          { text: '浏览器', link: '/工程化/浏览器' },
-          { text: 'webpack', link: '/工程化/webpack' },
+          { text: '浏览器', link: '/工程化/浏览器/01-febrowsercache.md' },
+          { text: 'webpack', link: '/工程化/webpack/01-webpacknotes01.md' },
           { text: 'git', link: '/工程化/git' },
           { text: '性能优化', link: '/工程化/性能优化/01-性能优化.md' },
           { text: 'SQL', link: '/工程化/SQL/01-sqlbasics.md' },
@@ -64,7 +64,7 @@ module.exports = {
         text: "算法",
         // link: "/前端",
         icon: "reco-home",
-        items:[
+        items: [
           { text: '数据结构与算法', link: '/算法/数据结构与算法' },
           { text: 'LeetCode', link: '/算法/LeetCode/回溯算法.md' },
         ]
@@ -161,6 +161,6 @@ module.exports = {
         }
       }
     },
-    
+
   }
 }
