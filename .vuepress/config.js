@@ -48,7 +48,7 @@ module.exports = {
         ]
       },
       {
-        text: "其他",
+        text: "工程化",
         // link: "/前端",
         icon: "reco-home",
         items: [
@@ -58,6 +58,7 @@ module.exports = {
           { text: 'git', link: '/工程化/git' },
           { text: '性能优化', link: '/工程化/性能优化/01-性能优化.md' },
           { text: 'SQL', link: '/工程化/SQL/01-sqlbasics.md' },
+          { text: '其他', link: '/工程化/其他/lerna.md' },
         ]
       },
       {
