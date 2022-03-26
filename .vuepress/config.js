@@ -55,7 +55,7 @@ module.exports = {
           { text: '计网', link: '/工程化/计网/http.md' },
           { text: '浏览器', link: '/工程化/浏览器/01-febrowsercache.md' },
           { text: 'webpack', link: '/工程化/webpack/01-webpacknotes01.md' },
-          { text: 'git', link: '/工程化/git' },
+          { text: 'git', link: '/工程化/git/01-gitbase-use.md' },
           { text: '性能优化', link: '/工程化/性能优化/01-性能优化.md' },
           { text: 'SQL', link: '/工程化/SQL/01-sqlbasics.md' },
           { text: '其他', link: '/工程化/其他/lerna.md' },

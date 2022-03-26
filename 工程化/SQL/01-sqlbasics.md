@@ -7,9 +7,10 @@ categories:
   - SQL
 tags:
   - 后端
-  - SSQL
+  - SQL
 ---
 # SQL笔记
+
 mysql是关系型数据库
 
 ### DDL：Data Definition Language
@@ -25,9 +26,11 @@ DML为用户提供添加、删除、更新数据的能力，这些是应用程�
 DQL允许用户查询数据，这也是通常最频繁的数据库日常操作。
 
 ### 主键和联合主键
+
 主键的一个基本原则是，不使用任何业务相关的字段作为主键，联合主键，允许一列有重复，只要不是所有主键列都重复即可。
 
 ### 基本查询方法
+
 ```sql
 # SELECT 结果集 FROM <表名>
 # 结果集可以显示 列名称
@@ -87,10 +90,13 @@ SELECT AVG(score) average FROM students
 # 多表查询 SELECT * FROM <表1>, <表2>
 # 多表查询时，要使用 表名.列名 这样的方式来引用列和设置别名，这样就避免了结果集的列名重复问题。
 ```
+
 ### 连接查询
+
 [廖雪峰sql教程-连接查询](https://www.bookstack.cn/read/liaoxuefeng-sql/bf30f02838d0e30e.md)
 
 ### 修改数据
+
 ```sql
 # 插入数据
 INSERT INTO <表名> (字段1, 字段2, ...) VALUES (值1, 值2, ...);
@@ -106,11 +112,15 @@ DELETE FROM <表名> WHERE ...;
 # 删除id=1的数据
 delete from students where id=1;
 ```
+
 ### 管理MySQL
+
 [管理MySQL](https://www.bookstack.cn/read/liaoxuefeng-sql/567d44abee253c21.md)
 
 ### 实用SQL语句
+
 [实用SQL语句](https://www.bookstack.cn/read/liaoxuefeng-sql/e3bf4632fad8f0be.md)
 
 ### 参考
+
 [廖雪峰SQL教程(MySQL)](https://www.bookstack.cn/read/liaoxuefeng-sql/b2bc7f8dbfe267a8.md)
