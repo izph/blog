@@ -193,7 +193,7 @@ function ajax(){
  });
 }
 ```
-## 7、对比两个JSON对象是否相等
+## 8、对比两个JSON对象是否相等
 ```javascript
 // notCompare: string [] 将不需要对比的属性放到数组中
 function compareJsonEqual(obj1 = {}, obj2 = {}, notCompare) {
@@ -226,4 +226,25 @@ function compareJsonEqual(obj1 = {}, obj2 = {}, notCompare) {
         return flag;
     }
     return compre(obj1, obj2);
+```
+## 9、解析模板字符串
+```js
+let template = '我是{{name}}，年龄{{age}}，性别{{sex}}';
+let data = {
+    name: 'yolo',
+    age: 18
+}
+function render(template, data) {
+    // replace 的第二个参数
+    let computed = template.replace(/\{\{(\w+)\}\}/g, function (match, key) { 
+      // match是模板  key是捕获的键
+        // console.log(match, key)
+        // {{name}} name
+        // {{age}} age
+        // {{sex}} sex
+        return data[key];
+    });
+    return computed;
+}
+console.log(render(template, data));// 我是姓名，年龄18，性undefined
 ```
