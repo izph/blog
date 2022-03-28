@@ -100,8 +100,11 @@ console.log(compute.sub()); // -1
 console.log(compute.mul()); // 2
 console.log(compute.div()); // 0.5
 ```
+
 ## 3、伪随机码的生成
+
 随机生成由32个字符组成的随机码（32位Guid字符串）
+
 ```javascript
 function guid(){
    let res = "";
@@ -123,7 +126,9 @@ function guid(){
 // 测试
 guid(); // '5c93b0e0-549b-24d7-9a03-576227bfb6c1'
 ```
+
 ## 4、用setTimeout 实现 setInterval
+
 ```javascript
 function mySetInterval(fn, time) {
     timer = setTimeout(function () {
@@ -136,9 +141,12 @@ function mySetInterval(fn, time) {
 }
 mySetInterval(function(){ console.log(1) }, 1000); 
 ```
+
 ## 5、手写 instanceof
+
 - 作用：instanceof 用于判断对象 是否出现在 构造函数的prototype属性的原型链中
 - 用法：(对象) instanceof (构造函数)
+
 ```javascript
 //  Object.getPrototypeOf(obj) 方法用于获取obj的原型对象(obj.__proto__)
 function myInstanceof(obj, func) { 
@@ -158,7 +166,9 @@ function myInstanceof(obj, func) {
   } 
 }
 ```
+
 ## 6、封装一个通用的javascript类型判断函数
+
 ```javascript
 function getType(value) { 
   // 判断数据是 null 的情况 
@@ -174,7 +184,9 @@ function getType(value) {
   } 
 }
 ```
+
 ## 7、结合Promise封装Ajax
+
 ```javascript
 function ajax(){
   return new Promise(function(resolve, reject){
@@ -193,7 +205,9 @@ function ajax(){
  });
 }
 ```
+
 ## 8、对比两个JSON对象是否相等
+
 ```javascript
 // notCompare: string [] 将不需要对比的属性放到数组中
 function compareJsonEqual(obj1 = {}, obj2 = {}, notCompare) {
@@ -227,7 +241,9 @@ function compareJsonEqual(obj1 = {}, obj2 = {}, notCompare) {
     }
     return compre(obj1, obj2);
 ```
+
 ## 9、解析模板字符串
+
 ```js
 let template = '我是{{name}}，年龄{{age}}，性别{{sex}}';
 let data = {
@@ -247,4 +263,18 @@ function render(template, data) {
     return computed;
 }
 console.log(render(template, data));// 我是姓名，年龄18，性undefined
+
+
+let str = "<div>{{$0}}({{$1}}){{$2}}</div>";
+let arr = ["前端", "js", "开发"];
+function tpl(templateStr, arr) {
+      templateStr = templateStr.replace(/\{\{\$(\w)+\}\}/g, function (match, index) {
+        // match, index
+        // {{$i}} i
+        return arr[index];
+    })
+    return templateStr;
+}
+console.log(tpl(str, arr))
+// <div>前端(js)开发</div>
 ```
