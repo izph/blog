@@ -148,6 +148,37 @@ test('test object', () => {
 ```
 ### React官方推荐的测试工具(enzyme和@testing-library/react)
 ```npm install --save-dev @testing-library/react```
+```npm install --save-dev @testing-library/jest-dom```
+
+@testing-library/jest-dom添加了一些针对dom的一些断言
+[@testing-library/jest-dom](https://github.com/testing-library/jest-dom)
+#### Filename Conventions
+Jest 将查找具有以下任何流行命名约定的测试文件：
+- __tests__ 文件夹中带有 `.js`或者`.ts` 后缀的文件。
+- 带有 .test.js 后缀的文件。
+- 带有 .spec.js 后缀的文件。
+
+.test.js / .spec.js 文件（或 __tests__ 文件夹）可以位于 src 顶级文件夹下的任何目录。
+建议将测试文件（或 __tests__ 文件夹）放在他们正在测试的代码旁边，以便相对导入看起来更短。例如，如果 App.test.js 和 App.js 在同一个文件夹中，则测试只需要从 './App' 导入 App，而不是长的相对路径。搭配还有助于在大型项目中更快地找到测试。
+
+### Menu组件需求分析
+Menu组件需要使用useState和useContext这两个hooks实现，用户依赖导航在各个页面中进行跳转。一般分为顶部导航和侧边导航，顶部导航提供全局性的类目和功能，侧边导航提供多级结构来收纳和排列网站架构。
+![](images/yolo-menu-001.png)
+#### Menu最基本样式分为横向和纵向
+1. 横向
+一类没有下拉菜单的基本类型，一类是有下拉菜单的类型，menu上有两个重要的属性，一个是active（菜单项高亮），菜单项是可以被disabled的，disabled后有特殊样式，并且点击没有响应。
+有下拉选项的菜单，可以展示更多的导航。
+2. 纵向
+和横向差不多，只是左右展示
+#### Menu需要的基本属性值
+defaultIndex表示默认选中的，onSelect选中后执行的回调，mode分为横向和纵向，
+activeIndex表示哪个高亮，className自定义类名。
+
+Menu.Item提取出来做单独的组件，任何属性都可以加到Item上，并且Menu.Item的children可以是任何元素，如string类型，jsx。Menu.Item上可以有index属性、disabled禁用，className等属性
+
+
+
+
 ## 代码打包输出和发布
 
 ## CI/CD，文档的生成
