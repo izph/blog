@@ -71,6 +71,15 @@ module.exports = {
         ]
       },
       {
+        text: "项目",
+        // link: "/前端",
+        icon: "reco-home",
+        items: [
+          { text: 'yolo-ui', link: '/项目/yolo-ui/01-yolo-preface.md' },
+          { text: 'yoyo', link: '/项目/yoyo/01-yoyo-bff.md' },
+        ]
+      },
+      {
         text: "联系",
         icon: "reco-message",
         items: [

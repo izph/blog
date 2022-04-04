@@ -61,7 +61,121 @@ compile|SyncHook|	一个新的编译 (compilation) 创建之后
 emit|AsyncSeriesHook|生成资源到 output 目录之前
 done|SyncHook|编译 (compilation) 完成
 
-实现MdToHtmlPlugin
+## 实现MdToHtmlPlugin
+
+### 1、创建MdToHtmlPlugin
+在根目录下创建plugin文件夹，在plugin下新建md-to-html-plugin文件夹，并在该文件夹下新建index.js入口文件，compiler.js文件，constant.js声明常量文件，util.js公共方法文件，template.html模板文件
+#### index.js
+```js
+const { readFileSync } = require('fs');
+const { resolve, dirname, join } = require('path');
+const { compileHTML } = require('./compiler');
+const { TEMPLATE_MARK, PLUGIN_NAME } = require('./constant');
+
+class MdToHtmlPlugin {
+  constructor({ template, filename }) {
+    // 没传template
+    if (!template) {
+      throw new Error('Please input the markdown template file')
+    }
+    this.template = template;
+    // 没传filename 默认为 index.html
+    this.filename = filename ? filename : 'index.html';
+  }
+  apply(compiler) {
+    // tap第一个参数是插件的名字，第二个参数是回调函数，回调函数的参数是一个compilation
+    compiler.hooks.emit.tap(PLUGIN_NAME, (compilation) => {
+
+      // _assets 打包的资源详情
+      const _assets = compilation.assets;
+
+      // fs的api readFileSync 同步读取文件 readFile是异步的
+      const templateContent = readFileSync(this.template, 'utf-8') // 目录文件，编码方式
+
+      // 找到当前目录下的template.html
+      const templateHtml = readFileSync(resolve(__dirname, "template.html"), 'utf-8');
+
+      // 将templateContent（md文件的内容） 变为数组
+      const templateContentArr = templateContent.split('\n');
+
+      // 核心方法： 将数组内容 编译为 html标签   
+      const { htmlStr, staticSource } = compileHTML(templateContentArr);
+
+      // 将template.html的模板字符串替换
+      const fileHtml = templateHtml.replace(TEMPLATE_MARK, htmlStr)
+
+      // _assets增加资源，this.filename 就是_assets的一个属性
+      _assets[this.filename] = {
+        //  source不是一个普通的函数，它会把放到_assets[this.filename]对象中
+        //  将资源放到我们定义filename的html文件中
+        source() {
+          return fileHtml;
+        },
+        // 资源的长度        
+        size() {
+          return fileHtml.length;
+        }
+      }
+
+      // 处理静态文件
+      if (staticSource && staticSource.length > 0) {
+        // 获取md文件所在的目录
+        const tplDirName = dirname(this.template);
+        staticSource.map((staticItem) => {
+          const { filename, staticPath } = staticItem;
+          // 拼接md文件引用的静态资源路径
+          const staticsourcepath = join(tplDirName, staticPath);
+          // 读取静态资源
+          const statics = readFileSync(staticsourcepath);
+          // _assets增加资源
+          _assets[`${filename}`] = {
+            source() {
+              return statics;
+            },
+            size() {
+              return statics.length;
+            }
+          }
+        })
+      }
+
+    })
+  }
+}
+
+module.exports = MdToHtmlPlugin;
+```
+
+### 2、创建webpack.config.js文件
+在根目录下新建notebook.md，并写入简单的md标记，引入MdToHtmlPlugin插件，
+配置MdToHtmlPlugin的template和filename
+```js
+const { resolve } = require('path')
+const MdToHtmlPlugin = require('./plugins/md-to-html-plugin');
+
+const config = {
+    // 模式
+    mode: "development",
+    // 入口文件
+    entry: resolve(__dirname, 'src/app.js'),
+    output: {
+        path: resolve(__dirname, 'dist'),
+        filename: "app.js"
+    },
+    // 配置自定义插件
+    plugins: [
+        new MdToHtmlPlugin({
+            template: resolve(__dirname, 'notebook.md'), // 我们需要解析的文件
+            filename: 'notebook.html' // 解析后的文件名
+        })
+    ]
+}
+
+module.exports = config;
+```
+notebook.md文件内容如下：
+![notebook.png](images/mdtohtml011.png)
+
 
 
 [项目地址](https://github.com/izph/md-to-html)
