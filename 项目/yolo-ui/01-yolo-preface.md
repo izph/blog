@@ -118,7 +118,7 @@ Unit -> Service -> UI -> Manual手动测试
 - 单项数据流。
 ### 测试框架Jest
 Jest是Facebook出品的框架
-![Jest中文文档](https://www.jestjs.cn/)
+[Jest中文文档](https://www.jestjs.cn/)
 #### Jest笔记
 ```js
 // 断言库
@@ -176,9 +176,11 @@ activeIndex表示哪个高亮，className自定义类名。
 
 Menu.Item提取出来做单独的组件，任何属性都可以加到Item上，并且Menu.Item的children可以是任何元素，如string类型，jsx。Menu.Item上可以有index属性、disabled禁用，className等属性
 
+#### Menu的实现
+采用FlexBox
 
-
-
+## 图标Icon的解决方案
+图标的历史演化，上古时期的雪碧图（不能缩放），Font Icon
 ## 代码打包输出和发布
 
 ## CI/CD，文档的生成
