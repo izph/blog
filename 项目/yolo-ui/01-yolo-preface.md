@@ -180,7 +180,27 @@ Menu.Item提取出来做单独的组件，任何属性都可以加到Item上，�
 采用FlexBox
 
 ## 图标Icon的解决方案
-图标的历史演化，上古时期的雪碧图（不能缩放），Font Icon
+图标的历史演化，上古时期的雪碧图（不能缩放），Font Icon（用字体文件的字符编码，代表图标，然后通过特定的class加伪类，加入到浏览器中），
+SVG（可以用任何的css控制）
+
+## Transition
+
+## 表单
+### input输入框
+基本的样式、支持不同的大小、disabled状态、带图标的样式、带前缀、后缀，自动补全（在iuput的基础上扩展，多了一个下拉菜单，继承了input的所有属性）
+```js
+<Input 
+    disabled
+    size="lg|md|sm"
+    icon="图标"
+    prepand="input的前缀，string或者ReactElement类型"
+    qppend="input的后缀，string或者ReactElement类型"
+    {...restProps} // 支持其他所有的HTMLInput属性、用户自定义的属性
+/>
+组件正确的开发流程：组件属性的分析 -> 组件开发 -> 组件测试 -> 组件的使用说明文档
+```
+### auto-complete
+要考虑是同步的、还是异步的关键词匹配
 ## 代码打包输出和发布
 
 ## CI/CD，文档的生成
