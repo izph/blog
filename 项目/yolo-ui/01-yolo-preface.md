@@ -201,6 +201,14 @@ SVG（可以用任何的css控制）
 ```
 ### auto-complete
 要考虑是同步的、还是异步的关键词匹配
+
+### Upload上传
+点击上传按钮，选择想要上传的文件，然后开始自动上传，之后会显示上传进度（progress），当进度满了就会显示上传成功，反之上传失败。鼠标悬浮到上传的文件，会显示叉号，可以取消上传的文件。
+支持用户自定义请求头headers，文件名称，上传额外的`data（{key：vale}）`，支持input本身file的属性，如multiple（多选）、accept（限制文件类型）、是否默认携带cookie。自定义触发的元素（在Upload设置按钮、文本。。。）、支持拖动上传文件、用户点击文件执行的自定义的回调等等。
+
+## Progress
+根据传入的百分比，来显示一个进度条。最外面有一个灰色progress-outer，它的高度可以配置，prosition为相对定位。progress-outer之上会有一个进度条，颜色可以配置，prosition为absolute，垂直居中，悬浮到progress-outer上，top和left都为0，则表示在最左边（0%），同时百分比也支持显示和隐藏
+![image.png](images/progress001.png)
 ## 代码打包输出和发布
 
 ## CI/CD，文档的生成
