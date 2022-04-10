@@ -275,17 +275,22 @@ $ git commit -amend
 - :e! 放弃当前修改，重新编辑
 
 当前分支下的，历史的commit信息怎么修改
-$ git rebase -i HEAD~2
+`$ git rebase -i HEAD~2`
 表示要修改当前版本的倒数第2次状态
-[
-
-](https://blog.csdn.net/u012999810/article/details/121078588)
+[vim编辑器的使用](https://blog.csdn.net/u012999810/article/details/121078588)
 $ git rebase -i commitID
 修改当前commitID的message，弹出vim编辑器（当前分支下的commitID）
 
 合并多个commit：
 $ git rebase -i commitID(这个commitID是需要合并的最后一个)
 弹出vim，将中间的需要合并的commit 的pick修改成s，保存退出，弹出另一个vim编辑器，稍微编辑一下合并commit的原因，写完后即可退出。
+
+### Github文件夹大小写问题
+git是默认不区分大小写的，之前的Button文件夹，后来将文件夹的名称改为了button，然而在Github上是不会将大写改为小写的。
+
+#### 解决方法
+
+进入`.git`文件夹，将`config`文件的 `ignorecase=true` 改为 `ignorecase=false`。
 
 ## 9、git如何删除文件
 
