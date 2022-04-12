@@ -238,3 +238,18 @@ win.onload = function(){
   win.document.title = "title text";
 }
 ```
+39、动态添加样式
+```js
+const cusStyle = `.box { background-color: red; }`;
+loadStyle(cusStyle);
+// insertRule(rule, [index])
+// rule: 样式字符串
+// index: 表示添加样式在样式表中的索引位置，默认为 -1，表示位于样式表的末尾。
+function loadStyle(params){
+    var headobj = document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    headobj.appendChild(style);
+    style.sheet.insertRule(params, 0);
+  }
+```
