@@ -51,6 +51,7 @@ tags:
     background: red; 
   }
   ```
+- 第三种方式是利用rem
 ### 4. 实现一个三角形
 实现原理是利用了元素边框连接处的等分原理
 ```css
@@ -108,12 +109,225 @@ body {
 }
 .right {
   height: 100%;
-  overflow: hidden;
   background-color: pink;
 }
 .content {
   height: 100%;
-  position: relative;
 }
+
+
 ```
 ![image.png](images/csshandwritten005.png)
+
+```js
+/*两栏布局一般指的是页面中一共两栏，左边固定，右边自适应的布局，一共有四种实现的方式。*/
+    /*以左边宽度固定为200px为例*/
+    /*（1）利用浮动，将左边元素宽度设置为200px，并且设置向左浮动。将右边元素的margin-left设置为 200px，宽度设置为auto（默认为auto，撑满整个父元素）。*/
+    .content {
+      height: 100px;
+    }
+
+    .left {
+      float: left;
+      height: 100px;
+      width: 200px;
+      background: tomato;
+    }
+
+    .right {
+      margin-left: 200px;
+      width: auto;
+      height: 100px;
+      background: gold;
+    }
+
+    /*（2）第二种是利用flex布局，将左边元素的放大和缩小比例设置为0，基础大小设置为200px。将右边的元素的放大比例设置为1，
+        缩小比例设置为1，基础大小设置为auto。*/
+    .content {
+      display: flex;
+      height: 100px;
+    }
+
+    .left {
+      width: 300px;
+      flex-basis: 200px;
+      background: tomato;
+    }
+
+    .right {
+      flex: 1 1 auto;
+      background: gold;
+    }
+
+    /*（3）第三种是利用绝对定位布局的方式，将父级元素设置相对定位。左边元素设置为absolute定位，
+        并 且宽度设置为 200px。将右边元素的margin-left的值设置为200px。*/
+    .content {
+      position: relative;
+      height: 100px;
+    }
+
+    .left {
+      position: absolute;
+      width: 200px;
+      height: 100px;
+      background: tomato;
+    }
+
+    .right {
+      margin-left: 200px;
+      height: 100px;
+      background: gold;
+    }
+
+    /*（4）第四种还是利用绝对定位的方式，将父级元素设置为相对定位。左边元素宽度设置为200px，
+    右边 元素设置为绝对定位，左边固定为200px，其余方向定位为0。*/
+    .content {
+      position: relative;
+      height: 100px;
+    }
+
+    .left {
+      width: 200px;
+      height: 100px;
+      background: tomato;
+    }
+
+    .right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 200px;
+      background: gold;
+    }
+```
+## 6. css三栏布局
+```html
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    .content {
+      height: 100%;
+    }
+
+    .left {
+      float: left;
+      background-color: red;
+      width: 200px;
+      height: 100%;
+    }
+    .center {
+      background-color: green;
+      height: 100%;
+      /* BFC不与浮动的元素发生重叠 */
+      overflow: hidden;
+    }
+
+    .right {
+      float: right;
+      background-color: blue;
+      height: 100%;
+      width: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content">
+    <div class="left">left</div>
+    <div class="right">right</div>
+    <div class="center">center</div>
+  </div>
+</body>
+```
+## 7. css等高布局
+```html
+<div class="content">
+    <div class="left">left</div>
+    <div class="center">center</div>
+    <div class="right">right</div>
+</div>
+
+```
+```css
+/* flex布局 */
+html,
+body {
+  height: 100%;
+}
+.content {
+  height: 100%;
+  display: flex;
+}
+.left {
+  background-color: red;
+  width: 200px;
+  height: 100%;
+}
+.center {
+  background-color: green;
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+.right {
+  background-color: blue;
+  height: 100%;
+  width: 200px;
+}
+```
+## 8. css上下固定中间自适应
+```html
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    .header {
+      position: absolute;
+      top: 0;
+
+
+      width: 100%;
+      height: 100px;
+      background: red;
+    }
+
+    .container {
+      position: absolute;
+      top: 100px;
+      bottom: 100px;
+
+
+      width: 100%;
+      background: green;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+
+      height: 100px;
+      width: 100%;
+      background: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="father">
+    <div class="header"></div>
+    <div class="container"></div>
+    <div class="footer"></div>
+  </div>
+
+</body>
+```

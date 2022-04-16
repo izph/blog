@@ -490,7 +490,7 @@ const arr = [
   { id: 1, age: 19 }
 ];
 
-arr6.sort(function (a, b) {
+arr.sort(function (a, b) {
   // 如果id相同，按照age的降序
   if (a.id === b.id) {
     return b.age - a.age
@@ -498,4 +498,13 @@ arr6.sort(function (a, b) {
     return a.id - b.id
   }
 })
+```
+## 19、生成1-100的数字
+```js
+  // 生成1-100数字
+  let arr1 = [...Array(100)].map((item, index) => index + 1);
+  let arr2 = Array.from({ length: 100 }, (item, index) => index + 1);
+
+  // 生成0-9数字
+  let arr3 = [...Array(10).keys()];
 ```
