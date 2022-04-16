@@ -1,5 +1,5 @@
 ---
-title: 前端浏览器缓存
+title: 前后端联调
 date: 2021-10-25 17:12:16
 permalink: /工程化/浏览器/httprequest
 categories:
@@ -10,7 +10,9 @@ tags:
   - 浏览器
 ---
 # 前后端联调方法
+
 ## 原生XMLHttpRequest
+
 ```js
 const xhr = new XMLHttpRequest();
 xhr.open('GET', 'http://www.example.com/test');
@@ -25,7 +27,9 @@ xhr.error = () => {
 }
 xhr.send();
 ```
+
 ## jquery的ajax
+
 ```js
 $.ajax({
     type: "POST",
@@ -36,12 +40,16 @@ $.ajax({
     error: function (){}
 })
 ```
+
 ## Fetch
+
 #### Fetch缺点
+
 - 只对网络请求报错，对400、500都当做成功的请求
 - 默认不会带cookie
 - 不支持超时控制，不支持终止
 - 没有办法原生检测请求的进度
+
 ```js
 fetch("http://www.example.com/test").then(function(response){
     return response.json();
@@ -53,9 +61,11 @@ fetch("http://www.example.com/test").then(function(response){
 ```
 
 ## axios
+
 参考官方文档：[axios中文文档](http://www.axios-js.com/zh-cn/docs/index.html)
 
 ### 传统表单上传二进制文件(伪代码)
+
 ```tsx
 import React from 'react';
 import axios from 'axios';

@@ -53,6 +53,7 @@ module.exports = {
         icon: "reco-home",
         items: [
           { text: '计网', link: '/工程化/计网/http.md' },
+          { text: '其他', link: '/工程化/计算机基础/01-计算机操作系统.md' },
           { text: '浏览器', link: '/工程化/浏览器/01-febrowsercache.md' },
           { text: 'webpack', link: '/工程化/webpack/01-webpacknotes01.md' },
           { text: 'git', link: '/工程化/git/01-gitbase-use.md' },

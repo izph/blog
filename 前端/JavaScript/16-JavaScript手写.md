@@ -431,3 +431,71 @@ function queryURLParams(URL) {
 console.log(queryURLParams(URL))
 ```
 参考：[获取URL参数](https://juejin.cn/post/7075305529903415304)
+
+## 15、数字转成千分符
+```js
+function toThousands(num) {
+  let result = '', counter = 0;
+  // 数字转成字符串
+  num = (num || 0).toString();
+  for (let i = num.length - 1; i >= 0; i--) {
+    counter++;
+    result = num[i] + result;
+    if (!(counter % 3) && i != 0) {
+      result = ',' + result;
+    }
+  }
+  return result;
+}
+toThousands(1234567890)
+// '1,234,567,890'
+```
+## 16、实现一个repeat函数
+这个函数能返回一个新函数，比如这样用`var repeatedFun = repeat(console.log, 4, 1000)`
+调用这个 repeatedFun("hellworld") 会console.log 4次 helloworld, 每次间隔1秒
+```js
+function repeat(func, times, wait) {
+    return function (val) {
+        let count = 0;
+        //func(val);如果一开始就打印 就先执行一遍再使用计时器，后面次数减1
+        let timer = setInterval(() => {
+            count++;
+            count < times ? '' : clearInterval(timer)
+            func(val);
+        }, wait)
+    }
+}
+const repeatFunc = repeat(console.log, 4, 1000)
+repeatFunc('helloworld')
+```
+## 17、转化为驼峰命名
+```js
+const str = "get-user-info";
+function (s) {
+  return s.replace(/-(\w)/g, function (match, key) {
+    return key.toUpperCase()
+    //return match.slice(1).toUpperCase();
+  })
+}
+// getUserInfo
+```
+## 18、根据数组中对象的多个属性值排序
+```js
+const arr = [
+  { id: 1, age: 12 }, 
+  { id: 2, age: 14 }, 
+  { id: 6, age: 10 }, 
+  { id: 9, age: 16 }, 
+  { id: 2, age: 18 }, 
+  { id: 1, age: 19 }
+];
+
+arr6.sort(function (a, b) {
+  // 如果id相同，按照age的降序
+  if (a.id === b.id) {
+    return b.age - a.age
+  } else {
+    return a.id - b.id
+  }
+})
+```
