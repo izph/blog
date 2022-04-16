@@ -355,7 +355,7 @@ function disThree(array) {
 }
 console.log(disThree(res));
 ```
-## 用js为选择器对应的所有元素添加类名
+## 12、用js为选择器对应的所有元素添加类名
 `dom.classList.add('test')`
 ```js
 // 为所有的div添加
@@ -366,4 +366,22 @@ const addClass =  (nodes, value) => {
     }
 }
 addClass(doms, 'test')
+```
+## 13、给全局对象window添加属性
+
+```js
+function getConst(key, val) {
+    window[key] = val;
+    Object.defineProperty(window, key, {
+      //如果设置了 set 或 get, 就不能设置 writable 和 value 中的任何一个，否则报错
+      get: function () { 
+          return constVal;
+      },
+      configurable: false, //配置信息是否可修改
+      enumerable: true, //是否可枚举
+    })
+};
+getConst("age", 10)
+age = 20;
+console.log(age); // 10  未被修改
 ```
