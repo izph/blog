@@ -278,3 +278,92 @@ function tpl(templateStr, arr) {
 console.log(tpl(str, arr))
 // <div>前端(js)开发</div>
 ```
+## 10、实现find函数，使下列的代码调用正确
+```js
+ var data = [
+    { userId: 8, title: 'title1' },
+    { userId: 11, title: 'other' },
+    { userId: 15, title: null },
+    { userId: 19, title: 'title2' },
+];
+// 简单实现
+var find = function (origin) {
+    const vm = {
+        data: origin,
+        wheredata: null,
+        where: function (attr, reg) {
+            this.wheredata = this.data.filter((item) => {
+                return reg.test(item[attr])
+            })
+            return this;
+        },
+        orderBy: function (attr, type) {
+            return this.wheredata.sort((a, b) => {
+                if (type === 'desc') {
+                    // 降序
+                    return b[attr] - a[attr]
+                } else {
+                    // 升序
+                    return a[attr] - b[attr]
+                }
+            })
+        }
+    }
+    return vm;
+};
+//查找data中，符合条件的数据，并进行排序
+var result = find(data).where('title', /\d$/).orderBy('userId','desc');
+console.log(result); 
+// [{ userId: 19, title: 'title2'}, { userId:8, title: 'title1' }];
+```
+## 11、list转成树结构
+```js
+let res = [
+    {
+        id: 100,
+        title: '苹果产品',
+    },
+    {
+        id: 200,
+        title: '华为产品',
+    },
+    {
+        pid: 100,
+        title: 'Iphone 11 pro max',
+    },
+    {
+        pid: 100,
+        title: 'Iphone 12 pro max',
+    },
+    {
+        pid: 200,
+        title: '华为Mate 30',
+    },
+    {
+        pid: 200,
+        title: '华为Mate 40',
+    },
+];
+function disThree(array) {
+    let parentList = array.filter((item) => item.id);
+    return (function (list) {
+        parentList.forEach((item) => {
+            item.children = list.filter((subItem) => item.id == subItem.pid);
+        });
+        return parentList;
+    })(array);
+}
+console.log(disThree(res));
+```
+## 用js为选择器对应的所有元素添加类名
+`dom.classList.add('test')`
+```js
+// 为所有的div添加
+const doms = document.querySelectorAll('div')
+const addClass =  (nodes, value) => {
+    for (let i = 0; i < nodes.length; i++) {
+        nodes[i].classList.add(value);
+    }
+}
+addClass(doms, 'test')
+```

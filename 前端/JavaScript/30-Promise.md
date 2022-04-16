@@ -144,3 +144,24 @@ p.then((data) => {
     console.log(data);
 })
 ```
+## Promise.all
+```js
+function all(arr) {
+    return new Promise(function (resolve, reject) {
+        // 参数判断
+        if (!Array.isArray(arr)) return;
+        let [count, res] = [0, []];
+        arr.forEach((promise, index) => {
+            promise.then((data) => {
+                res[index] = data;
+                count++
+                if (count === arr.length) {
+                    resolve(res)
+                }
+            }, (err) => {
+                reject(err)
+            })
+        });
+    })
+}
+```
