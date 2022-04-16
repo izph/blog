@@ -66,8 +66,8 @@ module.exports = {
         // link: "/前端",
         icon: "reco-home",
         items: [
-          { text: '数据结构与算法', link: '/算法/数据结构与算法' },
-          { text: 'LeetCode', link: '/算法/LeetCode/回溯算法.md' },
+          { text: '数据结构与算法', link: '/算法/数据结构/10-链表LinkedList的封装.md' },
+          { text: 'LeetCode', link: '/算法/LeetCode/字符串.md' },
         ]
       },
       {

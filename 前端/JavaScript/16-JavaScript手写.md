@@ -385,3 +385,49 @@ getConst("age", 10)
 age = 20;
 console.log(age); // 10  未被修改
 ```
+## 14、获取url的参数
+地址栏`?`及后面的参数就是search-string（search字符串）
+### qs获取
+```js
+import qs from "qs";
+
+var searchString = "a=1&b=2&c=3";
+
+var query = qs.parse(searchString);
+
+console.log(query); 
+// {a: 1, b: 2, c: 3}
+
+console.log(qs.stringify(query)); 
+// a=1&b=2&c=3
+```
+### split分割法获取
+```js
+let URL = "http://www.yolo.com?name=zph&age=18&height=175&weight=130"
+function queryURLParams(URL) {
+  // 直接通过search参数获取url中"?"符后的字串
+  // const url = window.location.search; 
+  let url = URL.split("?")[1];
+  let obj = {}; // 声明参数对象
+  let arr = url.split("&"); // 以&符号分割为数组
+  for (let i = 0; i < arr.length; i++) {
+    let arrNew = arr[i].split("="); // 以"="分割为数组
+    obj[arrNew[0]] = arrNew[1];
+  }
+  return obj;
+}
+console.log(queryURLParams(URL))
+```
+### URLSearchParams方法
+存在兼容性问题
+```js
+let URL = "http://www.yolo.com?name=zph&age=18&height=175&weight=130"
+function queryURLParams(URL) {
+  let url = URL.split("?")[1];
+  const urlSearchParams = new URLSearchParams(url);
+  const params = Object.fromEntries(urlSearchParams.entries());
+  return params;
+}
+console.log(queryURLParams(URL))
+```
+参考：[获取URL参数](https://juejin.cn/post/7075305529903415304)
