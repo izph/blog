@@ -123,6 +123,15 @@ Set-Cookie: weight=80; domain=me.jimu.com
 
 Session 的过期和销毁很简单，只要把存储的session 数据销毁就可以。
 
+#### 优点：
+- 较安全：客户端每次请求时无需发送身份信息，只需发送 SessionID。
+- 较高效：服务端无需每次处理请求时都要验证身份信息，只需通过 SessionID 查询 Session对象。
+#### 缺点：
+- 扩展性差，Session 对象保存在服务端，如果是保存在多个服务器上，有一致性问题，
+如果保存在单个服务器上，无法适应用户增长。
+- 基于 Cookie 的 SessionID 不能跨域共享，同一用户的多个客户端（如浏览器客户端和 APP不能共享 SessionId。
+- 基于 Cookie 的 SessionID 易被截获生成 CSRF 攻击。
+
 ## 应用方案：token，不存在数据库里面的
 session 的维护给服务端造成很大困扰，我们必须找地方存放它，又要考虑分布式的问题，甚至要单独为了它启用一套 Redis 集群。有没有更好的办法？
 ![](images/token07.png)

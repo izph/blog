@@ -166,9 +166,10 @@ function myNew(func, ...args) {
   // 创建一个空对象，并且指定原型为func.prototype
   var obj = Object.create(func.prototype);
   // new构造函数时要执行函数，同时指定this
-  func.call(obj, ...args);
-  // 最后return这个对象
-  return obj;
+  // 添加属性到新创建的obj上, 并获取obj函数执行的结果.
+  const result = func.call(obj, ...args);
+  // 如果执行结果有返回值并且是一个对象, 返回执行的结果, 否则, 返回新创建的对象
+  return typeof result === 'object' ? result : newObj;
 }
 
 // 验证myNew

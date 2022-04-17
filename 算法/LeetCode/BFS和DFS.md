@@ -57,10 +57,10 @@ function bfs(tree) {
 		list.push(target.value)
     // 判断target是否存在左右子元素，存在就将子元素放到队列中
 		if (target.childLeft) {
-				queue.push(target.childLeft)
+			queue.push(target.childLeft)
 		}
 		if(target.childRight) {
-				queue.push( target.childRight) 
+			queue.push( target.childRight) 
 		}
 	}
 	return list
@@ -75,6 +75,17 @@ console.log(bfs(tree)) // [ 1, 2, 3, 4, 5, 6 ]
 4. 3没有子节点，将4出栈。
 5. 此时栈中只有5，5出栈，将6入栈，最后6出栈。
 ![img](images/bfsdfs/dfs03.png)
+
+```js
+// dfs
+function dfs(root) {
+  if ([满足特定条件]) {
+    // 返回结果 or 退出搜索空间
+  }
+  dfs(root.left)
+  dfs(root.right)
+}
+```
 ```javascript
 let tree = {
     value: 1,
@@ -96,19 +107,19 @@ let tree = {
 }
   
 function dfs(tree) {
-	let list = [],stack = [tree];
-  // 栈不为空，一直while循环
+	let list = [], stack = [tree];
+  	// 栈不为空，一直while循环
 	while (stack.length!=0) {
-    // 从栈顶（数组后面）取出
+		// 从栈顶（数组后面）取出
 		let target = stack.pop();
-    // 将结果放到list
+		// 将结果放到list
 		list.push(target.value);
-    // 判断target是否存在左右子元素，存在就将子元素放到栈中
+		// 判断target是否存在左右子元素，存在就将子元素放到栈中
 		if (target.childRight) {
-				stack.push(target.childRight);
+			stack.push(target.childRight);
 		}
 		if(target.childLeft) {
-				stack.push(target.childLeft); 
+			stack.push(target.childLeft); 
 		}
 	}
 	return list;

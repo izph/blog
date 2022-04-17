@@ -1,7 +1,7 @@
 ---
 title: 链表LinkedList的封装
 date: 2021-12-16 11:38:51
-permalink: /算法/leetcode/linkedlist
+permalink: /算法/数据结构/linkedlist
 categories:
   - 算法
   - 数据结构
@@ -10,6 +10,7 @@ tags:
   - 数据结构
 ---
 # 链表LinkedList的封装
+
 ```js
 // 封装链表的构造函数
 function LinkedList() {
