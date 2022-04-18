@@ -29,7 +29,7 @@ module.exports = {
             text: 'JavaScript',
             link: '/前端/JavaScript/01-初识V8底层.md',
             items: [
-              { text: 'ECMAScript', link: '/前端/JavaScript/01-初识V8底层.md' },
+              { text: 'ECMAScript', link: '/前端/JavaScript/02-高质量的JS代码.md' },
               { text: 'DOM', link: '/前端/JavaScript/DOM/01-dom笔记.md' },
               { text: 'BOM', link: '/前端/JavaScript/BOM/01-bom笔记.md' },
             ]
@@ -43,7 +43,7 @@ module.exports = {
         // link: "/前端",
         icon: "reco-home",
         items: [
-          { text: 'Node', link: '/后端/Node/观察者模式.md' },
+          { text: 'Node', link: '/后端/Node/01-观察者模式.md' },
           { text: 'Koa', link: '/后端/Koa/01-koa-basics.md' },
         ]
       },
