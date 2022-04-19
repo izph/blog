@@ -16,7 +16,7 @@ tags:
 node安装教程和更改全局模块的安装路径可参考：[Node.js的安装及环境配置](https://blog.csdn.net/weixin_42881768/article/details/105028164)
 
 ## npm i xxx -s
-是npm install xxx --save的简写，对模块进行局部安装，模块写入到package.json的 devDependencies对象。
+是npm install xxx --save的简写，对模块进行局部安装，模块写入到package.json的 dependencies对象。
 
 - 模块一般安装到项目文件夹下的node_modules文件夹下。
 - dependencies对象，这个与devDependencies不同，是需要发布到生产环境中的，就比如你要跑一个基于react的项目，所以需要react来支持，react模块就需要跟随项目到最终的生产环境。npm i react -s即可将react模块安装到项目的依赖中，并一同发布到生产环境。
