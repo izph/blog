@@ -63,6 +63,9 @@ let anyOfArr: any[] = [1, 'yolo', false]  // 只能存储数组
 
 // 元组 一定数据类型的数组，前后要一一对应，把类型写在数组中
 let numAndArr: [number, string] = [18, 'yolo']  // 第一个必须是数字，第二个是字符串，前后相对应
+// 可以为元组添加元素，但是无法访问新添加的元素！！！不建议这样使用 
+
+
 let x: [string, number]; 
 // 类型必须匹配且个数必须为2
 
@@ -221,11 +224,14 @@ class MyCellphone implements RadioWithBattery {
 }
 ```
 ### 3.枚举enum
+枚举成员是只读的类型，不能修改
 ```javascript
 // 枚举的类型有两种：
-// 一种是常量类型 用const number
-// 一种是计算类型 compute number
-const enum Word {  // 常量枚举用const修饰  
+// 一种是常量类型 用const number  编译的时候被计算
+// 一种是计算类型 compute number  运行的时候才会被计算, 如C = 1+2, D = Math.random()
+
+// 常量枚举用const修饰，会在编译的时候移除，编译后没有任何代码
+const enum Word {    
   A,
   B,
   C,
@@ -236,7 +242,18 @@ const enum Word {  // 常量枚举用const修饰
 // 也可以把 枚举看成一个数组：Word[0] => A  Word[1] => B
 // 也可以手动赋值 A=10，则B会为11，C为12
 
-// 字符串枚举
+// 枚举的实现原理: 反向映射
+var Word;
+(function(Word){
+    Word[Word["A"] = 0] = "A";
+    Word[Word["B"] = 1] = "B";
+    Word[Word["C"] = 2] = "C";
+    Word[Word["D"] = 3] = "D";
+})(Word || Word = {})
+
+
+
+// 字符串枚举，不可以反向映射  
 const enum Direction {
   Up = 'UP',
   Down = 'DOWN',
