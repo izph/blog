@@ -87,6 +87,9 @@ class HelloComponent extends Component {
   }   
 } 
 ```
+## 使用map批量渲染组件时，都加上唯一的key值
+
+## 只在最顶层使用 hook，不要在循环、条件或嵌套语句中使用hook
 
 ## 函数组件，使用useCallback包装合成事件
 
