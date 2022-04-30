@@ -1,7 +1,7 @@
 ---
 title: 易忘的JavaScript基础
-date: 2022-01-14 20:53:16
-permalink: /前端/JavaScript/易忘的JavaScript基础
+date: 2020-09-14 21:43:16
+permalink: /前端/JavaScript/JavaScriptBase
 categories:
   - 前端
   - JavaScript
@@ -15,27 +15,35 @@ tags:
 一个html文件中，多个script标签之间的（多个代码块）错误是不会相互影响的，比如上一个script标签出现了语法错误或者引用错误，不会影响下一个srcipt标签的代码执行。
 
 ### 2、script标签如果有src属性，就只会加载src路径的 JS文件，srcipt里的代码就不会加载和执行。
+```html
+<script src="https://www.example.com/script.js">
+  const a = 1; // 不会执行这段代码，只会加载src路径的 JS文件
+</script>
+```
 
-### 3、原始数据类型的重复赋值是会开辟新的内存空间的，比如 var num = 3; num=1；会重新开辟一个num的命名空间，而且保存3的变量名会变为原来的地址名。
+### 3、原始数据类型的重复赋值
+原始数据类型的重复赋值是会开辟新的内存空间的，比如 var num = 3; num=1；会重新开辟一个num的命名空间，而且保存3的变量名会变为原来的地址名。
 
-内存空间的演化：一个1008地址对应一个空间，1008—空间  -> num—3  -> 1008—3 和 num —1。也就是说，当我们重新给num赋值为1时，1008地址存储的是3，而num—1是存储在了另外的内存空间。
+#### 内存空间的演化：
+一个1008地址对应一个空间，1008—空间  -> num—3  -> 1008—3 和 num —1。也就是说，当我们重新给num赋值为1时，1008地址存储的是3，而num—1是存储在了另外的内存空间。
 
 ### 4、大部分的原始数据类型的值 + 字符串都是字符串（symbol类型不能运算）。
 
 ### 5、利用 !!a，将变量a 转化为布尔值
 
 ### 6、typeof
-typeof a即使a是未定义，typeof a 的结果是“undefined”。typeof(+)  => Uncaught SyntaxError是语法错误，加号不属于任何类型。只要typeof获取的不是特殊字符的类型，typeof的返回值一定是字符串。
+typeof a即使a是未定义，typeof a 的结果undefined。
+typeof(+)  => Uncaught SyntaxError是语法错误，加号不属于任何类型。只要typeof获取的不是特殊字符的类型，typeof的返回值一定是字符串。
 
 ### 7、switch
-括号中的结果和case之间的比较是用，全等符号=== 比较的，如果当前的case里面没有break，则不会退出switch ，而是继续执行下一个case。
+括号中的结果和case之间的比较是用，全等符号 === 比较的，如果当前的case里面没有break，则不会退出switch ，而是继续执行下一个case。
 
 ### 8、只要有声明，就会有变量提升，不看if括号中是真是假
 ```javascript
 if(false){
     var b = 3;
 }
-console.log(b); // undefined 
+console.log(b); // undefined，不会报语法错误 
 ```
 
 ### 9、()运算
@@ -50,7 +58,8 @@ let func = new Function(`console.log(1)`);
 func();  // 输出1，new Function(str)中的str是可以执行JavaScript字符串
 ```
 
-### 12、null是一个表示"无"的对象（空对象指针），转为数值时为0；undefined是一个表示"无"的原始值，转为数值时为NaN。
+### 12、null和undefined
+null是一个表示"无"的对象（空对象指针），转为数值时为0；undefined是一个表示"无"的原始值，转为数值时为NaN。
 
 ### 13、[] + {} 和 {} + [] 结果
 ```javascript
@@ -61,28 +70,28 @@ func();  // 输出1，new Function(str)中的str是可以执行JavaScript字符�
   "[object Object]"。 最终结果就是后者。
 - 在看第二个表达式，表达式第一个就是{ }，这时候编译器只会把这个{ } 当作一个空代码块。（es6之前还没有块级作用，只有函数作用域和全局作用域，可以就理解为全局作用域下面一个多余的{ } 符号而已），{ } + [ ] 就可以当作是+ [ ], 而 + [ ]是强制将[ ]转换为number ，转换的过程是 + [ ] -->  +"" --> 0最终的结果就是0。
 
-### 14、原生JS触发按钮的点击事件：document.querySelector('.btn').click();
+### 14、原生JS触发按钮的点击事件
+document.querySelector('.btn').click();
 
-### 15、什么是缓存？缓存其实就是将一些临时的数据存储在数组、对象、Map、Set等数据结构中进行存储。浏览器的缓存：memory disk  内存   cache disk 硬盘缓存
+### 15、什么是缓存？
+缓存其实就是将一些临时的数据存储在数组、对象、Map、Set等数据结构中进行存储。
+浏览器的缓存：
+- memory disk，内存
+- cache disk，硬盘缓存
 
-### 16、同步和异步的区别
-同步：执行js代码时，执行完某个方法或者函数，才继续向下执行。
-异步：会将异步代码放到任务队列，继续执行同步代码，不会阻塞
+### 16、
+
 
 ### 17、Commonjs 和 ES Module区别
-使用方式: Commonjs 引入是require，导出是exports、module.exports
-         ES: 引入是import form，导出是export、export default
-ES输出的是值的引用（其实就是拿到是对象、数组、函数在堆内存的地址），而CommonJS输出的是值的拷贝
+- Commonjs 引入是require，导出是exports、module.exports
+- ES 引入是import xxx from xxx，导出是export、export default
+ES输出的是值的引用（其实就是拿到是对象、数组、函数在堆内存的地址），而CommonJS输出的是值的拷贝。
 
 ### 18、如何判断当前脚本运行在浏览器还是 node 环境中？
 this === window ? 'browser' : 'node';
 
-### 19、JS如何判断一个对象是否为空对象:  是否还有属性
-```javascript
-function checkNullObj(obj) {
-  return Object.keys(obj).length === 0;
-}
-```
+### 19、
+
 
 ### 20、函数内this指向问题
 this的指向，是当我们调用函数的时候确定的，调用方式不同，决定了this指向不同
@@ -96,7 +105,7 @@ this的指向，是当我们调用函数的时候确定的，调用方式不同�
 | 立即执行函数 |      window      |
 
 ### 21、连续声明
-var a = b = c = 1; 等价于  var  a  = 1; b = 1; c = 1; b 和 c 直接赋值，没有 var 声明，当全局变量看。
+var a = b = c = 1; 等价于 var  a  = 1; b = 1; c = 1; b 和 c 直接赋值，没有 var 声明，当全局变量看。
 
 ### 22、预解析(预编译)
 JS引擎会在正式执行代码之前进行一次预编译，预编译简单理解就是在内存中开辟一些空间，存放一些变量和函数，并检查的语法错误。
@@ -262,12 +271,12 @@ function loadStyle(params){
   }
 ```
 ### 40、JS执行机制
-1. 同步：上一个任务完成才能进入下一个任务
-2. 异步：多个任务可以并行执行
+1. 同步：执行js代码时，执行完某个方法或者函数，才继续向下执行
+2. 异步：会将异步代码放到任务队列，继续执行同步代码，不会阻塞。
 
 执行机制：
-- 先执行 执行栈中的同步任务
-- 遇到异步任务会将异步任务挂起，等到异步任务有返回结果时，将异步函数的回调放入任务队列中，等待执行
+- 先执行 调用栈中的同步任务。
+- 遇到异步任务会将异步任务挂起，等到异步任务有返回结果时，将异步函数的回调放入任务队列中，等待执行。
 - 当所有的同步任务执行完成后，主线程会检查任务队列，有任务就会把这些任务拿到执行栈中执行（微任务和宏任务）。
 
 ### 41、如何判断一个对象是不是空对象？
@@ -280,7 +289,7 @@ Object.keys(obj).length === 0
 window.navigator.userAgent
 ```
  
-### 43、使用 JS 实现获取文件扩展名？
+### 43、JS 实现获取文件扩展名
 ```js
 function getFileExtension(filename) {
   // 取最后一个元素即为扩展名

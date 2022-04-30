@@ -1,6 +1,6 @@
 ---
 title: DOM笔记（一）
-date: 2022-01-23 20:53:16
+date: 2020-09-23 20:53:16
 permalink: /前端/JavaScript/DOM/DOM笔记01
 categories:
   - 前端
@@ -10,31 +10,31 @@ tags:
   - JavaScript
   - DOM
 ---
-### 1、load 和 DOMContentLoaded
+## 1、load 和 DOMContentLoaded
 
-- load 等页面内容全部加载完毕，包含页面dom元素、图片、css等等
-- DOMContentLoaded是DOM 加载完毕，不包含图片、 css等就可以执行，加载速度比load更快一些
+- load 等页面内容全部加载完毕，包含页面dom元素、图片、css等等。
+- DOMContentLoaded是DOM 加载完毕，不包含图片、 css等就可以执行，加载速度比load更快一些。
 
 ```javascript
 window.addEventListener('load', function() {
 	alert('load');
 })
 document.addEventListener('DOMContentLoaded', function() {
-    alert('DOMContentLoaded');
+  alert('DOMContentLoaded');
 })
 ```
 
-### 2、DOM操作
+## 2、DOM操作
 
 创建、添加、删除、移动、克隆、查找节点
 
-#### (1) 创建新节点
+### (1) 创建新节点
 
-- 文档碎片：createDocumentFragment(node);
-- 元素节点：createElement(node);
-- 文本节点：createTextNode(text);
+- 创建文档碎片：createDocumentFragment(node);
+- 创建元素节点：createElement(node);
+- 创建文本节点：createTextNode(text);
 
-#### (2) 添加、删除、替换、插入
+### (2) 添加、删除、替换、插入
 
 - 添加：parentNode.appendchild(node)
 - 删除：parentNode.removechild(node)
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
 添加节点到父节点的第四个子元素之前，parentNode.insertBefore(child, parentNode.children[3])
 children：子节点
 childrenNodes（数组）: 所有的子节点，包含元素节点、文本节点等等
-#### (3) 查找
+### (3) 查找
 
 getElementById();
 getElementsByName();
@@ -52,14 +52,14 @@ getElementsByclassName();
 querySelector();
 querySelectorAll();
 
-#### (4) 属性操作
+### (4) 属性操作
 
 getAttribute(key);
 setAttribute(key，value);
 hasAttribute(key);
 removeAttribute(key);
 
-### 3、DOM元素的classList
+## 3、DOM元素的classList
 
 dom元素的class类名会以字符串的形式存储到classList(类数组，有length属性)
 
@@ -75,7 +75,7 @@ node.classLis.toggle("classname_3");
 node.contains("classname_4");
 ```
 
-### 4、insertAdjacentHTML
+## 4、insertAdjacentHTML
 
 insertAdjacentHTML的作用：添加html标签
 
@@ -90,19 +90,20 @@ insertAdjacentHTML的作用：添加html标签
 3. 具体例子如下：
 ![image.png](images/dom001.png)
 
-### 5、动态添加样式规则
+## 5、动态添加样式规则
 ```javascript
 // 创建 style 标签
-var stylelabel = document.createElement('style');
+const stylelabel = document.createElement('style');
 // 样式内容
 stylelabel.innerHTML = `
-body {
-  color:red
-} 
-#app:hover {
-  background-color: red;
-  color: white;
-}`;
+    body {
+      color:red
+    } 
+    #app:hover {
+      background-color: red;
+      color: white;
+    }
+`;
 // 将style内容添加到head中
 document.head.appendChild(stylelabel);
 ```
