@@ -1,7 +1,7 @@
 ---
-title: 记录我所了解的JS函数
-date: 2022-01-14 20:53:16
-permalink: /前端/JavaScript/记录我所了解的JS函数
+title: JS函数
+date: 2020-09-18 23:54:16
+permalink: /前端/JavaScript/JS函数
 categories:
   - 前端
   - JavaScript
@@ -11,8 +11,9 @@ tags:
 ---
 # 记录我所了解的JS函数
 
-1. JavaScript函数内置了一部分属性，如name为函数名，length为函数参数长度，caller则表示调用函数的对象，即函数的执行环境，如果函数的执行环境为window，则返回null。
-2. 函数的声明(function a(){}) 和 函数表达式，普通函数没有写返回值，默认返回undefined
+## 1. JavaScript函数内置的部分属性
+JavaScript函数内置了一部分属性，如name为函数名，length为函数参数长度，caller则表示调用函数的对象，即函数的执行环境，如果函数的执行环境为window，则返回null。
+## 2. 函数的声明(function a(){}) 和 函数表达式，普通函数没有写返回值，默认返回undefined
 
 ```javascript
 // 这是一个匿名函数，内部可以调用test_inner()
@@ -30,7 +31,7 @@ var test = function(){} // test是一个变量名
 var test = () => {}
 ```
 
-3. 函数表达式变量提升 和 普通变量声明一样(var)
+### 3. 函数表达式变量提升 和 普通变量声明一样(var)
 
 ```javascript
 helper(); // 报错
@@ -45,7 +46,7 @@ var helper = function () {
 //}
 ```
 
-4. 同名的两个函数声明，后面覆盖前面，同名的函数和变量声明，函数声明优先
+### 4. 同名的两个函数声明，后面覆盖前面，同名的函数和变量声明，函数声明优先
 
 ```javascript
 console.log(a) // 最后的声明为函数声明， 因此a此时为函数体，打印函数a

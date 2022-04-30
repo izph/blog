@@ -1,7 +1,7 @@
 ---
 title: JavaScript字符串（笔记）
-date: 2022-01-23 20:53:16
-permalink: /前端/JavaScript/js字符串
+date: 2020-09-15 12:33:16
+permalink: /前端/JavaScript/jsstring
 categories:
   - 前端
   - JavaScript
@@ -9,6 +9,7 @@ tags:
   - 前端
   - JavaScript
 ---
+# 字符串
 ## 1、split
 split使用正则表达式实现拆分多个分隔符
 ```javascript

@@ -1,6 +1,6 @@
 ---
 title: Object的数据属性
-date: 2022-01-18 20:53:16
+date: 2020-09-25 14:23:16
 permalink: /前端/JavaScript/Object的数据属性
 categories:
   - 前端
