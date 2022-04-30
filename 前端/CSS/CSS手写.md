@@ -1,28 +1,29 @@
 ---
 title: CSS手写小技巧
-date: 2020-12-30 11:38:51
+date: 2020-12-30 14:30:20
 permalink: /前端/CSS/CSS手写
 categories:
   - 前端
   - CSS
 tags:
-  -
+  - CSS
 ---
 ## 1. CSS单行超出省略
 
-   ```css
+```css
    {
    	width: 100px;
    	overflow: hidden;/* 超出隐藏 */
    	text-overflow: ellipsis;/* 文本溢出时显示省略标记 */
    	white-space: no-wrap;/* 文本不换行 */
    }
-   ```
+```
+
 ## 2. 多行超出省略
 
-   设置文本隐藏的元素不能设置高度，或者有上下padding，否则会导致超出部分不隐藏
+设置文本隐藏的元素不能设置高度，或者有上下padding，否则会导致超出部分不隐藏
 
-   ```css
+```css
    {
        width：300px; /*可自定义，也可不设*/
        overflow: hidden; /*超出隐藏*/
@@ -32,8 +33,10 @@ tags:
        -webkit-line-clamp: 3; /*文本占的行数, 如果要设置3行加...则设置为3*/
        -webkit-box-orient: vertical; /*子代元素垂直显示*/
    }
-   ```
+```
+
 ## 3. 实现一个宽高自适应的正方形
+
 - 第一种方式是利用vw、vh来实现
   ```css
   .box { 
@@ -52,8 +55,11 @@ tags:
   }
   ```
 - 第三种方式是利用rem
+
 ### 4. 实现一个三角形
+
 实现原理是利用了元素边框连接处的等分原理
+
 ```css
   .box { 
     /* 宽高设置为0 */ 
@@ -64,7 +70,9 @@ tags:
     border-color: red transparent transparent transparent; 
   }
 ```
+
 ## 5. 实现一个自适应矩形，水平垂直居中，且宽高比为 2:1
+
 ```css
 .box { 
     /* 水平垂直居中 */
@@ -82,8 +90,11 @@ tags:
     background: red; 
   }
 ```
+
 ## 5. 实现一个两栏布局
+
 左边固定，右边自适应
+
 ```html
 <body>
   <div class="content">
@@ -92,6 +103,7 @@ tags:
   </div>
 </body>
 ```
+
 ```css
 /* 原来元素的高度如果设置为百分比的话，
     要么由内容撑开，要么由父元素得到，如果父元素没有高度，那么这个百分比是没有用的。 
@@ -117,6 +129,7 @@ body {
 
 
 ```
+
 ![image.png](images/csshandwritten005.png)
 
 ```js
@@ -201,7 +214,9 @@ body {
       background: gold;
     }
 ```
+
 ## 6. css三栏布局
+
 ```html
 <head>
   <meta charset="UTF-8">
@@ -247,7 +262,9 @@ body {
   </div>
 </body>
 ```
+
 ## 7. css等高布局
+
 ```html
 <div class="content">
     <div class="left">left</div>
@@ -256,6 +273,7 @@ body {
 </div>
 
 ```
+
 ```css
 /* flex布局 */
 html,
@@ -283,7 +301,9 @@ body {
   width: 200px;
 }
 ```
+
 ## 8. css上下固定中间自适应
+
 ```html
   <style>
     body {
