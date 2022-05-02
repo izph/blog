@@ -10,47 +10,47 @@ tags:
   - TypeScript
 ---
 
-## myPartial
-myPartial<T> 将类型的属性变成可选，只支持处理第一层的属性
+## Partial
+Partial<T> 将类型的属性变成可选，只支持处理第一层的属性
 ```tsx
-type myPartial<T> = {
+type Partial<T> = {
 		[key in keyof T]?: T[key]
 }
 ```
-## myDeepPartial
-myDeepPartial<T> 将类型的属性变成可选，只支持**多**层的属性
+## DeepPartial
+DeepPartial<T> 将类型的属性变成可选，只支持**多**层的属性
 ```tsx
-type myDeepPartial<T> = {
+type DeepPartial<T> = {
 		[key in keyof T]?: T[key] extends object
-  ? myDeepPartial<T[key]> 
+  ? DeepPartial<T[key]> 
   : T[key]
 }
 ```
-## myRequired
-myRequired将类型的属性变成必选
+## Required
+Required将类型的属性变成必选
 ```tsx
-type myRequired<T> = {
+type Required<T> = {
 		[key in keyof T]-?: T[key]
 }
 ```
-## myReadonly
-myReadonly<T> 的作用是将某个类型所有属性变为只读属性，也就意味着这些属性不能被重新赋值。
+## Readonly
+Readonly<T> 的作用是将某个类型所有属性变为只读属性，也就意味着这些属性不能被重新赋值。
 ```tsx
-type myReadonly<T> = {
+type Readonly<T> = {
 	readonly	[key in keyof T]: T[key]
 }
 ```
-## myPick（挑选）
-myPick 从某个类型中挑出一些属性出来
+## Pick（挑选）
+Pick 从某个类型中挑出一些属性出来
 ```tsx
-type myPick<T, K extends keyof T> = {
+type Pick<T, K extends keyof T> = {
 	[key in K]: T[key]
 }
 ```
-## myRecord（转化）
-myRecord<K extends keyof any, T> 的作用是将 K 中所有的属性的值转化为 T 类型。
+## Record（转化）
+Record<K extends keyof any, T> 的作用是将 K 中所有的属性的值转化为 T 类型。
 ```tsx
-type myRecord<K extends keyof any, T> = {
+type Record<K extends keyof any, T> = {
 		[key in K]: T
 }
 
@@ -60,17 +60,17 @@ interface PageInfo {
 
 type Page = "home" | "about" | "contact";
 
-const x: myRecord<Page, PageInfo> = {
+const x: Record<Page, PageInfo> = {
   about: { title: "about" },
   contact: { title: "contact" },
   home: { title: "home" },
 };
 ```
-## myExclude（移除）
-myExclude<T, U> 的作用是将某个类型中属于另一个的类型移除掉。
+## Exclude（移除）
+Exclude<T, U> 的作用是将某个类型中属于另一个的类型移除掉。
 如果 T 能赋值给 U 类型的话，那么就会返回 never 类型，否则返回 T 类型。最终实现的效果就是将 T 中某些属于 U 的类型移除掉。
 ```tsx
-type myExclude<T, U> = T extends U ? never : T;
+type Exclude<T, U> = T extends U ? never : T;
 
 // 例子
 type T0 = Exclude<"a" | "b" | "c", "a">; // "b" | "c"
@@ -78,19 +78,19 @@ type T1 = Exclude<"a" | "b" | "c", "a" | "b">; // "c"
 type T2 = Exclude<string | number | (() => void), Function>; // string | number
 
 ```
-## myExtract（公共）
+## Extract（公共）
 Extract<T, U> 的作用是从 T 中提取出 U。提取公共部分
 ```tsx
-type myExtract<T, U> = T extends U ? T : never;
+type Extract<T, U> = T extends U ? T : never;
 
 type T0 = Extract<"a" | "b" | "c", "a" | "f">; // "a"
 type T1 = Extract<string | number | (() => void), Function>; // () =>void
 
 ```
-## myOmit（差集）
+## Omit（差集）
 Omit<T, K extends keyof any> 的作用是使用 T 类型中除了 K 类型的所有属性，来构造一个新的类型。
 ```tsx
-type myOmit<T, K extends keyof any> = 
+type Omit<T, K extends keyof any> = 
   Pick<T, Exclude<keyof T, K>>;
 ```
 ```tsx
@@ -127,4 +127,12 @@ type B = Parameters<typeof Array.isArray>; // [any]
 type C = Parameters<typeof parseInt>; // [string, (number | undefined)?]
 type D = Parameters<typeof Math.max>; // number[]
 
+```
+
+## ReturnType
+获取函数的返回值的类型
+```ts
+type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;
+
+type E = ReturnType<() => string> // E的类型是string
 ```

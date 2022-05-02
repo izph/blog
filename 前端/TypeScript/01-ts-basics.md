@@ -142,11 +142,19 @@ type combination = number|string|boolean;
 class Animal {
     name: string;
     // 默认是public name: string;
-    // private 只能在该类访问，它的子类也不能访问
-    // protected和private类似，但是它允许子类访问属性
-    // readonly 只能读的属性，不能重新赋值
-    // static静态属性 只能该类Animal直接调用 子类不能调用
+    // protected age = 18;
+
+    // private 只能在该类通过this.name访问，它的实例和子类都不能访问，在外部Animal.name不能访问
+
+    // protected和private类似，但是它允许子类访问属性，实例化不能访问，在外部Animal.age不能访问
+    
+    // readonly 只读属性，不能重新赋值，初始化时一般会定义它的值
+
+    // static静态属性 只能该类Animal直接调用，实例和子类不能调用，
+    // 不用static声明的属性，Animal.name 也是无法直接访问的
+
     // 类中的定义和实例中的状态没有太大关系的时候，可以使用静态修饰符
+
     // 静态属性
     static categoies: string[] = ['mammal', 'bird']
     // 静态方法
@@ -174,6 +182,7 @@ const xiaobao = new Dog('xiaobao')
 xiaobao.bark()
 
 
+// ES6的类 定义方法是 放到它的prototype上的，它的实例对象里没有方法，通过prototype查找的
 class Cat extends Animal {
     constructor(name) {
         super(name)
@@ -193,19 +202,26 @@ const maomao = new Cat('maomao')
 
 interface Radio {
     switchRadio(): void; // switchRadio(参数可填):void  表示没有返回值
+    name: string;
 }
 
 interface Battery {
     checkBatteryStatus();
 }
+// 接口之间可以像类一样，可以实现继承，一个接口可以继承多个接口
 interface RadioWithBattery extends Radio {
     // RadioWithBattery 继承了 Radio，就有了Radio上的属性和方法
     checkBatteryStatus();
+
 }
+
+// 类实现接口，必须要实现 接口里面的所有属性和方法，接口只能约束 类的公有成员
+// 对象也是如此，定义一个对象是 let obj: Radio = {...} 需要实现Radio里所有的方法和属性
 class Car implements Radio {
     switchRadio() {
 
     }
+    name: string;
 }
 
 class Cellphone implements Radio {
@@ -222,6 +238,34 @@ class MyCellphone implements RadioWithBattery {
 
     }
 }
+
+//  接口还可以继承类，相当于接口把类的成员都抽象了出来，只有类的成员结构，没有具体的实现
+class A {
+    profession: string;
+}
+// 接口B继承 类A时， 不仅抽离了 A的公共成员，还抽离了私有成员（private）和受保护的成员（protected）
+interface B extends A {
+
+}
+class C implements B {
+    profession = 'fe'
+}
+// A的子类 childrenA 也可以实现 接口B， 子类 childrenA中不必实现profession属性，
+// 因为他是A的子类，自然就继承了 profession 属性
+class childrenA extends A  implements B{}
+
+
+// 抽象类  不能实例化，只能被继承，用来抽取公共的方法，实现代码复用
+// 每个子类都可以重复定义sleep，子类调用sleep时会各自调用它自身的sleep，这就是多态
+abstract class Animal{
+    eat(){
+        console.log("eat")
+    }
+    abstract sleep(): void
+}
+
+
+
 ```
 ### 3.枚举enum
 枚举成员是只读的类型，不能修改
@@ -306,7 +350,8 @@ const obj = echoWithLength({ length: 10, width: 10 }) // obj 含有length属性
 const arr2 = echoWithLength([1, 2, 3]) // arr2 含有length属性
 // const num = echoWithLength(12) 报错！！！
 
-// 泛型在类中使用
+// 泛型在类中使用，静态成员static 不能使用泛型
+// 生成实例的时候，可以不传入泛型约束，
 class Queue<T> {
     private data = [];
     push(item: T) {
@@ -328,7 +373,7 @@ queue2.push('str')
 console.log(queue2.pop().length)
 
 // 泛型在接口中使用
-interface KeyPair<T, U> {
+interface KeyPair<T = number, U = string> {
     key: T;
     value: U;
 }
@@ -352,7 +397,61 @@ function connect(a: string, b: string): string {
 }
 const a: IPlus<number> = plus
 const b: IPlus<string> = connect
+
+
+// 泛型约束
+interface Length {
+    length: number;
+}
+// 当泛型T中没有length属性时，我们定义一个接口Length来声明length属性
+// 并用泛型 T 继承 Length，通过了类型检查，T受到了约束，不在是任意类型都可以传了，
+// 输入的参数不管是什么类型，都必须含有 length属性
+function test<T extends Length>(value: T): T{
+    console.log(value, value.length);
+    return value;
+}
+// 数组和字符串都有length属性
+test([1,2,3,4])
+test('1234')
 ```
+#### 使用泛型的好处
+1. 函数和类可以轻松地支持多种类型，增强程序的扩展性
+2. 不必写多条函数的重载，联合类型说明，增加代码的可读性
+3. 灵活控制类型之间的约束
+
+### 类型检查机制
+
+#### 类型推断
+
+#### 类型兼容
+当一个类型y可以被赋值给另一个类型x时，则可以说类型x兼容类型y，也就是说y是x的子类型。
+也就是说源类型必须具备目标类型的必要属性，才能赋值给目标类型。
+成员少的，可以兼容成员多的
+```x兼容y: x(目标类型) = y(源类型) ```
+
+#### 函数的兼容性
+```ts
+let Helper = (a:number, b:number) => void;
+function test(helper: Helper){}
+// 传入的函数helper的参数个数  要小于等于 Helper的个数，参数多的 可以 兼容少的
+// (注：这个和接口兼容相反)
+```
+- 普通函数可以兼容 含有可选参数和剩余参数的函数
+- 可选参数 不能兼容 普通函数和剩余参数的函数
+- 剩余参数 可以兼容 普通函数、可选参数的函数
+- 函数的返回值类型是，少的兼容多的，多的无法兼容少的
+- 枚举的类型 之间是不能相互兼容的
+- 类的兼容：如果两个类有相同的成员变量，那么他们的实例就可以相互兼容。静态成员和构造函数是不参考比较的；
+- 如果类中含有私有成员（private），那么这两个类就不可以兼容。这个时候只有父类和子类相互兼容（父类的实例和子类的实例可以相互兼容）。
+- 泛型的兼容性：使用的时候是不兼容的
+- 总结：结构之间兼容是成员少的兼容成员多的；函数之间兼容是参数多的兼容参数少的
+
+#### 类型保护方法
+
+- instanceof
+- in
+- typeof
+
 ### 5.类型别名和类型断言
 ```javascript
 // type aliases 类型别名
@@ -406,3 +505,25 @@ function getLength(input: string | number): number {
 // 安装第三方库 @types/***  @types/jquery  
 // 就可以直接在ts文件中使用
 ```
+### 7. 索引类型
+
+keyof Obj 获取Obj的所有的键
+```ts
+let obj = {
+    a: 1,
+    b: 2,
+    c: 3
+}
+function getValues<T, K extends keyof T>(obj: T, keys: K[]): T[K][] {
+    return keys.map(key => obj[key])
+}
+console.log(getValues(obj, ['a', 'b']))
+console.log(getValues(obj, ['d', 'e'])) // 报错，传入的字符串不属于类型 'a' | 'b' | 'c'
+```
+### 8. namespace命名空间
+在一个完全模块化的项目里很少使用命名空间namespace
+
+### 9
+有些第三方库不是用ts写的，而是用js写的，在ts项目中直接用ES6模块引入会报错，提示找不到该模块的声明文件。
+我们在用非ts编写的库时，必须为该类库编写声明文件，对外暴露它的API。大多数的声明文件社区已经写好，使用的方法就是安装类型声明包。
+包的名字: @types/包名。
