@@ -44,17 +44,7 @@ font-size: 1em;
 
 ## 创建自己组件库的色彩体系
 
-### 系统色板
-
-- 基础色板 + 中性色板
-  [中国色](http://zhongguose.com/)
-
-### 产品色板
-
-- 品牌色板（primary） + 功能色板（成功success、失败danger、警告warning）
-  功能色彩尽量保持一致
-
-### Yolo组件库的色彩体系
+### Yolo 组件库的色彩体系
 
 #0069fe（primary）、#606a73（）、#15bd02（success）、#ffd300（warning）、#eb1e3d（danger）、#009bb0(info、辅助颜色)
 
@@ -87,6 +77,7 @@ font-size: 1em;
 ### 不同的Button Size（padding的大小、lineHeight高度）
 
 利用less的混合方法，传入不同的参数，实现样式的复用和切换。
+
 ![ButtonSize](images/yolo-button-002.png)
 
 ### Button的禁用状态
@@ -251,6 +242,7 @@ SVG（可以用任何的css控制）
 ## Progress
 
 根据传入的百分比，来显示一个进度条。最外面有一个灰色progress-outer，它的高度可以配置，prosition为相对定位。progress-outer之上会有一个进度条，颜色可以配置，prosition为absolute，垂直居中，悬浮到progress-outer上，top和left都为0，则表示在最左边（0%），同时百分比也支持显示和隐藏
+
 ![image.png](images/progress001.png)
 
 ## 代码打包输出和发布

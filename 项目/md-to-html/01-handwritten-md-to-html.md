@@ -1,12 +1,11 @@
 ---
 title: 实现mini版的md转html插件
 date: 2022-03-02 14:12:16
-permalink: /工程化/webpack/mdtohtml
+permalink: /项目/md-to-html/md-to-html的实现
 categories:
-  - 工程化
+  - 项目
   - webpack
 tags:
-  - 工程化
   - webpack
 ---
 # 实现一个小插件（plugin）
@@ -119,7 +118,7 @@ class MdToHtmlPlugin {
         source() {
           return fileHtml;
         },
-        // 资源的长度      
+        // 资源的长度    
         size() {
           return fileHtml.length;
         }

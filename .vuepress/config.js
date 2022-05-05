@@ -67,8 +67,8 @@ module.exports = {
         // link: "/前端",
         icon: "reco-home",
         items: [
-          { text: '数据结构', link: '/算法/数据结构/10-链表LinkedList的封装.md' },
-          { text: 'LeetCode', link: '/算法/LeetCode/字符串.md' },
+          { text: 'DataStructure', link: '/算法/数据结构/01-复杂度.md' },
+          { text: 'LeetCode', link: '/算法/LeetCode/02-字符串.md' },
         ]
       },
       {
@@ -77,7 +77,7 @@ module.exports = {
         icon: "reco-home",
         items: [
           { text: 'yolo-ui', link: '/项目/yolo-ui/01-yolo-preface.md' },
-          { text: 'yoyo', link: '/项目/yoyo/01-yoyo-bff.md' },
+          { text: 'md-to-html', link: '/项目/md-to-html/01-handwritten-md-to-html.md' },
         ]
       },
       {
@@ -127,18 +127,17 @@ module.exports = {
       }
     },
     friendLink: [
-      {
-        title: "午后南杂",
-        desc: "Enjoy when you can, and endure when you must.",
-        email: "1156743527@qq.com",
-        link: "https://www.recoluan.com"
-      },
-      {
-        title: "vuepress-theme-reco",
-        desc: "A simple and beautiful vuepress Blog & Doc theme.",
-        avatar: "/z.jpg",
-        link: "https://vuepress-theme-reco.recoluan.com"
-      }
+      // {
+      //   title: "午后南杂",
+      //   desc: "Enjoy when you can, and endure when you must.",
+      //   email: "1156743527@qq.com",
+      //   link: "https://www.recoluan.com"
+      // },
+      // {
+      //   title: "vuepress-theme-reco",
+      //   desc: "A simple and beautiful vuepress Blog & Doc theme.",
+      //   link: "https://vuepress-theme-reco.recoluan.com"
+      // }
     ],
     // "logo": "/logo.png",
     logo: "/z.jpg",
