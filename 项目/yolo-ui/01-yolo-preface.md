@@ -46,7 +46,7 @@ font-size: 1em;
 
 ### Yolo 组件库的色彩体系
 
-#0069fe（primary）、#606a73（）、#15bd02（success）、#ffd300（warning）、#eb1e3d（danger）、#009bb0(info、辅助颜色)
+primary（#0d6efd）、default（#ffffff）、success（#15bd02）、warning（#ffd300）、danger（#eb1e3d）、info(#009bb0)
 
 ### 组件库样式变量分类
 
@@ -93,10 +93,9 @@ font-size: 1em;
   disabled
   href=""
   className=""
-  autoFocus=""
-  ...
+  ...{restProps}
 >
-primary
+  primary
 </Button>
 ```
 
@@ -246,5 +245,87 @@ SVG（可以用任何的css控制）
 ![image.png](images/progress001.png)
 
 ## 代码打包输出和发布
+
+### 1. 组件库的入口文件
+
+- 组件库的入口文件为```src/index.ts```
+
+- 组件库的全局样式文件为```src/style/index.less```或者```src/global.less```，两者都可以用来全局样式的提取。
+
+### 2. 组件的打包
+
+#### 在根目录新建tsconfig.build.json文件
+```json
+{
+  "compilerOptions": {
+    "outDir": "dist", // 编译之后的存放路径
+    "module": "ESNext",
+    "target": "ES5", // 指定编译之后的目标版本
+    "declaration": true, // 为每一个js文件生成 .d.ts类型声明文件
+    "jsx": "react",
+    "moduleResolution": "node", // classic 和 Node
+    "allowSyntheticDefaultImports": true //  true 支持 defalut 引入的方式
+  },
+  "include": ["src/"],
+  "exclude": ["src/**/style", "src/**/*.md"]
+}
+```
+
+#### 在package.json文件中添加命令
+
+- 分别安装lessc和rimraf依赖，lessc将less转化为css，rimraf用来删除dist目录。
+
+```json
+{ 
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build:lib": "npm run clean && npm run build-ts && npm run build-css",
+    "build-ts": "tsc -p tsconfig.build.json",
+    "build-css": "lessc ./src/style/index.less ./dist/index.css",
+  }
+}
+```
+
+- 在执行build-ts发生了很多个报错如下，经过在[stackoverflow](https://stackoverflow.com/)上查找相关资料得知，是```@types/react-router-dom```和```@types/react-router```的版本太低了导致了，把这两个依赖升级到最新版本后，就可以正常打包了。
+```js
+xxx/node_modules/@types/react-router-dom/index.d.ts(59,34): error TS2694: Namespace '"/node_modules/history/index"' has no exported member 'LocationState'.
+```
+#### 本地测试(npm link)
+
+- 在yolo-ui的根目录下执行npm link命令，npm link的作用是可以让未发布的npm包，做本地测试，映射脚本吧。
+
+- 在yolo-ui-test（create-react-app生成的测试项目）工程下执行npm link yolo-ui。
+
+- 在yolo-ui-test的package.json中加入yolo-ui依赖
+
+```json
+{ 
+  "dependencies": {
+    "yolo-ui": "^0.1.0"
+  },
+}
+```
+- 分别在```App.tsx```和```index.tsx```引入组件和组件的样式
+```tsx
+// App.tsx
+import { Button } from 'yolo-ui';
+
+function App() {
+  return (
+    <div className="App">
+      <Button type="primary">Hello Yolo</Button>
+    </div>
+  );
+}
+
+export default App;
+```
+```tsx
+// index.tsx
+import "yolo-ui/dist/index.css";
+```
+- 测试结果如下，本地测试没问题。
+
+![images](images/yolo-build-001.png)
 
 ## CI/CD，文档的生成
