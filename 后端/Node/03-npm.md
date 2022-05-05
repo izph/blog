@@ -3,7 +3,7 @@ title: npm安装命令的区别
 date: 2021-03-15 22:13:16
 permalink: /前端/JavaScript/npminstall
 categories:
-  - node
+  - 后端
 tags:
   - node
 ---

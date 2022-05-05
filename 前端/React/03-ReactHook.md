@@ -27,6 +27,139 @@ tags:
 - 从 URL 中读到的值。比如有时需要读取 URL 中的参数，把它作为组件的一部分状态。那么我们可以在每次需要用的时候从 URL 中读取，而不是读出来直接放到 state 里。
 - 从 cookie、localStorage 中读取的值。通常来说，也是每次要用的时候直接去读取，而不是读出来后放到 state 里。
 
+### useState 的实现原理
+
+借助闭包，封装一个 `setState` 如下：
+
+```javascript
+function render() {
+  ReactDOM.render(<App />, document.getElementById("root"));
+}
+
+let state: any;
+
+function useState<T>(initialState: T): [T, (newState: T) => void] {
+  state = state || initialState;
+
+  function setState(newState: T) {
+    state = newState;
+    render();
+  }
+
+  return [state, setState];
+}
+
+render(); // 首次渲染
+```
+
+这是一个简易能用的`useState`雏形了。但如果在函数内声明多个 state，在当前代码中，只有第一个 state 是生效的(请看`state = state || initialState;`)。
+
+### 让useState支持多个state
+
+React Hook本质上还是通过 Array 来实现的。
+
+前面 useState 的简单实现里，初始的状态是保存在一个全局变量中的。以此类推，多个状态，应该是保存在一个专门的全局容器中。这个容器，就是一个Array。具体过程如下：
+
+- 第一次渲染时候，根据 useState 顺序，逐个声明 state 并且将其放入全局 Array 中。每次声明 state，都要将 cursor 增加 1。
+- 更新 state，触发再次渲染的时候。**cursor 被重置为 0**。按照 useState 的声明顺序，依次拿出最新的 state 的值，视图更新。
+
+实现的代码如下：
+
+```javascript
+import React from "react";
+import ReactDOM from "react-dom";
+
+const states: any[] = [];
+let cursor: number = 0;
+
+function useState<T>(initialState: T): [T, (newState: T) => void] {
+  const currenCursor = cursor;
+  states[currenCursor] = states[currenCursor] || initialState; // 检查是否渲染过
+
+  function setState(newState: T) {
+    states[currenCursor] = newState;
+    render();
+  }
+
+  ++cursor; // update: cursor
+  return [states[currenCursor], setState];
+}
+
+function App() {
+  const [num, setNum] = useState < number > 0;
+  const [num2, setNum2] = useState < number > 1;
+
+  return (
+    <div>
+      <div>num: {num}</div>
+      <div>
+        <button onClick={() => setNum(num + 1)}>加 1</button>
+        <button onClick={() => setNum(num - 1)}>减 1</button>
+      </div>
+      <hr />
+      <div>num2: {num2}</div>
+      <div>
+        <button onClick={() => setNum2(num2 * 2)}>扩大一倍</button>
+        <button onClick={() => setNum2(num2 / 2)}>缩小一倍</button>
+      </div>
+    </div>
+  );
+}
+
+function render() {
+  ReactDOM.render(<App />, document.getElementById("root"));
+  cursor = 0; // 重置cursor
+}
+
+render(); // 首次渲染
+```
+
+此时，如果想在循环、判断等不在函数组件顶部的地方使用 Hook，如下所示：
+
+```javascript
+let tag = true;
+
+function App() {
+  const [num, setNum] = useState < number > 0;
+
+  // 只有初次渲染，才执行
+  if (tag) {
+    const [unusedNum] = useState < number > 1;
+    tag = false;
+  }
+
+  const [num2, setNum2] = useState < number > 2;
+
+  return (
+    <div>
+      <div>num: {num}</div>
+      <div>
+        <button onClick={() => setNum(num + 1)}>加 1</button>
+        <button onClick={() => setNum(num - 1)}>减 1</button>
+      </div>
+      <hr />
+      <div>num2: {num2}</div>
+      <div>
+        <button onClick={() => setNum2(num2 * 2)}>扩大一倍</button>
+        <button onClick={() => setNum2(num2 / 2)}>缩小一倍</button>
+      </div>
+    </div>
+  );
+}
+```
+
+由于在条件判断的逻辑中，重置了`tag=false`，因此此后的渲染不会再进入条件判断语句。看起来好像没有问题？但是，由于 useState 是基于 Array+Cursor 来实现的，第一次渲染时候，state 和 cursor 的对应关系如下表：
+
+| 变量名    | cursor |
+| --------- | ------ |
+| num       | 0      |
+| unusedNum | 1      |
+| num2      | 2      |
+
+当点击事件触发再次渲染，并不会进入条件判断中的 useState。所以，cursor=2 的时候对应的变量是 num2。而其实 num2 对应的 cursor 应该是 3。就会导致`setNum2`并不起作用。
+
+所以不建议在循环、判断内部使用 Hook。在使用 Hook 的时候，请在函数组件顶部使用！
+
 ## useEffect
 
 useEffect执行副作用，每次组件 render 完后判断依赖并执行
@@ -84,6 +217,47 @@ useEffect(async () => {
 
 `useEffect` 约定 Effect 函数要么没有返回值，要么返回一个函数。而这里 async 函数会隐式地返回一个 Promise，直接违反了这一约定，会造成不可预测的结果。
 
+### useEffect 的实现原理
+
+在 useEffect 的第二个参数中，我们可以指定一个数组，如果下次渲染时，数组中的元素没变，那么就不会触发这个副作用（可以类比 Class 类的关于 nextprops 和 prevProps 的生命周期）。好处显然易见，**相比于直接裸写在函数组件顶层，useEffect 能根据需要，避免多余的 render**。
+
+下面是一个不包括销毁副作用功能的 useEffect 的 TypeScript 实现：
+
+```javascript
+// 还是利用 Array + Cursor的思路
+const allDeps: any[][] = [];
+let effectCursor: number = 0;
+
+function useEffect(callback: () => void, deps: any[]) {
+  if (!allDeps[effectCursor]) {
+    // 初次渲染：赋值 + 调用回调函数
+    allDeps[effectCursor] = deps;
+    ++effectCursor;
+    callback();
+    return;
+  }
+
+  const currenEffectCursor = effectCursor;
+  const rawDeps = allDeps[currenEffectCursor];
+  // 检测依赖项是否发生变化，发生变化需要重新render
+  const isChanged = rawDeps.some(
+    (dep: any, index: number) => dep !== deps[index]
+  );
+  if (isChanged) {
+    callback();
+  }
+  ++effectCursor;
+}
+
+function render() {
+  ReactDOM.render(<App />, document.getElementById("root"));
+  effectCursor = 0; // 注意将 effectCursor 重置为0
+}
+```
+
+参考：
+- [useEffect 完整指南](https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/)
+- [React Hooks 原理](https://github.com/brickspert/blog/issues/26)
 ## useCallback
 
 每次组件状态发生变化的时候，函数组件实际上都会重新执行一遍。在每次执行的时候，实际上都会创建一个新的事件处理函数 handleIncrement。
