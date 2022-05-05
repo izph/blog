@@ -4,8 +4,10 @@
   "author": "iZph",
   "scripts": {
     "dev": "vuepress dev . --open --host \"localhost\"",
+    "start": "vuepress dev . --open --host \"localhost\"",
     "build": "vuepress build .",
-    "bash": "bash deploy.sh"
+    "clean": "rimraf ./public",
+    "bash": "npm run clean && bash deploy.sh"
   },
   "devDependencies": {
     "vue-template-compiler": "^2.6.14",
