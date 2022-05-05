@@ -1,12 +1,10 @@
 ---
 title: 前后端联调
-date: 2021-10-25 17:12:16
+date: 2021-01-10 15:11:19
 permalink: /工程化/浏览器/httprequest
 categories:
-  - 工程化
   - 浏览器
 tags:
-  - 工程化
   - 浏览器
 ---
 # 前后端联调方法

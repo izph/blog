@@ -1,6 +1,6 @@
 ---
 title: tsconfig配置
-date: 2021-12-26 17:12:16
+date: 2022-01-02 10:15:06
 permalink: /前端/TypeScript/tsconfig
 categories:
   - 前端
@@ -9,22 +9,63 @@ tags:
   - 前端
   - TypeScript
 ---
-
 ## tsconfig.json介绍
+
 tsconfig.json 是 TypeScript 项目的配置文件。如果一个目录下存在一个 tsconfig.json 文件，那么往往意味着这个目录就是 TypeScript 项目的根目录。
 tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置项，我们可以让 TypeScript 编译出 ES6、ES5、node 的代码。
+
 ## tsconfig.json 重要字段
 
-- files - 设置要编译的文件的名称；
-- include - 设置需要进行编译的文件，支持路径模式匹配；
-- exclude - 设置无需进行编译的文件，支持路径模式匹配；
+- files - 设置需要编译的单个文件的列表；
+
+```json
+// 只编译 src下的 index.ts文件
+{
+  "files": ["src/index.ts"]
+}
+```
+
+- include - 设置需要进行编译的文件或者目录，支持路径模式匹配；
+  include和files会合并
+
+```json
+// 编译src所有的ts文件
+// 支持通配符，只编译src下的一级目录的ts文件，如"src/*"，二级文件 "src/*/*"
+{
+  "include": ["src"]
+}
+```
+
+- exclude - 设置无需进行编译的文件，支持路径模式匹配（排除）；
+  默认排除node_modules下的所有文件、排除所有声明文件(xxx.d.ts)
+
+```json
+// 排除src/lib的文件编译
+{
+  "include": ["src/lib"]
+}
+```
+
+- extends，导入其他配置
+
+```json
+// 导入当前目录下的tsconfig.base.json里的配置，但是导入的配置容易被覆盖（在tsconfig.json可以覆盖导入的配置）
+{
+  "extends": "./tsconfig.base.json"
+}
+```
+
+- compileOnSave: true, 保存文件时自动编译文件（VScode不支持这个配置）
 - compilerOptions - 设置与编译流程相关的选项。
 - 如果ts.config文件为空，则会按照默认是编译当前目录下的所有ts文件
+
 ### compilerOptions 选项
+
 ```tsx
 {
   "compilerOptions": {
-  
+    "tsBuildInfoFile": './buildFile',      // 指定编译后的文件放在哪里
+
     /* 基本选项 */
     "target": "es5",                       // 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'
     "module": "commonjs",                  // 指定使用模块: 'commonjs', 'amd', 'system', 'umd' or 'es2015'

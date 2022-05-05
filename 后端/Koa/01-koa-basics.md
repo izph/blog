@@ -1,11 +1,9 @@
 ---
 title: Koa基础
-date: 2022-01-16 20:53:16
+date: 2021-08-16 21:55:16
 permalink: /后端/Koa/koabasics
 categories:
   - 后端
-  - Node
-  - Koa
 tags:
   - 后端
   - Node

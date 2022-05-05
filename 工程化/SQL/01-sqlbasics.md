@@ -1,10 +1,9 @@
 ---
 title: SQL笔记（一）
-date: 2021-12-26 17:12:16
+date: 2021-04-26 21:03:45
 permalink: /工程化/SQL/sqlnotes01
 categories:
   - 后端
-  - SQL
 tags:
   - 后端
   - SQL

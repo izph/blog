@@ -1,6 +1,6 @@
 ---
 title: Promise
-date: 2022-01-27 20:53:16
+date: 2020-12-28 20:51:20
 permalink: /前端/JavaScript/Promise
 categories:
   - 前端
@@ -10,7 +10,9 @@ tags:
   - JavaScript
 ---
 # Promise
+
 new Promise(callback)，callback回调是同步执行的
+
 ```javascript
 // 封装一个sleep方法
 function sleep(duration) {
@@ -20,7 +22,9 @@ function sleep(duration) {
 }
 sleep(1000).then(()=> console.log("finished"));
 ```
+
 ## Promise的实现
+
 ```javascript
 /**
   * promise
@@ -144,7 +148,9 @@ p.then((data) => {
     console.log(data);
 })
 ```
+
 ## Promise.all
+
 ```js
 function all(arr) {
     return new Promise(function (resolve, reject) {

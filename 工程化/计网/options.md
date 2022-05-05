@@ -1,15 +1,15 @@
 ---
 title: OPTIONS预检请求
-date: 2021-12-26 17:12:16
+date: 2020-12-29 10:10:12
 permalink: /工程化/计网/options
 categories:
-  - 计网
-  - http
+  - 计算机网络
 tags:
-  - 计网
+  - 计算机网络
   - http
 ---
 #### 参考
+
 [阮老师的跨域资源共享 CORS 详解](http://www.ruanyifeng.com/blog/2016/04/cors.html)
 ![image.png](images/options01.png)
 ![image.png](images/options02.png)
@@ -255,4 +255,3 @@ text/plain
 2. 查看OPTIONS的reponse headers中Access-Control-Request-Headers 的自定义headers字段
 是否跟后端一开始约定的一样
 ```
-

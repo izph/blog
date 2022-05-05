@@ -1,6 +1,6 @@
 ---
 title: ReactHooks笔记
-date: 2022-01-13 21:57:42
+date: 2021-07-13 22:37:42
 permalink: /前端/React/ReactHook笔记
 categories:
   - 前端
@@ -11,27 +11,31 @@ tags:
 # ReactHooks笔记
 
 ## Hooks带来的好处
+
 把业务逻辑清晰地隔离开，能够让代码更加容易理解和维护，解决了Class组件存在的一些代码冗余、难以逻辑复用的问题，替代了高阶组件的负担
 
 ## Hooks 的使用规则
+
 只能在函数组件的顶级作用域使用；只能在函数组件或者其他 Hooks 中使用。
 所谓顶层作用域，就是 Hooks 不能在循环、条件判断或者嵌套函数内执行，而必须是在顶层。同时 Hooks 在组件的多次渲染之间，必须按顺序被执行。(第一，所有 Hook 必须要被执行到。第二，必须按顺序执行。)
 
 ## useState
+
 让函数组件具有维持状态的能力，类组件中的 state 只能有一个，而函数组件中用 useState 则可以很容易地创建多个 state。state 中永远不要保存可以通过计算得到的值。比如说：
 
 - 从 props 传递过来的值。有时候 props 传递过来的值无法直接使用，而是要通过一定的计算后再在 UI 上展示，比如说排序。那么我们要做的就是每次用的时候，都重新排序一下，或者利用某些 cache 机制，而不是将结果直接放到 state 里。
-
 - 从 URL 中读到的值。比如有时需要读取 URL 中的参数，把它作为组件的一部分状态。那么我们可以在每次需要用的时候从 URL 中读取，而不是读出来直接放到 state 里。
-
 - 从 cookie、localStorage 中读取的值。通常来说，也是每次要用的时候直接去读取，而不是读出来后放到 state 里。
 
 ## useEffect
+
 useEffect执行副作用，每次组件 render 完后判断依赖并执行
 useEffect 接收的返回值是一个回调函数，这个回调函数不只是会在组件销毁时执行，而且是每次 Effect 重新执行之前都会执行，用于清理上一次 Effect 的执行结果。当组件销毁时，运行最后一次Effect返回的函数。每个 Effect 必然在渲染之后执行，因此不会阻塞渲染，提高了性能
+
 - 没有依赖项，则每次 render 后都会重新执行
 - 空数组作为依赖项，则只在第一次 render 后执行，对应到 Class 组件就是 componentDidMount
 - useEffect 还允许你返回一个函数，用于在组件销毁的时候做一些清理的操作。比如移除事件的监听。这个机制就几乎等价于class类组件中的 componentWillUnmount。
+
 ```js
 // 设置一个 size 的 state 用于保存当前窗口尺寸
 const [size, setSize] = useState({});
@@ -54,6 +58,7 @@ useEffect(() => {
 - 依赖项中定义的变量一般是会在回调函数中用到的，否则声明依赖项其实是没有意义的。
 - 依赖项一般是一个常量数组，而不是一个变量。因为一般在创建 callback 的时候，你其实非常清楚其中要用到哪些依赖项了。(依赖项数组好不添加或者删除元素，一开始就定义好需要监听哪些常量)
 - React 会使用浅比较来对比依赖项是否发生了变化，所以要特别注意数组或者对象类型。如果你是每次创建一个新对象，即使和之前的值是等价的，也会被认为是依赖项发生了变化。这是一个刚开始使用 Hooks 时很容易导致 Bug 的地方。例如下面的代码：
+
 ```javascript
 function Sample() {
   // 这里在每次组件执行时创建了一个新数组
@@ -63,17 +68,20 @@ function Sample() {
   }, [todos]);
 }
 ```
+
 代码的原意可能是在 todos 变化的时候去产生一些副作用，但是这里的 todos 变量是在函数内创建的，实际上每次都产生了一个新数组。所以在作为依赖项的时候进行引用的比较，实际上被认为是发生了变化的。
 
 `deps` 数组在判断元素是否发生改变时同样也使用了 `Object.is` 进行比较。因此一个隐患便是，当 `deps` 中某一元素为非原始类型时（例如函数、对象等）， **每次渲染都会发生改变** ，从而失去了 `deps` 本身的意义（条件式地触发 Effect）
 
 不建议把 Effect 写成一个 async 函数
+
 ```
 useEffect(async () => {
   const response = await fetch('...');
   // ...
 }, []);
 ```
+
 `useEffect` 约定 Effect 函数要么没有返回值，要么返回一个函数。而这里 async 函数会隐式地返回一个 Promise，直接违反了这一约定，会造成不可预测的结果。
 
 ## useCallback
@@ -81,6 +89,7 @@ useEffect(async () => {
 每次组件状态发生变化的时候，函数组件实际上都会重新执行一遍。在每次执行的时候，实际上都会创建一个新的事件处理函数 handleIncrement。
 只有当 count 发生变化时，我们才需要重新定一个回调函数。而这正是 useCallback 这个 Hook 的作用，
 useCallback一般是包装react合成事件的触发函数
+
 ```javascript
 // 这样，只有 count 发生变化的时候，才需要重新创建一个回调函数，这样就保证了组件不会创建重复的回调函数。而接收这个回调函数作为属性的组件，也不会频繁地需要重新渲染
 function Counter() {
@@ -90,8 +99,11 @@ function Counter() {
   return <button onClick={handleIncrement}>+</button>
 }
 ```
+
 ## useMemo
+
 缓存计算的结果，避免重复计算，useCallback 的功能其实是可以用 useMemo 来实现的：
+
 ```javascript
 const myEventHandler = useMemo(() => {
    // 返回一个函数作为缓存结果
@@ -102,6 +114,7 @@ const myEventHandler = useMemo(() => {
 ```
 
 ## useRef
+
 在多次渲染之间共享数据，可以把 useRef 看作是在函数组件之外创建的一个容器空间。在这个容器上，我们可以通过唯一的 current 属设置一个值，从而在函数组件的多次渲染之间共享这个值。
 
 使用 useRef 保存的数据一般是和 UI 的渲染无关的，因此当 ref 的值发生变化时，是不会触发组件的重新渲染的，这也是 useRef 区别于 useState 的地方。（我们可以将定时器的timer放到Ref.current中，需求清除定时器时，直接从current取timer）
@@ -125,15 +138,18 @@ function TextInputWithFocusButton() {
 ```
 
 ## useContext
+
 定义全局状态，当这个 Context 的数据发生变化时，使用这个数据的组件就能够自动刷新。(还可以在函数组件中监听Context的value值的变化)，让组件的复用变得困难，因为一个组件如果使用了某个 Context，它就必须确保被用到的地方一定有这个 Context 的 Provider 在其父组件的路径上。
 
 所以在 React 的开发中，我们很少会使用 Context 来做太多数据的共享，Context 更多的是提供了一个强大的机制，让 React 应用具备定义全局的响应式数据的能力。主要是用来实现 Theme(主题)、Language (多语)等功能
 
 ## 自定义Hooks
+
 如何创建自定义 Hooks？
 自定义 Hooks 在形式上其实非常简单，就是声明一个名字以 use 开头的函数，比如 useCounter。这个函数在形式上和普通的 JavaScript 函数没有任何区别，你可以传递任意参数给这个 Hook，也可以返回任何值。但是要注意，Hooks 和普通函数在语义上是有区别的，就在于函数中有没有用到其它 Hooks。
 
 举一个简单的例子，一个简单计数器的实现，当时把业务逻辑都写在了函数组件内部，但其实是可以把业务逻辑提取出来成为一个 Hook。比如下面的代码：
+
 ```js
 import { useState, useCallback }from 'react';
 function useCounter() {
@@ -150,7 +166,9 @@ function useCounter() {
   return { count, increment, decrement, reset };
 }
 ```
+
 有了这个Hook，我们就可以在组件中使用它，比如下面的代码：
+
 ```js
 import React from 'react';
 function Counter() {
@@ -168,7 +186,9 @@ function Counter() {
   );
 }
 ```
+
 一次性的代码执行。虽然没有直接的机制可以做到这一点，但是利用 useRef 这个 Hook，我们可以实现一个 useSingleton 这样的一次性执行某段代码的自定义 Hook，代码如下：
+
 ```js
 import { useRef } from 'react';
 // 创建一个自定义 Hook 用于执行一次性代码
@@ -183,7 +203,9 @@ function useSingleton(callback) {
   called.current = true;
 }
 ```
+
 从而在一个函数组件中，可以调用这个自定义 Hook 来执行一些一次性的初始化逻辑：
+
 ```js
 import useSingleton from './useSingleton';
 const MyComp = () => {
@@ -196,7 +218,9 @@ const MyComp = () => {
   );
 };
 ```
+
 自定义 hook 使 useEffect 页面初次渲染时不执行
+
 ```js
 import { useRef, useEffect } from 'react';
 // 自定义 hook 使 useEffect 页面初次渲染时不执行
@@ -219,11 +243,14 @@ useDidUpdateEffect(() => {
 ```
 
 ## 封装通用逻辑：useAsync
+
 在日常 UI 的开发中，有一个最常见的需求：发起异步请求获取数据并显示在界面上。在这个过程中，我们不仅要关心请求正确返回时，UI 会如何展现数据；还需要处理请求出错，以及关注 Loading 状态在 UI 上如何显示。
+
 - 创建 data，loading，error 这 3 个 state；
 - 请求发出后，设置 loading state 为 true；
 - 请求成功后，将返回的数据放到某个 state 中，并将 loading state 设为 false；
 - 请求失败后，设置 error state 为 true，并将 loading state 设为 false。
+
 ```js
 import { useState } from 'react';
 
@@ -254,7 +281,9 @@ const useAsync = (asyncFunction) => {
   return { execute, loading, data, error };
 };
 ```
+
 那么有了这个 Hook，我们在组件中就只需要关心与业务逻辑相关的部分。比如代码可以简化成这样的形式：
+
 ```js
 import React from "react";
 import useAsync from './useAsync';
@@ -277,12 +306,14 @@ export default function UserList() {
 }
 // 利用了 Hooks 能够管理 React 组件状态的能力，将一个组件中的某一部分状态独立出来，从而实现了通用逻辑的重用。
 ```
+
 ## 监听浏览器状态：useScroll
 
 虽然 React 组件基本上不需要关心太多的浏览器 API，但是有时候却是必须的：界面需要根据在窗口大小变化重新布局；在页面滚动时，需要根据滚动条位置，来决定是否显示一个“返回顶部”的按钮。
 
 以滚动条位置的场景为例，来看看应该如何用 Hooks 优雅地监听浏览器状态。
 正如 Hooks 的字面意思是“钩子”，它带来的一大好处就是：可以让 React 的组件绑定在任何可能的数据源上。这样当数据源发生变化时，组件能够自动刷新。把这个好处对应到滚动条位置这个场景就是：组件需要绑定到当前滚动条的位置数据上。
+
 ```js
 import { useState, useEffect } from 'react';
 // 获取横向，纵向滚动条位置
@@ -310,7 +341,9 @@ const useScroll = () => {
 };
 
 ```
+
 有了这个 Hook，你就可以非常方便地监听当前浏览器窗口的滚动条位置了。比如下面的代码就展示了“返回顶部”这样一个功能的实现：
+
 ```js
 
 import React, { useCallback } from 'react';
@@ -341,7 +374,9 @@ function ScrollTop() {
 }
 
 ```
+
 ## 拆分复杂组件函数组件
+
 虽然很容易上手，但是当某个组件功能越来越复杂的时候，我发现很多同学会出现一个问题，就是组件代码很容易变得特别长，比如超过 500 行，甚至 1000 行。这就变得非常难维护了。
 
 怎么才能让函数组件不会太过冗长呢？做法很简单，就是尽量将相关的逻辑做成独立的 Hooks，然后在函数组中使用这些 Hooks，通过参数传递和返回值让 Hooks 之间完成交互。
@@ -353,6 +388,7 @@ function ScrollTop() {
 为了支持过滤功能，后端提供了两个 API：一个用于获取文章的列表，另一个用于获取所有的分类。这就需要我们在前端将文章列表返回的数据分类 ID 映射到分类的名字，以便显示在列表里。
 
 这时候，如果按照直观的思路去实现，通常都会把逻辑都写在一个组件里，比如类似下面的代码：
+
 ```js
 function BlogList() {
   // 获取文章列表...
@@ -363,8 +399,10 @@ function BlogList() {
   // 渲染 UI ...
 }
 ```
+
 改变这个状况的关键仍然在于开发思路的转变。我们要真正把 Hooks 就看成普通的函数，能隔离的尽量去做隔离，从而让代码更加模块化，更易于理解和维护。
 那么针对这样一个功能，我们甚至可以将其拆分成 4 个 Hooks，每一个 Hook 都尽量小，代码如下：
+
 ```js
 
 import React, { useEffect, useCallback, useMemo, useState } from "react";
@@ -483,14 +521,17 @@ export default function BlogList() {
 ```
 
 ## 异步处理：如何向服务器端发送请求？
+
 实现自己的 API Client无论大小项目，在开始实现第一个请求的时候，通常我们要做的第一件事应该都是创建一个自己的 API Client，之后所有的请求都会通过这个 Client 发出去。而不是上来就用 fetch 或者是 axios 去直接发起请求，因为那会造成大量的重复代码。
 
 实现这样一个 Client 之后，你就有了一个统一的地方，去对你需要连接的服务端做一些通用的配置和处理，比如 Token、URL、错误处理等等
 
 通常来说，会包括以下几个方面：
+
 - 一些通用的 Header。比如 Authorization Token。
 - 服务器地址的配置。前端在开发和运行时可能会连接不同的服务器，比如本地服务器或者测试服务器，此时这个 API Client 内部可以根据当前环境判断该连接哪个 URL。
 - 请求未认证的处理。比如如果 Token 过期了，需要有一个统一的地方进行处理，这时就会弹出对话框提示用户重新登录。
+
 ```js
 import axios from "axios";
 // 定义相关的 endpoint
@@ -527,11 +568,15 @@ instance.interceptors.response.use(
 export default instance;
 // 所有的请求都可以通过 Client 连接到指定的服务器，从而不再需要单独设置 Header，或者处理未授权的请求了
 ```
+
 ## 使用Hooks思考异步请求：封装远程资源
+
 对于一个 Get 类型的 API，我们完全可以将它看成一个远程的资源。只是和本地数据不同的地方在于，它有三个状态，分别是：
+
 1. Data: 指的是请求成功后服务器返回的数据；
 2. Error: 请求失败的话，错误信息将放到 Error 状态里；
 3. Pending: 请求发出去，在返回之前会处于 Pending 状态。
+
 ```js
 
 import { useState, useEffect } from "react";
@@ -570,7 +615,9 @@ const useArticle = (id) => {
   };
 };
 ```
+
 那么要显示一篇文章的时候，你的脑子里就不再是一个具体的 API 调用，而可以把它看作一个数据，只不过是个远程数据，于是很自然就有加载状态或者错误状态这些数据了。使用的时候，我们就可以把组件的表现层逻辑写得非常简洁：
+
 ```js
 import useArticle from "./useArticle";
 const ArticleView = ({ id }) => {
@@ -588,17 +635,21 @@ const ArticleView = ({ id }) => {
   );
 };
 ```
+
 可以看到，有了这样一个 Hook，React 的函数组件几乎不需要有任何业务的逻辑，而只是把数据映射到 JSX 并显示出来就可以了，在使用的时候非常方便。
 
 事实上，在我们的项目中，可以把每一个 Get 请求都做成这样一个 Hook。数据请求和处理逻辑都放到 Hooks 中，从而实现 Model 和 View 的隔离，不仅代码更加模块化，而且更易于测试和维护。
 
 ## 多个API调用：如何处理并发或串行请求？
+
 在刚才讲的文章显示的例子中，我们只是简单显示了文章的内容，要知道，实际场景肯定比这个更复杂。比如，还需要显示作者、作者头像，以及文章的评论列表。那么，作为一个完整的页面，就需要发送三个请求：
+
 - 获取文章内容；
 - 获取作者信息，包括名字和头像的地址；
 - 获取文章的评论列表；
-这三个请求同时包含了并发和串行的场景：文章内容和评论列表是两个可以并发的请求，它们都通过 Article ID 来获取；用户的信息需要等文章内容返回，这样才能知道作者的 ID，从而根据用户的 ID 获取用户信息，这是一个串行的场景。
-如果用传统的思路去实现，可能会写下这样一段代码，或者类似的代码：
+  这三个请求同时包含了并发和串行的场景：文章内容和评论列表是两个可以并发的请求，它们都通过 Article ID 来获取；用户的信息需要等文章内容返回，这样才能知道作者的 ID，从而根据用户的 ID 获取用户信息，这是一个串行的场景。
+  如果用传统的思路去实现，可能会写下这样一段代码，或者类似的代码：
+
 ```js
 // 并发获取文章和评论列表
 const [article, comments] = await Promise.all([
@@ -608,6 +659,7 @@ const [article, comments] = await Promise.all([
 // 得到文章信息后，通过 userId 获取用户信息
 const user = await fetchUser(article.userId);
 ```
+
 但是我们知道，React 函数组件是一个同步的函数，没有办法直接使用 await 这样的同步方法，而是要把请求通过副作用去触发。因此如果按照上面这种传统的思维，是很难把逻辑理顺的。
 
 函数组件的每一次 render，其实都提供了我们根据状态变化执行不同操作的机会，我们思考的路径，就是利用这个机制，通过不同的状态组合，来实现异步请求的逻辑。那么刚才这个显示作者和评论列表的业务需求，主要的实现思路就包括下面这么四点：
@@ -620,6 +672,7 @@ const user = await fetchUser(article.userId);
 可以看到，这里的任何一个副作用，也就是异步请求，都是基于数据的状态去进行的。只有当文章的数据返回之后，我们才能得到作者 ID，从而再发送另外一个请求来获取作者信息。这样基于一个数据状态的变化，我们就实现了串行发送请求这个功能。
 
 所以，在代码层面，我们首先需要对 useUser 这个 Hook 做一个改造，使得它在没有传入 ID 的情况下，就不发送请求。对比上面的 useArticle 这个 Hook，唯一的变化就是在 useEffect 里加入了ID 是否存在的判断：
+
 ```js
 import { useState, useEffect } from "react";
 import apiClient from "./apiClient";
@@ -652,7 +705,9 @@ export default (id) => {
   };
 };
 ```
+
 那么，在文章的展示页面，我们就可以使用下面的代码来实现：
+
 ```js
 
 import { useState } from "react";
@@ -685,10 +740,13 @@ const ArticleView = ({ id }) => {
   );
 };
 ```
+
 这里，结合代码我们再理一下其中并发和串行请求的思路。因为文章的 ID 已经传进来了，因此 useArticle 和 useComments 这两个 Hooks 会发出两个并发的请求，来分别获取信息。而 userUser 这个 Hook 则需要等 article 内容返回后，才能获得 userId 信息，所以这是一个串行的请求：需要等文章内容的请求完成之后才能发起。
 
 ## 函数组件设计模式：如何应对复杂条件渲染场景？
+
 ### 使用 render props 模式重用 UI 逻辑
+
 对于 React 开发而言，如果要挑选一个最重要的设计模式，那一定是 render props。因为它解决了 UI 逻辑的重用问题，不仅适用于 Class 组件，在函数组件的场景下也不可或缺。
 
 render props 就是把一个 render 函数作为属性传递给某个组件，由这个组件去执行这个函数从而 render 实际的内容。
@@ -698,10 +756,12 @@ render props 就是把一个 render 函数作为属性传递给某个组件，�
 有两个按钮，加一和减一，并将当前值显示在界面上。执行的效果如下图所示：
 ![image.png](images/hooks/hooks01.png)
 如果不考虑 UI 的展现，这里要抽象的业务逻辑就是计数逻辑，包括三个部分：
+
 - count: 当前计数值；
 - increase: 让数值加 1 的方法；
 - decrease: 让数值减 1 的方法。
-如果用 render props 模式把这部分逻辑封装起来，那就可以在不同的组件中使用，由使用的组件自行决定 UI 如何展现。下面的代码就是这个计数器的 render props 的实现：
+  如果用 render props 模式把这部分逻辑封装起来，那就可以在不同的组件中使用，由使用的组件自行决定 UI 如何展现。下面的代码就是这个计数器的 render props 的实现：
+
 ```js
 import { useState, useCallback } from "react";
 
@@ -717,7 +777,9 @@ function CounterRenderProps({ children }) {
   return children({ count, increment, decrement });
 }
 ```
+
 可以看到，我们要把计数逻辑封装到一个自己不 render 任何 UI 的组件中，那么在使用的时候可以用如下的代码：
+
 ```js
 function CounterRenderPropsExample() {
   return (
@@ -735,6 +797,7 @@ function CounterRenderPropsExample() {
   );
 }
 ```
+
 这里利用了 children 这个特殊属性。也就是组件开始 tag 和结束 tag 之间的内容，其实是会作为 children 属性传递给组件。那么在使用的时候，是直接传递了一个函数过去，由实现计数逻辑的组件去调用这个函数，并把相关的三个参数 count，increase 和 decrease 传递给这个函数。
 
 当然，我们完全也可以使用其它的属性名字，而不是 children。我们只需要把这个 render 函数作为属性传递给组件就可以了，这也正是 render props 这个名字的由来。
@@ -753,14 +816,17 @@ function useCounter() {
   return { count, increment, decrement };
 }
 ```
+
 很显然，使用 Hooks 的方式是更简洁的。这也是为什么我们经常说 Hooks 能够替代 render props 这个设计模式。但是，需要注意的是，Hooks 仅能替代纯数据逻辑的 render props。如果有 UI 展示的逻辑需要重用，那么我们还是必须借助于 render props 的逻辑，这就是我一再强调必须要掌握 render props 这种设计模式的原因。
 
 ## 路由层面实现权限控制
+
 在一个前端应用中，路由机制不仅能够管理我们的导航，另外一个常用的场景就是进行权限的控制。比如说，只有登录了的用户才能访问某些页面，否则就会显示为“未授权”，并提示登录。那么应该如何利用 React Router 去实现权限控制呢？
 
 我们完全可以利用前端路由的动态特性。你已经看到了，路由是通过 JSX 以声明式的方式去定义的，这就意味着路由的定义规则是可以根据条件进行变化的，也就是所谓的动态路由。
 
 所以我们只需要根据用户是否登录这样一个状态，通过 Route 组件去声明不同的路由就可以了。比如说下面的代码，就展示了权限控制功能应该如何实现：
+
 ```js
 import { useState } from "react";
 import { Button } from "antd";
@@ -823,7 +889,9 @@ export default () => {
   );
 
 ```
+
 代码中核心的机制就在于我们根据登录状态，创建了不同的路由规则，这样就能在源头上对权限进行集中控制，避免用户未经授权就访问某些受保护的页面。同时呢，因为在相同的 URL 下进行了信息提示，那么也就更容易实现用户登录后还能返回原页面的功能。
 
 #### 参考
+
 [geekbang](https://time.geekbang.org/column/intro/100079901)

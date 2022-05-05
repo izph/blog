@@ -12,8 +12,11 @@ tags:
 # 实现一个小插件（plugin）
 
 为什么要实现这个乞丐版的md转化html的插件，一是最近加班不是很多，有更多的空余时间去做自己想做的事情；二是想做一些有挑战的小Demo，工作以来，大多数是调接口、做交互，维护老项目，做CRUD的事情，感觉这样下去，技术会越来越菜，得不到成长。所以，突破自己，尝试去实现一些有难度的东西，做一些有意义的事情。参考了许多资料，慢慢的实现了这个乞丐版plugin。
+
 ## 如何创建 Plugin
+
 参考：[手把手带你入门WebpackPlugin](https://juejin.cn/post/6968988552075952141)
+
 ```js
 const pluginName = 'md-to-html-plugin';
 
@@ -29,11 +32,12 @@ class MdToHtmlPlugin {
     }
 }
 ```
+
 - compiler 对象包含了 Webpack 环境所有的的配置信息，包含 options，loaders，plugins 这些信息，这个对象在 Webpack 启动时候被实例化，它是全局唯一的，可以简单地把它理解为 Webpack 实例；
 - webpack会提供一个apply方法，接受一个编译器compiler，编译的时候都是在apply里执行，是执行具体的插件方法。
 - apply 方法的入参注入了一个 compiler 实例，compiler 实例是 Webpack 的支柱引擎，代表了 CLI 和 Node API 传递的所有配置项。
 - compiler会有钩子hooks，钩子hooks会有一个发布器emit（类似node的EmitterEvent发布订阅）
-tap第一个参数是插件的名字，第二个参数是回调函数，回调函数的参数是一个compilation。
+  tap第一个参数是插件的名字，第二个参数是回调函数，回调函数的参数是一个compilation。
 - compilation 对象包含了当前的模块资源、编译生成资源、变化的文件等。当 Webpack 以开发模式运行时，每当检测到一个文件变化，一次新的 compilation 将被创建。compilation 对象也提供了很多事件回调供插件做扩展。通过 compilation 也能读取到 Compiler 对象。
 - Hook 上还暴露了 3 个方法供使用，分别是 tap、tapAsync 和 tapPromise。这三个方法用于定义如何执行 Hook，比如 tap 表示注册同步 Hook，tapAsync 代表 callback 方式注册异步 hook，而 tapPromise 代表 Promise 方式注册异步 Hook。
 
@@ -52,20 +56,24 @@ compiler 对象执行 run 方法，并自动触发 beforeRun、run、beforeCompi
 ![webpack打包流程](images/webpack001.png)
 
 ### 常见Hooks
-参考: [webpack](https://www.webpackjs.com/api/compiler-hooks/?fileGuid=3tGHdrykRgwCyTP8) 
 
-Hook|type|调用
-:-:|:-:|:-:
-run|AsyncSeriesHook|开始读取 records 之前
-compile|SyncHook|	一个新的编译 (compilation) 创建之后
-emit|AsyncSeriesHook|生成资源到 output 目录之前
-done|SyncHook|编译 (compilation) 完成
+参考: [webpack](https://www.webpackjs.com/api/compiler-hooks/?fileGuid=3tGHdrykRgwCyTP8)
+
+|  Hook  |      type      |                调用                |
+| :-----: | :-------------: | :---------------------------------: |
+|   run   | AsyncSeriesHook |        开始读取 records 之前        |
+| compile |    SyncHook    | 一个新的编译 (compilation) 创建之后 |
+|  emit  | AsyncSeriesHook |     生成资源到 output 目录之前     |
+|  done  |    SyncHook    |       编译 (compilation) 完成       |
 
 ## 实现MdToHtmlPlugin
 
 ### 1、创建MdToHtmlPlugin
+
 在根目录下创建plugin文件夹，在plugin下新建md-to-html-plugin文件夹，并在该文件夹下新建index.js入口文件，compiler.js文件，constant.js声明常量文件，util.js公共方法文件，template.html模板文件
+
 #### index.js
+
 ```js
 const { readFileSync } = require('fs');
 const { resolve, dirname, join } = require('path');
@@ -111,7 +119,7 @@ class MdToHtmlPlugin {
         source() {
           return fileHtml;
         },
-        // 资源的长度        
+        // 资源的长度      
         size() {
           return fileHtml.length;
         }
@@ -145,15 +153,19 @@ class MdToHtmlPlugin {
 
 module.exports = MdToHtmlPlugin;
 ```
+
 #### index.js中做了哪些事件？
+
 - 读取md文件，用到了node内置模块fs的方法，将md内容存到为数组中；
 - 将数组传入编译文件compiler的compileHTML中进行编译，返回html字符串和静态资源的路径，htmlStr如下：
-![htmlStr](images/mdtohtml009.png)
+  ![htmlStr](images/mdtohtml009.png)
 - 读取template模板html文件，将文件内的模板替换为htmlStr
 - 最后把html文件和静态资源放到_assets中，交由webpack处理
 
 ### 2、compiler模板编译文件
+
 compiler.js:
+
 ```js
 const { guid } = require('./util');
 const { basename } = require('path');
@@ -333,19 +345,25 @@ module.exports = {
   compileHTML
 }
 ```
+
 #### compiler做了什么？
+
 1. compileHTML方法中，调用createTree方法将数组转化为树形结构，htmlTree如下：
-![htmlTree](images/mdtohtml008.png)
+   ![htmlTree](images/mdtohtml008.png)
 2. createTree的作用
-- 遍历数组，匹配不同的md标识符，如`#`号代表标题，`(num.)`代表有序列表，`(-)`代表无序列表，`![]()`代表图片标识等，对不同的标识做不同的处理，如果是列表，需要在外层嵌套ul、ol。匹配md标识，用到了正则表达式。
+
+- 遍历数组，匹配不同的md标识符，如 `#`号代表标题，`(num.)`代表有序列表，`(-)`代表无序列表，`![]()`代表图片标识等，对不同的标识做不同的处理，如果是列表，需要在外层嵌套ul、ol。匹配md标识，用到了正则表达式。
 - 如果是超链接，则设置a标签，设置a标签默认样式，href属性。
 - 如果是图片，则设置img标签，获取图片的路径，设置src、alt等属性。
 - 最后返回htmlTree
+
 3. 遍历htmlTree的所有value，如果是simple类型，则直接拼接结果，如果是nesting类型，则需要在外面嵌套ol、ul
 4. 最后返回处理结果htmlStr、staticSource。
 
 ### 3、其他文件说明
+
 #### constant.js
+
 ```js
 // 以空字符串开头，以空格结尾，找到里边的所有字符
 const REG_MARK = /^(.+?)\s/;
@@ -393,10 +411,13 @@ module.exports = {
     PLUGIN_NAME
 }
 ```
+
 #### template.html
+
 ![template.html](images/mdtohtml010.png)
 
 #### util.js
+
 ```js
 // 生成uid
 function guid() {
@@ -411,9 +432,12 @@ module.exports = {
     guid
 }
 ```
+
 ### 4、创建webpack.config.js文件
+
 在根目录下新建notebook.md，并写入简单的md标记，引入MdToHtmlPlugin插件，
 配置MdToHtmlPlugin的template和filename
+
 ```js
 const { resolve } = require('path')
 const MdToHtmlPlugin = require('./plugins/md-to-html-plugin');
@@ -438,13 +462,15 @@ const config = {
 
 module.exports = config;
 ```
+
 notebook.md文件内容如下：
 ![notebook.png](images/mdtohtml011.png)
 
 ### 5、调试和运行
-- 执行`npm run build`
+
+- 执行 `npm run build`
 - 在dist文件夹下输出打包后文件
 - 打开notebook.html看结果
-![notebook.html](images/mdtphtml012.png)
+  ![notebook.html](images/mdtphtml012.png)
 
 [项目地址](https://github.com/izph/md-to-html)

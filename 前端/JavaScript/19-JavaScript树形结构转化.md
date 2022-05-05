@@ -1,6 +1,6 @@
 ---
 title: JavaScript树形结构转化（笔记）
-date: 2022-02-16 11:38:51
+date: 2021-07-10 13:50:11
 permalink: /前端/JavaScript/JavaScript树形结构转化
 categories:
   - 前端
@@ -10,8 +10,11 @@ tags:
   - JavaScript
 ---
 # JavaScript树形结构转化
+
 ## 1、列表转成树形结构
+
 数据集如下：
+
 ```javascript
 const data = [
     { id: 1, name: "广东", pid: 0 },
@@ -30,7 +33,9 @@ const data = [
     { id: 14, name: "高新区", pid: 10 },
 ];
 ```
+
 需要将以上数据转化成树形结构：id与pid之间的对应关系，当pid不存在或pid:0的时候，这一项，应该为树的顶端。
+
 - 广东
   - 广州
     - 天河区
@@ -69,7 +74,9 @@ function toTree(data) {
 }
 console.log(toTree(data))
 ```
+
 结果如下：
+
 ```javascript
 [
     {
@@ -156,7 +163,9 @@ console.log(toTree(data))
     }
 ]
 ```
+
 ### 列表转成树形结构的通用方法（支持无限层级）
+
 ```javascript
 /**
  * treeData: []，列表的数据源
@@ -174,7 +183,7 @@ function listToTree(treeData, id, pid, children){
       	// 给父级添加一个children属性，并赋值
         branchArr.length > 0 ? fatherItem[children] = branchArr : '';
       // 如果第一层不是pid=0，请自行修改
-        return fatherItem[pid] === 0;     
+        return fatherItem[pid] === 0;   
     })
 }
  
@@ -183,7 +192,9 @@ listToTree(treeData, 'id', 'pid', 'children');
 ```
 
 ## 2、树形结构转成列表
+
 参照以上省市的例子，代码如下
+
 ```javascript
 function treeToList(data) {
   let res = [];
@@ -200,8 +211,11 @@ function treeToList(data) {
   return res;
 }
 ```
+
 ## 3、获取树形结构所有的key值
+
 数据如下：
+
 ```javascript
 let data = [{
     key: '1',

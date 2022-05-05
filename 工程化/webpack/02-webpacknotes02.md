@@ -1,6 +1,6 @@
 ---
 title: webpack笔记（二）
-date: 2021-12-26 17:12:16
+date: 2021-03-26 21:28:19
 permalink: /工程化/webpack/webpacknotes02
 categories:
   - 工程化
@@ -10,6 +10,7 @@ tags:
   - webpack
 ---
 # Webpack笔记
+
 ```js
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -38,7 +39,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
     babel缓存   开起babel缓存，不然每一次都需要babel转化
       cacheDirectory: true
       --> 让第二次打包构建速度更快
-      
+    
     文件资源缓存  hash
       hash: 每次wepack构建时会生成一个唯一的hash值。只要构建，都会发送变化
         问题: 因为js和css同时使用一个hash值。
@@ -49,7 +50,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
           因为css是在js中被引入的，所以同属于一个chunk
 
       contenthash: 根据文件的内容生成hash值。不同的文件hash值一定不一样 
-      
+    
       维护hsah值的变化，就能知道这个文件有没有更新（就是说有没有修改这个文件的代码）
 
       --> 让代码上线运行缓存更好使用
@@ -446,7 +447,7 @@ module.exports = {
 
       --> source-map(调试友好) / cheap-module-souce-map（cheap的速度会快一点）
 
-      
+    
 */
 
 

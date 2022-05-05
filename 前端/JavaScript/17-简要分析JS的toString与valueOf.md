@@ -1,6 +1,6 @@
 ---
 title: 简要分析toString和valueOf
-date: 2022-01-27 20:53:16
+date: 2021-01-22 12:13:05
 permalink: /前端/JavaScript/分析toString和valueOf
 categories:
   - 前端

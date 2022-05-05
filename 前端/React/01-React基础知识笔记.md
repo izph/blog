@@ -1,6 +1,6 @@
 ---
 title: React基础知识笔记
-date: 2021-12-26 17:12:16
+date: 2021-07-06 17:12:16
 permalink: /前端/React/React基础知识
 categories:
   - 前端
@@ -36,20 +36,26 @@ ReactDOM.render(VDOM, document.getElementById('root'))
 - 状态不可直接更改
   - this.state.conut = this.state.conut + 1，状态(state)不可直接更改，是错误的写法
   - this.setState((state) => { return { count: state.count + 1 } });（依赖于原状态）
+
 #### setState更新状态的2种写法
+
 1. setState(stateObject, [callback])————对象式的setState
+
 - stateObject为状态改变对象(该对象可以体现出状态的更改)；
 - callback是可选的回调函数, 它在状态更新完毕、界面也更新后(render调用后)才被调用，setState引起react后续动作是异步更新的；
 
 2. setState(stateFunction, [callback])————函数式的setState
+
 - stateFunction为返回stateObject对象的函数；
 - stateFunction可以接收到state和props；
 - callback是可选的回调函数, 它在状态更新、界面也更新后(render调用后)才被调用；
 
 3. 总结：对象式的setState是函数式的setState的简写方式(语法糖)
+
 - 如果新状态不依赖于原状态 ===> 使用对象方式
 - 如果新状态依赖于原状态 ===> 使用函数方式
 - 如果需要在setState()执行后获取最新的状态数据，要在第二个callback函数中读取
+
 ### props
 
 #### constructor方法中super，传递的参数props是否有必要写？
@@ -65,7 +71,9 @@ ReactDOM.render(VDOM, document.getElementById('root'))
 可以的，react在除了constructor之外的生命周期已经传入了this.props了，完全不受super(props)的影响。
 
 #### 对标签属性进行类型、必要性的限制(propTypes 来自prop-types )
+
 PropTypes可以检验props
+
 ```javascript
 import propTypes from 'prop-types';
 //  ...
@@ -89,17 +97,18 @@ Person.defaultProps = {
 #### 字符串ref
 
 - 获取ref：const { input1 } = this.refs;
-- ```<input ref="input1" type="text"/>```
+- ``<input ref="input1" type="text"/>``
 
 #### 回调函数ref
 
 - 获取ref：const { input2 } = this;
-- ```<input ref={ c => { this.input2 = c }} type="text"/>```
+- ``<input ref={ c => { this.input2 = c }} type="text"/>``
 
 #### React.createRef创建ref
+
 - React通过ref，获取组件对应的DOM元素
 - 创建，myRef = React.createRef()，使用this.myRef.current.value
-- ```<input ref={this.myRef} type="text" />```
+- ``<input ref={this.myRef} type="text" />``
 
 ## 5、事件处理
 
@@ -110,15 +119,16 @@ Person.defaultProps = {
 ## 6、受控组件与非受控组件
 
 - 受控组件：组件的展示完全由传入的属性决定。比如说，如果一个输入框中的值完全由传入的 value 属性决定，而不是由用户输入决定，那么就是受控组件，写法是：
-  ```< input value={value} onChange={handleChange} />```
+  ``< input value={value} onChange={handleChange} />``
   这也是为什么只给 < input/> 传了一个 value 值但是没有传 onChange 事件，那么键盘怎么输入都没有反应。
 - 非受控组件：表单组件可以有自己的内部状态，而且它的展示值是不受控的。比如 input 在非受控状态下的写法是：
-  ```< input onChange={handleChange}/>```
+  ``< input onChange={handleChange}/>``
   也就是说，父组件不会把 value 直接传递给 input 组件。在日常开发中，大部分的表单元素其实都是受控组件，我们会通过外部的状态完全控制当前组件的行为。
 
 ## 7、高阶函数
 
 ### 高阶函数
+
 参数的回调函数或者返回值是一个函数
 
 ```javascript
@@ -165,8 +175,11 @@ render(){
 	)
 }
 ```
+
 ### 函数作为子组件
-children 是 React 组件的一个特殊内置属性，```<Comp>xxx</Comp>``` 里的 xxx 部分会作为 children 传递给 Comp 组件，如果 xxx 是函数，那么 Comp 里主动调用它去得到结果。
+
+children 是 React 组件的一个特殊内置属性，``<Comp>xxx</Comp>`` 里的 xxx 部分会作为 children 传递给 Comp 组件，如果 xxx 是函数，那么 Comp 里主动调用它去得到结果。
+
 ```js
 class MyComponent extends React.Component{
 		render(){
@@ -183,7 +196,9 @@ class MyComponent extends React.Component{
 ```
 
 ## 8、类组件的生命周期
+
 [React生命周期](02-ReactLifeCycle.md)
+
 ## 9、key的作用
 
 1. key是新、旧虚拟DOM对象的标识，diff算法比较中发挥着重要作用
@@ -242,6 +257,7 @@ componentWillUnmount() {
 ## 11、HOC(高阶组件)
 
 高阶组件：接受组件作为参数，对已有组件的一个封装，返回新的组件。新的组件会有它的应用逻辑，产生新的状态，将新的状态传给 参数组件，以便让该 参数组件使用。实现一些通用的逻辑，被不同的组件所使用，它本身并不存在任何UI的展现
+
 ```javascript
 // 高阶组件
 const withWindowSize = Component => { 
@@ -250,6 +266,7 @@ const withWindowSize = Component => {
     return WrappedComponent;
 };
 ```
+
 ```javascript
 const NewComponent = higherOrderComponent(YourComponent)
 
@@ -311,12 +328,16 @@ const OtherComponent = React.lazy(() => import('./OtherComponent'));
 // 我们指定了空档期使用Loading展示在界面上面，等OtherComponent组件异步加载完毕，
 // 把OtherComponent组件的内容替换掉Loading上
 ```
+
 ### react-lodable
+
 使用 react-lodable，实现组件的异步加载
+
 1. 定义一个加载器组件，在使用的地方依赖于这个加载器组件而不是原组件；
 2. 在加载器组件的执行过程中，使用 import 去动态加载真实的实现代码；
 3. 处理加载过程，和加载出错的场景，确保用户体验。
-react-loadable，正是这样一个开源的 npm 模块，专门用于 React 组件的按需加载。在实际的项目开发中，我们一般都会直接使用 react-loadable 来完成按需加载，而不用自己去实现。
+   react-loadable，正是这样一个开源的 npm 模块，专门用于 React 组件的按需加载。在实际的项目开发中，我们一般都会直接使用 react-loadable 来完成按需加载，而不用自己去实现。
+
 ```js
 import Loadable from "react-loadable";
 
@@ -330,26 +351,32 @@ const HelloLazyLoad = Loadable({
   loading: Loading,
 });
 ```
+
 react-lodable 本身是通过高阶组件来实现的，这个高阶组件实现了模块加载、loading 状态以及错误处理的功能。你只要通过它提供的简单 API，就可以很容易实现组件的动态加载。
 
 在代码中，我们可以看到 Loadable 这个高阶组件主要就是两个 API。
 loader：用于传入一个加载器回调，在组件渲染到页面时被执行。在这个回调函数中，我们只需要直接使用 import 语句去加载需要的模块就可以了。
 loading：表示用于显示加载状态的组件。在模块加载完成之前，加载器就会渲染这个组件。如果模块加载失败，那么 react-loadable 会将 errors 属性传递给 Loading 组件，方便你根据错误状态来显示不同的信息给用户。
 
-
 ## 13、ReactRouter
+
 [React-Router](04-React-Router.md)
 
 ## 14、create-react-app脚手架配置代理
+
 ### 在package.json中追加如下配置
+
 "proxy":"http://localhost:8888"
+
 1. 优点：配置简单，前端请求资源时可以不加任何前缀。
 2. 缺点：不能配置多个代理。
 3. 工作方式：上述方式配置代理，当请求了3000不存在的资源时，那么该请求会转发给5000(优先匹配前端资源)
 
 ### 创建代理配置文件setupProxy
+
 1. 优点：可以配置多个代理，可以灵活的控制请求是否走代理。
 2. 缺点：配置繁琐，前端请求资源时必须加前缀。
+
 ```javascript
 // 在src下创建配置文件：src/setupProxy.js
 const proxy = require('http-proxy-middleware')
@@ -373,8 +400,11 @@ module.exports = function(app) {
   )
 }
 ```
+
 ## 15、Fragment
+
 放在最外层，包裹其他标签
+
 ```javascript
 import React, { Component, Fragment } from 'react'
 <Fragment key={1}>
@@ -382,18 +412,24 @@ import React, { Component, Fragment } from 'react'
 	<input type="text" />
 </Fragment>
 ```
+
 ## 16、Context
+
 Context可以实现组件通信，但是在应用开发中，一般不用Context通信传递数据,  一般用它来实现换肤功能、多语功能、封装react插件。
 
 ## 17、类组件优化
+
 Component的2个问题
-- 只要执行setState()，即使不改变状态数据，组件也会重新render()  ==> 效率低 
+
+- 只要执行setState()，即使不改变状态数据，组件也会重新render()  ==> 效率低
 - 当前组件重新render()，就会自动更新子组件的render，即使子组件没有用到父组件的任何数据 ==> 效率低
-那如何才能使得只有当组件的state或props数据发生改变时才重新render()
+  那如何才能使得只有当组件的state或props数据发生改变时才重新render()
 - 办法1: 重写shouldComponentUpdate()方法，比较新旧state或props数据, 如果有变化才返回true，如果没有返回false
 - 办法2: 使用PureComponent，PureComponent重写了shouldComponentUpdate(), 只有state或props数据有变化才返回true。
-只是进行state和props数据的浅比较, 如果只是数据对象内部数据变了, 返回false。不要直接修改state数据, 而是要产生新数据。项目中一般使用PureComponent来优化
+  只是进行state和props数据的浅比较, 如果只是数据对象内部数据变了, 返回false。不要直接修改state数据, 而是要产生新数据。项目中一般使用PureComponent来优化
+
 ## 18、render props
+
 [React组件逻辑复用](https://juejin.cn/post/6844904162472247304#heading-12)
 
 ## 19、Portal
@@ -401,27 +437,34 @@ Component的2个问题
 ## 20、Immutable.js
 
 ## 21、对React-Fiber的理解
+
 Fiber是React16 对 React 一些核心算法的一次重写吧，主要是使用Fiber有助于性能优化。
 React V15 在渲染时，会递归比对 VirtualDOM 树，找出需要变动的节点，然后同步更新它们， 一气呵成。
 整个过程， React 会占据浏览器资源，这会导致用户触发的事件得不到响应，并且会导致掉帧，导致用户感觉到卡顿。React 通过Fiber 架构，让这个执行过程变成可被中断，让CPU 能在这段时间执行其他的操作。渲染的过程可以被中断，可以将控制权交回浏览器，执行优先级高的任务，浏览器空闲后再恢复渲染。
 分批延时对DOM进行操作，避免一次性操作大量 DOM 节点，进而避免同步渲染带来的卡顿，打断渲染线程的“一次大量的同步渲染”。
 
 ## 22、类组件和函数组件的区别
+
 ### 类组件（有状态组件）
+
 - 内部使用state，维护自身状态的变化
 - 可以使用this
 - 可以使用react的生命周期
 
 ### 函数组件
+
 - 没有自己的state
 - 没有this关键字
 - 不能使用生命周期钩子
 
 ## 23、 useState 为什么要使用数组而不是对象解构
+
 数组的话可以直接根据顺序解构，而对象解构是根据属性的key
 
 ## 24、React 中的高阶组件运用了什么设计模式？
+
 使用了装饰模式，装饰模式的特点是不需要改变 被装饰对象 本身，而只是在外面套一个外壳接口。用法如下：
+
 ```js
 @testable
    class MyTestableClass {

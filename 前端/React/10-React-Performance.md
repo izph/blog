@@ -1,6 +1,6 @@
 ---
 title: React性能优化笔记
-date: 2021-12-26 17:12:16
+date: 2021-07-25 22:18:18
 permalink: /前端/React/React性能优化
 categories:
   - 前端
@@ -87,6 +87,7 @@ class HelloComponent extends Component {
   }   
 } 
 ```
+
 ## 使用map批量渲染组件时，都加上唯一的key值
 
 ## 只在最顶层使用 hook，不要在循环、条件或嵌套语句中使用hook

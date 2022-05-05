@@ -1,6 +1,6 @@
 ---
 title: 手写hooks
-date: 2021-11-26 17:12:16
+date: 2021-09-26 19:27:10
 permalink: /前端/React/handwrittenhooks
 categories:
   - 前端
@@ -12,6 +12,7 @@ tags:
 # 手写Hooks（笔记）
 
 ## useInterval
+
 ```js
 function useInterval(callback, delay) {
     const memorizeCallback = useRef();

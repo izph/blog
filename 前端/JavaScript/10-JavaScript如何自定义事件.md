@@ -1,6 +1,6 @@
 ---
 title: JavaScript自定义事件
-date: 2022-01-17 20:53:16
+date: 2021-01-14 12:13:16
 permalink: /前端/JavaScript/JavaScript自定义事件
 categories:
   - 前端

@@ -1,12 +1,11 @@
 ---
 title: 常见HTTP请求头和响应头
-date: 2021-12-26 17:12:16
+date: 2020-12-22 15:20:16
 permalink: /工程化/计网/httpheader
 categories:
-  - 计网
-  - http
+  - 计算机网络
 tags:
-  - 计网
+  - 计算机网络
   - http
 ---
 ## 一、常用的http请求头

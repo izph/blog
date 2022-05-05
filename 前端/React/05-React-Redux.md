@@ -1,6 +1,6 @@
 ---
 title: Redux笔记
-date: 2021-12-26 17:12:16
+date: 2021-07-16 23:10:20
 permalink: /前端/React/react-redux
 categories:
   - 前端
@@ -116,6 +116,7 @@ store.dispatch(createIncrementAsyncAction(value * 1, 500));
 ## react-redux基本使用
 
 在 react-redux 的实现中，为了确保需要绑定的组件能够访问到全局唯一的 Redux Store，利用了 React 的 Context 机制去存放 Store 的信息。通常我们会将这个 Context 作为整个 React 应用程序的根节点。因此，作为 Redux 的配置的一部分，我们通常需要如下的代码：
+
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -130,6 +131,7 @@ ReactDOM.render(
   rootElement
 )
 ```
+
 这里使用了 Provider 这样一个组件来作为整个应用程序的根节点，并将 Store 作为属性传给了这个组件，这样所有下层的组件就都能够使用 Redux 了。
 
 ### connect的作用：负责连接 React 和 Redux
@@ -270,8 +272,11 @@ export default connect(
 	{jiaYiRen: createAddPersonAction}  //映射操作状态的方法
 )(Person)
 ```
+
 ## React 数据持久化实践
+
 在React项目中，通过redux存储全局数据时，会有一个问题，如果用户刷新了网页，那么通过redux存储的全局数据就会被全部清空，比如登录信息等。这时就会有全局数据持久化存储的需求。首先想到的就是localStorage，localStorage是没有时间限制的数据存储，可以通过它来实现数据的持久化存储。
+
 ```js
 // 封装 数据持久化组件
 let storage={
@@ -290,7 +295,9 @@ let storage={
 };
 export default Storage;
 ```
+
 但是在我们已经使用redux来管理和存储全局数据的基础上，再去使用localStorage来读写数据，这样不仅是工作量巨大，还容易出错。那么有没有结合redux来达到持久数据存储功能的框架呢？当然，它就是redux-persist。redux-persist会将redux的store中的数据缓存到浏览器的localStorage中。
+
 ```js
 // $ npm install redux-persist --save
 // 对于reducer和action的处理不变，只需修改store的生成代码
@@ -333,9 +340,12 @@ export default store;
 // export default createStore(reducer, applyMiddleware(thunk))
 
 ```
+
 ## 如何在函数组件中使用 Redux
+
 在函数组件中使用 Redux : 利用 react-redux提供的 useSelector 和 useDispatch 这两个 Hooks。
 Hooks 的本质就是提供了让 React 组件能够绑定到某个可变的数据源的能力。在这里，当 Hooks 用到 Redux 时可变的对象就是 Store，而 useSelector 则让一个组件能够在 Store 的某些数据发生变化时重新 render。
+
 ```js
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';

@@ -1,6 +1,6 @@
 ---
 title: JavaScript手写（二）
-date: 2022-01-27 20:53:16
+date: 2021-05-27 20:53:16
 permalink: /前端/JavaScript/JavaScript手写题2
 categories:
   - 前端
@@ -42,9 +42,9 @@ console.log(myTypeof(new String(1))); // 'object string'
 console.log(myTypeof(new Boolean(1)));// 'object boolean'
 ```
 
-## 2、插件的写法
+## 2、插件（第三方库）的写法
 
-立即执行函数是一个非常好写插件的函数，模板如下：
+采用UMD模块，立即执行函数是一个非常好写插件的函数，模板如下：
 
 ```javascript
 // 独立开辟一个作用域，防止作用域污染
@@ -278,7 +278,9 @@ function tpl(templateStr, arr) {
 console.log(tpl(str, arr))
 // <div>前端(js)开发</div>
 ```
+
 ## 10、实现find函数，使下列的代码调用正确
+
 ```js
  var data = [
     { userId: 8, title: 'title1' },
@@ -316,7 +318,9 @@ var result = find(data).where('title', /\d$/).orderBy('userId','desc');
 console.log(result); 
 // [{ userId: 19, title: 'title2'}, { userId:8, title: 'title1' }];
 ```
+
 ## 11、list转成树结构
+
 ```js
 let res = [
     {
@@ -355,8 +359,11 @@ function disThree(array) {
 }
 console.log(disThree(res));
 ```
+
 ## 12、用js为选择器对应的所有元素添加类名
+
 `dom.classList.add('test')`
+
 ```js
 // 为所有的div添加
 const doms = document.querySelectorAll('div')
@@ -367,6 +374,7 @@ const addClass =  (nodes, value) => {
 }
 addClass(doms, 'test')
 ```
+
 ## 13、给全局对象window添加属性
 
 ```js
@@ -385,9 +393,13 @@ getConst("age", 10)
 age = 20;
 console.log(age); // 10  未被修改
 ```
+
 ## 14、获取url的参数
-地址栏`?`及后面的参数就是search-string（search字符串）
+
+地址栏 `?`及后面的参数就是search-string（search字符串）
+
 ### qs获取
+
 ```js
 import qs from "qs";
 
@@ -401,7 +413,9 @@ console.log(query);
 console.log(qs.stringify(query)); 
 // a=1&b=2&c=3
 ```
+
 ### split分割法获取
+
 ```js
 let URL = "http://www.yolo.com?name=zph&age=18&height=175&weight=130"
 function queryURLParams(URL) {
@@ -418,8 +432,11 @@ function queryURLParams(URL) {
 }
 console.log(queryURLParams(URL))
 ```
+
 ### URLSearchParams方法
+
 存在兼容性问题
+
 ```js
 let URL = "http://www.yolo.com?name=zph&age=18&height=175&weight=130"
 function queryURLParams(URL) {
@@ -430,9 +447,11 @@ function queryURLParams(URL) {
 }
 console.log(queryURLParams(URL))
 ```
+
 参考：[获取URL参数](https://juejin.cn/post/7075305529903415304)
 
 ## 15、数字转成千分符
+
 ```js
 function toThousands(num) {
   let result = '', counter = 0;
@@ -450,9 +469,12 @@ function toThousands(num) {
 toThousands(1234567890)
 // '1,234,567,890'
 ```
+
 ## 16、实现一个repeat函数
-这个函数能返回一个新函数，比如这样用`var repeatedFun = repeat(console.log, 4, 1000)`
+
+这个函数能返回一个新函数，比如这样用 `var repeatedFun = repeat(console.log, 4, 1000)`
 调用这个 repeatedFun("hellworld") 会console.log 4次 helloworld, 每次间隔1秒
+
 ```js
 function repeat(func, times, wait) {
     return function (val) {
@@ -468,7 +490,9 @@ function repeat(func, times, wait) {
 const repeatFunc = repeat(console.log, 4, 1000)
 repeatFunc('helloworld')
 ```
+
 ## 17、转化为驼峰命名
+
 ```js
 const str = "get-user-info";
 function (s) {
@@ -479,7 +503,9 @@ function (s) {
 }
 // getUserInfo
 ```
+
 ## 18、根据数组中对象的多个属性值排序
+
 ```js
 const arr = [
   { id: 1, age: 12 }, 
@@ -499,7 +525,9 @@ arr.sort(function (a, b) {
   }
 })
 ```
+
 ## 19、生成1-100的数字
+
 ```js
   // 生成1-100数字
   let arr1 = [...Array(100)].map((item, index) => index + 1);

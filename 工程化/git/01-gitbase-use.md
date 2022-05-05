@@ -1,36 +1,41 @@
 ---
 title: git笔记
-date: 2021-12-26 17:12:16
+date: 2021-02-13 10:15:16
 permalink: /工程化/git/gitbaseuse
 categories:
-  - 工程化
   - git
 tags:
-  - 工程化
   - git
 ---
 # git笔记
+
 ## 1、git基本使用
+
 ### 初始化git管理
+
 对于已创建的文件夹，直接在文件夹目录下执行：git init
 创建并初始化git，可以执行：git init 文件夹名
 
 ### 添加最小配置
+
 git config --local user.name 'izph'
 git config --local user.email 'izph@foxmail.com'（收得到email的邮箱）
 
 #### 参数区别
+
 local的优先级比global的高
 git config --local（只对某个仓库有效，切换到另外一个仓库失效）
 git config --global （当前用户的所有仓库有效，工作当中最常用）
 git config --sysstem （系统的所有用户，几乎不用）
 
 #### 查看配置
+
 git config --list --local（只能在仓库里面起作用，普通路径git不管理）
 git config --list --global
 git config --list --system
 
 #### 清除设置
+
 git config --unset --local user.name
 git config --unset --global user.name
 git config --unset --system user.name
@@ -41,11 +46,13 @@ system应该在git安装目录的下
 ![image.png](images/git001.png)
 
 #### 我们从远程拉取仓库下拉时，默认使用的是global的user，email。如何修改成其他的user和email呢？
+
 git config --add --local user.name 'xxx';
 git config --add --local user.email 'xxx';
 
 #### 已经初始化了name和email，如何修改global的 user.name和 user.email
-git config --global --replace-all user.email "输入你的邮箱" 
+
+git config --global --replace-all user.email "输入你的邮箱"
 git config --global --replace-all user.name "输入你的用户名"
 
 $ pwd
@@ -58,7 +65,6 @@ http.sslverify=false
 
 $ ls -al（查看当前文件夹下的文件有哪些ls -al）
 drwxr-xr-x 1 ZPH 197121 0 Feb 26 15:28 .git/
-
 
 $ git config --local --list
 user.name=izph
@@ -95,6 +101,7 @@ $ vi style.css
 查看style.css文件的内容，弹出编辑器
 
 ## 2、git文件名重命名方式(git commit后的文件名如何修改？)
+
 将fitstname.txt修改成rename.txt
 $ mv firstname.txt remane.txt
 
@@ -105,7 +112,7 @@ $ git rm firstname.txt
 $ git status
 On branch master
 Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
+  (use "git restore --staged `<file>`..." to unstage)
         renamed:    firstname.txt -> rename.txt
 
 以上几个步骤可以只用一条命令实现:
@@ -113,6 +120,7 @@ git mv firstname.txt remane.txt
 接下来就可以git commit -m "提交重命名的原因"
 
 ## 3、git查看版本的历史
+
 git log只显示当前分支的提交日志信息
 git log --all查看工作区所有分支的log信息
 git log --all --graph图形化显示
@@ -137,6 +145,7 @@ $ gitk
 ![image.png](images/git002.png)
 
 ## 4、探索.git目录
+
 $ cd .git
 进入git目录
 
@@ -175,6 +184,7 @@ $ cat config（查看配置config信息）
 （可以直接vi .git/config，修改config信息里面的user.name user.email等信息）
 
 ## 5、commit、tree、blob之间的关系
+
 tree是文件夹，blob是一个文件
 
 ![image.png](images/git003.png)
@@ -206,6 +216,7 @@ $ git checkout  developtest ID
 绑定到了developtest 分支下
 
 ## 6、HEAD和branch的理解
+
 HEAD可以指向分支，也可以指向commit
 
 $ git checkout -b dev (developtest | commit | master | 远端分支)
@@ -215,7 +226,7 @@ $ git checkout -b dev (developtest | commit | master | 远端分支)
 $ git diff commit1 commit2 (-- filename 指定两个commitID的同一个文件的差异)
 用git diff比较两个commit之间的差异
 
-$ git diff develop master index.html 
+$ git diff develop master index.html
 // 比较master和develop分支的 index.html文件
 
 $ git diff HEAD HEAD^（HEAD~1）
@@ -226,12 +237,11 @@ $ git diff --cached
 表示的是，比较HEAD和暂存区的差异
 如果比较没有问题，就可以git commit -m 'xxx'
 
-$ git diff 
+$ git diff
 //直接git diff 可查看所有的工作区和暂存区的差异
 
-$ git diff -- index.html 
+$ git diff -- index.html
 // -- (空格) 后面跟哪个文件就查看哪个文件工作区和暂存区之间的差异
-
 
 $ git reset HEAD
 取消暂存区所有的文件，恢复到与工作区一致
@@ -286,11 +296,12 @@ $ git rebase -i commitID(这个commitID是需要合并的最后一个)
 弹出vim，将中间的需要合并的commit 的pick修改成s，保存退出，弹出另一个vim编辑器，稍微编辑一下合并commit的原因，写完后即可退出。
 
 ### Github文件夹大小写问题
+
 git是默认不区分大小写的，之前的Button文件夹，后来将文件夹的名称改为了button，然而在Github上是不会将大写改为小写的。
 
 #### 解决方法
 
-进入`.git`文件夹，将`config`文件的 `ignorecase=true` 改为 `ignorecase=false`。
+进入 `.git`文件夹，将 `config`文件的 `ignorecase=true` 改为 `ignorecase=false`。
 
 ## 9、git如何删除文件
 
@@ -300,6 +311,7 @@ $ git rm filename(具体的文件名)
 或者先执行：$ rm filename 再执行 $ git rm filename  都是删除filename文件
 
 ## 10、开发过程中临时加塞了紧急任务怎么处理呢？
+
 在我们开发的过程中，测试突然说，某个commit出问题了，要临时修复这个commit的，这个时候就需要把我们当前的修改保存到一个区域里面，先去解决临时的commit，问题解决后，再回到开发过程
 
 $ git stash
@@ -314,6 +326,7 @@ $ git stash apply
 $ git stash pop(将之前保存的代码恢复到工作区，删除git stash list里的信息)
 
 ## 11、指定不需要git管理的文件(也就是说，指定一些不需要上传到git仓库的文件)
+
 ```javascript
 #  过滤掉整个node_modules文件夹
 node_modules
@@ -324,6 +337,7 @@ node_modules
 #  过滤掉dist文件夹下的文件
 dist/
 ```
+
 **shell命令：**
 1、删除单个文件$ rm 1.txt
 2、强制删除文件，无需确认 $ rm -rf 1.txt
@@ -333,6 +347,7 @@ dist/
 $ rm -rf !(1.txt)
 
 ## 12、Git的备份
+
 ![image.png](images/git004.png)
 
 Git 备份：将原有的Git仓库从一个地方传输到另一个地方做个备份，需要用的传输协议。
@@ -344,12 +359,12 @@ Git的传输协议包含三种类型的协议：本地协议，http/https协议�
 
 http/https协议：
 http://git-server.com:port/path/to/path/repo.git
-https://git-server.com:port/path/to/path/repo.git 
+https://git-server.com:port/path/to/path/repo.git
 ssh协议：user@git-server.com:/path/to/path/repo.git (工作中最常用的智能协议)
 
 注：除哑协议外，其他均称为智能协议，二者最明显的区别：使用智能协议在仓库备份的过程中会有进度的显示。备份操作，Git备份，可以使用 git clone 使用不同的协议将远端仓库备份到本地。
 
-git clone --bare  remote-repo.git  new-repo.git 
+git clone --bare  remote-repo.git  new-repo.git
 --bare: 克隆一个不带工作区的仓库
 git clone --bare /d/git-study/.git  ya.git  (哑协议)
 git clone --bare file:///d/git-study/.git  zhienng.git (智能协议)
@@ -358,12 +373,13 @@ git clone --bare file:///d/git-study/.git  zhienng.git (智能协议)
 git remote -v
 
 添加新的远端仓库：
-git remote add filename file:///d/git-study/zhineng.git 
+git remote add filename file:///d/git-study/zhineng.git
 filename  新建远端仓库别名
 
 $ git push filename 分支名
 
 ## 13、查看公私钥
+
 $ cd ~/.ssh
 $ ls -al
 total 29
@@ -378,6 +394,7 @@ $ cat id_rsa.pub
 查看公钥
 
 ## 14、本地仓库同步到Github
+
 $ git remote add origin git@github.com:izph/git-test.git
 origin：是远程仓库的名称，可自行命名
 
@@ -407,34 +424,38 @@ $ git clone url（filename，不写的话，默认为远端仓库名称）
 拉取远程代码到当前目录下，并且重命名文件夹为filename
 
 ## 15、不同的人修改了不同的文件如何处理
+
 A同事修改dev分支的index.html文件，提交了，并且推送到了远端git仓库
 此时，B同事也修改了dev分支的readme文件，这时候B同事提交，并想push到远端，这时候会报错，说远端的最新dev分支和B同事，本地的dev分支有冲突，
 B同事应该执行：
 $ git fetch origin（拉取远端最新代码）
 
-$ git merge origin/dev（将远端最新的dev合并到本地dev） 
+$ git merge origin/dev（将远端最新的dev合并到本地dev）
 $ git merge commitID（也可以，但是必须是最新拉下来dev的commitID），用 git branch -av 查看commitID
 
 $ git push origin（此时，推送push到远端就不会出错了）
 
 ## 16、不同的人修改了相同的文件的不同地方
+
 和15基本上一样的操作，git是有能力merge合并 同一文件，不同区域的修改的
 其实可以直接git pull（拉取fetch，并且merge合并），再推送即可git push
 
 ## 17、不同的人修改了相同的文件的相同区域，这时候需要人为手动修改冲突
+
 想push时，无法提交，此时我们需要git pull拉取最新代码
 不同的人修改了相同的文件的相同区域，这时候需要人为手动修改冲突，进入到有冲突的文件，如下
 HEAD为当前同事修改的，====以下为其他同事修改的，这时候就需要和同事沟通，进行处理
 如果同事双方的修改都需要，则把
 <<<<<<HEAD
-=======
->>>>>>>
+==========
+
 这些注释说明都删除了，保存
 git commit -m "xxxxx"提交
 git push再推送
 ![image.png](images/git005.png)
 
 ## 18、一个人修改了home文件的文件名，另一个人还在home文件在修改内容，这时候该怎么办？
+
 A同事修改了home文件的文件名，另一个同事B还在home文件在修改内容，变更名字的同事A commit后，将更名的信息push到远端，这时候B同事修改后，也想push的远端，会报错，此时B同事再拉取一下git pull即可，
 git会知道是文件名变更了
 
@@ -450,6 +471,7 @@ $ git commit -m "xxxxx"
 最后push即可
 
 ## 19、git集成使用禁忌！！！
+
 当我们再进行版本回退的过程中执行
 $ git reset --hard commitID
 如果再执行
@@ -457,6 +479,7 @@ $ git push -f（origin 分支名称）
 会把远程仓库也会倒退回去以前的版本，只是非常危险的！
 
 ## 20、github搜索
+
 **Git** 是一个开源的**分布式版本控制系统**，可以有效、高速地处理从很小到非常大的项目版本管理。
 **GitHub是一个面向开源及私有软件项目的托管平台**
 **Github常用词含义**
@@ -493,7 +516,6 @@ location: China
 - **in:name xxx** 项目名包含xxx
 - **in:description xxx** 项目描述包含xxx
 - **in:readme xxx** 项目介绍文档里含有xxx
-
 - **stars:>xxx** **stars数大于xxx**
 - **stars:xx..xx** **stars数在xx..xx之间**
 - **forks:>xxx** **forks数大于xxx**
@@ -513,4 +535,3 @@ location: China
 
 blog in:readme stars:>5000
 博客搜索
-
