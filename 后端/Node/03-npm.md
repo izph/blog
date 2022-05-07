@@ -43,3 +43,16 @@ node安装教程和更改全局模块的安装路径可参考：[Node.js的安�
   }
 }
 ```
+## 查看npm镜像源
+
+- `npm config ls`
+- `npm get registry`
+
+## npm和cnpm的镜像源
+
+- npm: `https://registry.npmjs.org/`
+- cnpm: `https://registry.npm.taobao.org/`
+
+## 切换npm的镜像源
+
+`npm config set registry xxxUrl`

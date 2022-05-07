@@ -290,7 +290,7 @@ SVG（可以用任何的css控制）
 ```js
 xxx/node_modules/@types/react-router-dom/index.d.ts(59,34): error TS2694: Namespace '"/node_modules/history/index"' has no exported member 'LocationState'.
 ```
-#### 本地测试(npm link)
+### 本地测试(npm link)
 
 - 在yolo-ui的根目录下执行npm link命令，npm link的作用是可以让未发布的npm包，做本地测试，映射脚本吧。
 
@@ -328,4 +328,53 @@ import "yolo-ui/dist/index.css";
 
 ![images](images/yolo-build-001.png)
 
+### 将yolo-ui发布到npm
+
+- 切换npm的源镜像为npm的原生源
+- 在命令行工具执行npm adduser，填写username、password and email 登录(sign in)
+- 在package.json添加一些必要信息
+```json
+{ 
+  "files": [
+    "dist"
+  ], // 发布哪些文件到npm
+  // 添加prepublish命令
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build:lib": "npm run clean && npm run build-ts && npm run build-css",
+    "build-ts": "tsc -p tsconfig.build.json",
+    "build-css": "lessc ./src/style/index.less ./dist/index.css",
+    "prepublish": "npm run build:lib"
+  },
+}
+```
+- 执行npm publish即可发布到npm
+![image.png](images/yolo-npm-publish.png)
+
+- 此外，还可以在peerDependencies中告诉用户，要使用某某依赖需要安装什么依赖，如下：
+要使用yolo-ui库，需要安装react和react-dom的16.8.0版本以上。当npm i yolo-ui的，peerDependencies里面的依赖不会被安装，会有一个日志输出，npm warning会提示用户需要安装react和react-dom的依赖。
+```json
+// package.json
+{ 
+  "peerDependencies": {
+    "react": "≥16.8.0",
+    "react-dom": "≥16.8.0"
+  },
+}
+```
+
 ## CI/CD，文档的生成
+### CI-持续集成
+
+- 频繁的奖代码集成到主干（master）
+- 快速发现错误
+- 防止分支大幅偏离主干
+- 持续集成的目的，让产品快速迭代，同时保证比较高的质量
+- 集成到主干master之前，必须通过自动化测试，只要有一个测试用例失败，就不能集成
+
+### CD-持续交付和持续部署
+- 持续交付：频繁的将软件的新版本，交付给质量团队或者用户，以供评审，然后由QA进行测试，通过之后，就进入生产阶段
+- 持续部署：代码通过评审以后，自动部署到生产环境，持续部署的前提是能够自动化完成测试，构建部署等等步骤
+
+## Travis CI（自动化平台）
+
