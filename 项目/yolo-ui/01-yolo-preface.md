@@ -1,15 +1,15 @@
 ---
-title: Yolo UI 前言
+title: Yolo UI 实现
 date: 2022-02-27 23:22:10
 permalink: /项目/yolo-ui/yolo-preface
 categories:
   - 项目
 tags:
 ---
-
 # 核心技术栈
 
 React + TypeScript + Less + dumi
+
 # 样式解决方案
 
 ## 1. Inline CSS：快速写一些简单的样式
@@ -64,6 +64,7 @@ primary（#0d6efd）、default（#ffffff）、success（#15bd02）、warning（#
 ### Button组件需求分析
 
 需要考虑padding的大小、lineHeight高度、颜色、文字居中、box-shadow，disabled时的特殊样式，鼠标的cursor的变化。
+
 - Button Size的大小其实就是padding控制，font-size不同、border的不同。
 - Button Type是变化background-color，border-color、字体颜色。
 - 同时还有添加不同的状态、hover之后要颜色发生一定的变化，focus颜色变化，disabled颜色也发生变化。
@@ -126,9 +127,11 @@ Menu.Item提取出来做单独的组件，任何属性都可以加到Item上，�
 图标的历史演化，上古时期的雪碧图（不能缩放），Font Icon（用字体文件的字符编码，代表图标，然后通过特定的class加伪类，加入到浏览器中），SVG（可以用任何的css控制）
 
 ### Icon
+
 Icon 基于 Font Awesome 封装
 
 ## Transition
+
 封装一个Transition过渡动画，以便其他组件的使用。
 
 ## input输入框
@@ -158,7 +161,6 @@ Icon 基于 Font Awesome 封装
 
 ![image.png](images/upload001.png)
 
-
 ## Progress
 
 根据传入的百分比，来显示一个进度条。最外面有一个灰色progress-outer，它的高度可以配置，prosition为相对定位。progress-outer之上会有一个进度条，颜色可以配置，prosition为absolute，垂直居中，悬浮到progress-outer上，top和left都为0，则表示在最左边（0%），同时百分比也支持显示和隐藏
@@ -166,19 +168,20 @@ Icon 基于 Font Awesome 封装
 ![image.png](images/progress001.png)
 
 ## 组件测试用例分析和编码
+
 [组件测试](02-yolo-test-notes.md)
 
 ## 代码打包输出和发布
 
 ### 1. 组件库的入口文件
 
-- 组件库的入口文件为```src/index.ts```
-
-- 组件库的全局样式文件为```src/style/index.less```或者```src/global.less```，两者都可以用来全局样式的提取。
+- 组件库的入口文件为 ``src/index.ts``
+- 组件库的全局样式文件为 ``src/style/index.less``或者 ``src/global.less``，两者都可以用来全局样式的提取。
 
 ### 2. 组件的打包
 
 #### 在根目录新建tsconfig.build.json文件
+
 ```json
 {
   "compilerOptions": {
@@ -210,16 +213,16 @@ Icon 基于 Font Awesome 封装
 }
 ```
 
-- 在执行build-ts发生了很多个报错如下，经过在[stackoverflow](https://stackoverflow.com/)上查找相关资料得知，是```@types/react-router-dom```和```@types/react-router```的版本太低了导致了，把这两个依赖升级到最新版本后，就可以正常打包了。
+- 在执行build-ts发生了很多个报错如下，经过在[stackoverflow](https://stackoverflow.com/)上查找相关资料得知，是 ``@types/react-router-dom``和 ``@types/react-router``的版本太低了导致了，把这两个依赖升级到最新版本后，就可以正常打包了。
+
 ```js
 xxx/node_modules/@types/react-router-dom/index.d.ts(59,34): error TS2694: Namespace '"/node_modules/history/index"' has no exported member 'LocationState'.
 ```
+
 ### 本地测试(npm link)
 
 - 在yolo-ui的根目录下执行npm link命令，npm link的作用是可以让未发布的npm包，做本地测试，映射脚本吧。
-
 - 在yolo-ui-test（create-react-app生成的测试项目）工程下执行npm link yolo-ui。
-
 - 在yolo-ui-test的package.json中加入yolo-ui依赖
 
 ```json
@@ -229,7 +232,9 @@ xxx/node_modules/@types/react-router-dom/index.d.ts(59,34): error TS2694: Namesp
   },
 }
 ```
-- 分别在```App.tsx```和```index.tsx```引入组件和组件的样式
+
+- 分别在 ``App.tsx``和 ``index.tsx``引入组件和组件的样式
+
 ```tsx
 // App.tsx
 import { Button } from 'yolo-ui';
@@ -244,10 +249,12 @@ function App() {
 
 export default App;
 ```
+
 ```tsx
 // index.tsx
 import "yolo-ui/dist/index.css";
 ```
+
 - 测试结果如下，本地测试没问题。
 
 ![images](images/yolo-build-001.png)
@@ -257,6 +264,7 @@ import "yolo-ui/dist/index.css";
 - 切换npm的源镜像为npm的原生源
 - 在命令行工具执行npm adduser，填写username、password and email 登录(sign in)
 - 在package.json添加一些必要信息
+
 ```json
 { 
   "files": [
@@ -272,11 +280,12 @@ import "yolo-ui/dist/index.css";
   },
 }
 ```
-- 执行npm publish即可发布到npm
-![image.png](images/yolo-npm-publish.png)
 
+- 执行npm publish即可发布到npm
+  ![image.png](images/yolo-npm-publish.png)
 - 此外，还可以在peerDependencies中告诉用户，要使用某某依赖需要安装什么依赖，如下：
-要使用yolo-ui库，需要安装react和react-dom的16.8.0版本以上。当npm i yolo-ui的，peerDependencies里面的依赖不会被安装，会有一个日志输出，npm warning会提示用户需要安装react和react-dom的依赖。
+  要使用yolo-ui库，需要安装react和react-dom的16.8.0版本以上。当npm i yolo-ui的，peerDependencies里面的依赖不会被安装，会有一个日志输出，npm warning会提示用户需要安装react和react-dom的依赖。
+
 ```json
 // package.json
 { 
@@ -288,6 +297,7 @@ import "yolo-ui/dist/index.css";
 ```
 
 ## CI/CD，文档的生成
+
 ### CI-持续集成
 
 - 频繁的奖代码集成到主干（master）
@@ -297,13 +307,12 @@ import "yolo-ui/dist/index.css";
 - 集成到主干master之前，必须通过自动化测试，只要有一个测试用例失败，就不能集成
 
 ### CD-持续交付和持续部署
+
 - 持续交付：频繁的将软件的新版本，交付给质量团队或者用户，以供评审，然后由QA进行测试，通过之后，就进入生产阶段
 - 持续部署：代码通过评审以后，自动部署到生产环境，持续部署的前提是能够自动化完成测试，构建部署等等步骤
 
 ## Travis CI（自动化平台）
 
-
 ## yolo-ui静态文档上传至阿里云服务器
+
 [yolo-ui静态文档上传至阿里云服务器](03-yolo-upload-aliyun.md)
-
-

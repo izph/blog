@@ -1,6 +1,6 @@
 ---
 title: BOM笔记（一）
-date: 2002-09-24 22:13:16
+date: 2020-09-24 22:13:16
 permalink: /前端/JavaScript/BOM/BOMnote01
 categories:
   - 前端

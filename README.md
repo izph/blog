@@ -11,12 +11,17 @@ tagline: 坚持初衷，成为更好的自己
 #   background: '#fff',
 #   borderRadius: '1rem',
 # }
+
 bgImage: '/banner-bg.png'
 bgImageStyle: {
   maxHeight: '450px',
   text-align: 'center',
   overflow: hidden,
 }
+# bgStyle: {
+#   background-color: '#d9f1fd'
+# }
+
 isShowTitleInHome: false
 actionText: Guide
 actionLink: /views/other/guide

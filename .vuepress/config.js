@@ -20,8 +20,7 @@ module.exports = {
       },
       {
         text: "前端",
-        // link: "/前端",
-        icon: "reco-home",
+        icon: "reco-blog",
         items: [
           { text: 'HTML', link: '/前端/HTML/HTMLNoteOne.md' },
           { text: 'CSS', link: '/前端/CSS/CSSNoteOne.md' },
@@ -40,8 +39,7 @@ module.exports = {
       },
       {
         text: "后端",
-        // link: "/前端",
-        icon: "reco-home",
+        icon: "reco-blog",
         items: [
           { text: 'Node', link: '/后端/Node/01-观察者模式.md' },
           { text: 'Koa', link: '/后端/Koa/01-koa-basics.md' },
@@ -49,8 +47,7 @@ module.exports = {
       },
       {
         text: "工程化",
-        // link: "/前端",
-        icon: "reco-home",
+        icon: "reco-api",
         items: [
           { text: '计网', link: '/工程化/计网/http.md' },
           { text: '计算机基础', link: '/工程化/计算机基础/01-计算机操作系统.md' },
@@ -64,8 +61,7 @@ module.exports = {
       },
       {
         text: "算法",
-        // link: "/前端",
-        icon: "reco-home",
+        icon: "reco-document",
         items: [
           { text: 'DataStructure', link: '/算法/数据结构/01-复杂度.md' },
           { text: 'LeetCode', link: '/算法/LeetCode/02-字符串.md' },
@@ -73,8 +69,7 @@ module.exports = {
       },
       {
         text: "项目",
-        // link: "/前端",
-        icon: "reco-home",
+        icon: "reco-coding",
         items: [
           { text: 'yolo-ui', link: '/项目/yolo-ui/01-yolo-preface.md' },
           { text: 'md-to-html', link: '/项目/md-to-html/01-handwritten-md-to-html.md' },
@@ -97,49 +92,26 @@ module.exports = {
         icon: "reco-date"
       },
     ],
-    // sidebar: {
-    //   "/前端/React": [
-    //     {
-    //       text: "React常用生命周期",
-    //       link: "/前端/React/React常用生命周期",
-    //     },
-    //     {
-    //       text: "ReactHook笔记",
-    //       link: "/前端/React/ReactHook笔记",
-    //     }
-    //     ,
-    //     "",
-    //     "theme",
-    //     "plugin",
-    //     "api"
-    //   ]
-    // },
     type: "blog",
     // 导航栏的分类和标签
     blogConfig: {
       category: {
-        location: 6,
+        location: 7,
         text: "分类"
       },
       tag: {
-        location: 7,
+        location: 8,
         text: "标签"
       }
     },
     friendLink: [
-      // {
-      //   title: "午后南杂",
-      //   desc: "Enjoy when you can, and endure when you must.",
-      //   email: "1156743527@qq.com",
-      //   link: "https://www.recoluan.com"
-      // },
-      // {
-      //   title: "vuepress-theme-reco",
-      //   desc: "A simple and beautiful vuepress Blog & Doc theme.",
-      //   link: "https://vuepress-theme-reco.recoluan.com"
-      // }
+      {
+        title: "vuepress-theme-reco",
+        desc: "A simple and beautiful vuepress Blog & Doc theme.",
+        email: "",
+        link: "https://vuepress-theme-reco.recoluan.com"
+      }
     ],
-    // "logo": "/logo.png",
     logo: "/z.jpg",
     search: true,
     searchMaxSuggestions: 10,
@@ -150,12 +122,11 @@ module.exports = {
     authorAvatar: "/z.jpg",
     "record": "xxxx",
     startYear: "2020",
-    subSidebar: 'auto'//在所有页面中启用自动生成子侧边栏，原 sidebar 仍然兼容
+    subSidebar: 'auto' //在所有页面中启用自动生成子侧边栏，原sidebar仍然兼容
   },
   // md设置
   markdown: {
-    // ......
-    lineNumbers: true, // 代码行号
+    lineNumbers: true,  // 代码行号
     extendMarkdown: md => {
       md.use(require("markdown-it-disable-url-encode"));
     }
