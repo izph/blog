@@ -301,11 +301,16 @@ module.exports = {
 
 ### 文件指纹
 打包后输出的文件名的后缀，如`index_0a4dfa7c33787eec103e.chunk.js`中的0a4dfa7c33787eec103e
-- Hash：和整个项目的构建相关，只要项目文件有修改，整个项目构建的 hash 值就会更改
-- Chunkhash：对于 JS 文件，和 webpack 打包的 chunk 相关，不同的 entry 会生成不同的 chunkhash 值
-- Contenthash：对于 CSS 文件，根据文件内容来定义 hash，文件内容不变，contenthash 不变
+- hash：和整个项目的构建相关，只要项目文件有修改，整个项目构建的 hash 值就会更改
+- chunkhash：对于 JS 文件，和 webpack 打包的 chunk 相关，不同的entry会生成不同的 chunkhash 值
+- contenthash：将根据资源内容创建出唯一 hash。当资源内容发生变化时，[contenthash] 也会发生变化。
 1. JS 的文件指纹设置，在output 的 filename，使用 [chunkhash]
 2. CSS 的文件指纹设置，可以在MiniCssExtractPlugin使用[contenthash]
+
+使用hash的场景还应该结合mode来考虑，如果mode是development的时候，在使用hmr的情况下，尽量避免使用chunkhash和contenthash，应该使用hash。而在mode是production的时候，就是不用hmr的情况下，这时候就适合使用chunkhash了。hmr只在development开发阶段使用。
+
+js使用chunkhash是便于寻找资源，js的资源的关联度更高；而css采用contenthash是因为css一般是根据不同的页面书写的，css资源之前的关联度不高，也就不用在其他资源修改，而css部分没有修改的时候重新更新css。
+
 
 MiniCssExtractPlugin作用
 - 将 CSS 提取到单独的文件中
@@ -331,7 +336,7 @@ module.exports = {
 
 ```
 ### 图片的文件指纹设置
-设置 file-loader 的 name，使用 [hash]
+在 file-loader或者url-loader 的options参数中设置name，使用[hash]
 
 |占位符名称|	含义|
 |---|---|
@@ -339,7 +344,7 @@ module.exports = {
 |[name]	|文件名称|
 |[path]	|文件的相对路径|
 |[folder]	|文件所在的文件夹|
-|[contenthash]|	文件的内容 hash，默认是 md5 生成|
+|[contenthash]|	文件的内容 hash，默认是 md5 生成，默认有32位，一般取前8位|
 |[hash]	|文件内容的 hash，默认是 md5 生成|
 |[emoji]|	一个随机的指代文件内容的 emoji|
 
@@ -354,7 +359,7 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: '[name][hash:8].[ext]'
+                            name: 'images/[name][hash:8].[ext]'
                         }
                     }
                 ]
@@ -365,6 +370,52 @@ module.exports = {
 
 ```
 
+## webpack之JS、css和html文件的压缩
+webpack4 内置了uglifyjs-webpack-plugin 插件（mode为production），默认打包出的 JS 文件已压缩过
+
+1. CSS 文件的压缩
+```bash
+# 安装依赖，使用 optimize-css-assets-webpack-plugin 插件，同时使用预处理器 cssnano
+npm i optimize-css-assets-webpack-plugin cssnano -D
+```
+2. html文件的压缩
+```js
+const path = require('path');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+module.exports = {
+    entry: {
+        index: './src/index.js',
+    },
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: '[name][chunkhash:8].js'
+    },
+    plugins: [
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.css$/g,
+            cssProcessor: require('cssnano')
+        }),
+        // 通常是一个html页面对应一个HtmlWebpackPlugin，多个html就使用多个HtmlWebpackPlugin
+        new HtmlWebpackPlugin({
+            template: path.join(__dirname, 'src/index.html'),  // html 模板所在的位置
+            filename: 'index.html',  // 指定打包出 html 的文件名称
+            chunks: ['index'],  // 指定生成的 html 要 使用哪些 chunk
+            inject: true,  // 将指定的chunks（js、css）引入到 html中
+            minify: {
+                html5: true,
+                // 移除空格
+                collapseWhitespace: true,
+                // 当标记之间的空格包含换行符时，始终折叠为1换行符(不完全删除它)，必须与collapseWhitespace=true一起使用
+                preserveLineBreaks: false,
+                minifyCSS: true, // 压缩文内css
+                minifyJS: true,  // 压缩文内js
+                // 移除注释
+                removeComments: false
+            }
+        })
+    ]
+}
+```
 ## 理解 loader 和 plugin
 
 要让一个 Less 文件最终打包到目标文件中，并被浏览器运行，那么首先需要把 Less 代码转换成 Css，再通过 style 标记插入到浏览器中。
