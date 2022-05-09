@@ -56,3 +56,26 @@ node安装教程和更改全局模块的安装路径可参考：[Node.js的安�
 ## 切换npm的镜像源
 
 `npm config set registry xxxUrl`
+
+# cross-env
+## 出现cross-env的大概原因
+- 设置NODE_ENV =production环境变量时，大多数Windows命令提示将会阻塞(报错)，也就是说windows不支持NODE_ENV=development的设置方式。
+
+- cross-env能够提供一个设置环境变量的scripts，然后在windows上也能兼容运行。
+
+## 使用cross-env
+安装cross-env: `npm install --save-dev cross-env`
+```json
+// NODE_ENV环境变量将由cross-env设置
+{
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js"
+  }
+}
+```
+通过process.env.NODE_ENV可以去到设置的值
+
+## cross-env的其他用法
+- 简单理解为：cross-env Attr=value，可以在 process.env这个对象上挂载Attr属性，值为value，在项目中通过process.env.Attr拿到value。
+- 在 scripts 中配置`cross-env BABEL_ENV=test`，当前环境可通过 process.env.BABEL_ENV 来获得。
+- `cross-env DEPLOY=server1`，通过process.env.DEPLOY获取DEPLOY的值

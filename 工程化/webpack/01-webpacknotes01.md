@@ -11,6 +11,82 @@ tags:
 ---
 # webpack笔记（一)
 
+## 为什么需要构建工具
+- 本质上来讲，构建工具的作用是连接开发者使用高效率的语言语法、开发工具与实现浏览器高效可读代码的桥梁。
+- **转换ES6语法**：ES6语法已经在前端开发领域普遍使用，然而很多浏览器依旧对ES6没有提供全面的兼容和支持。所以需要构建工具来进行编译。
+- **转换JSX、vue指令**：前端三大框架里，例如React的JSX，VUE和Angular的指令都是浏览器无法识别的，需要编译转换。
+- **CSS前缀补全，预处理器**：在CSS开发中，我们已经习惯使用less、sass等预编译工具，有了构建工具做编译转化，可以让我们开发效率更高，代码更好维护。
+- **图片压缩**：前端必不可少要使用图片等多媒体资源，构建工具可以对它们进行压缩。
+- **压缩混淆**：当前的前端开发都是模块开发，也引入了大量的依赖包，为了让浏览器对代码的加载更快，以及代码不会被轻易识别和可读，需要构建工具对代码进行压缩和混淆。
+
+### 前端构建之路：grunt -> gulp -> rollup、webpack、parcel、vite
+
+
+- webpack4版本以上，webpack和webpack-cli是分开的，需要同时安装
+- 安装的局部开发依赖如果有命令，会在node_modules/.bin目录创建软连接，package.json是可以读取到依赖下.bin目录下的命令，可以在package.json直接使用该命令。
+- webpack仅支持js和json文件，想对其他类型的文件打包需要使用loader，转化成为有效的模块。loader本身是一个函数，接受源文件作为参数，返回转换的结果。
+- plugins是增强webpack功能，打包输出js文件（bundle）的一个优化，资源管理和环境变量的注入，作用于整个构建过程。可以理解为任何loader没办法做的事情，都可以用plugins去完成。比如构建之前需要手动删除目录，其实可以通过plugins很灵活的去完成。
+- 简单理解：chunk是webpack打包过程中依赖，bundle是输出的产物。
+
+### webpack指令
+- webpack默认配置文件：webpack.config.js
+- 自定义使用其他配置文件打包：`webpack --config filename`
+- 监听变动并自动打包：`webpack --watch`或者在webpack.config.js中设置`watch: true`，文件监听是在发现源码发生变化时，自动重新构建出新的输出文件。
+[webpack文件监听的原理](###webpack文件监听的原理)
+- 压缩混淆脚：`webpack -p`
+- 方便出错时能查阅更详尽的信息：`webpack  --display-error-details`
+- 让编译的输出内容带有进度和颜色：webpack --progress --colors
+- 模块热替换，在前端代码变动的时候无需整个刷新页面，只把变化的部分替换掉：webpack-dev-server --hot
+- inline选项会为入口页面添加热加载功能，即代码改变后重新加载页面（刷新浏览器）：webpack-dev-server --inline
+
+
+
+## 常见的loaders有哪些
+|名称|描述|
+|---|---|
+|babel-loader|转换ES6、ES7等JS新特性语法|
+|css-loader|支持.css文件的加载和解析|
+|less-loader|将less文件转换成css|
+|ts-loader|将TS转换成JS|
+|file-loader|进行图片、字体、媒体等的打包|
+|raw-loader| 首屏资源需要内联情况下，raw-loader可以将文件以字符串的形式导入|
+|thread-loader|正常情况下webpack开一个进程打包，thread-loader作用是多进程打包JS和CSS|
+
+## 常见的plugins
+|名称|描述|
+|---|---|
+|splitchunksplugin |将chunks相同的模块代码提取成公共js|
+|CleanWebpackPlugin |清理构建目录|
+|mini-css-extract-plugin|将CSS从 bunlde文件里提取成一个独立的CSS文件|
+|copyWebpackPlugin|将文件或者文件夹拷贝到构建的输出目录|
+|HtmlWebpackPlugin|创建html文件，去承载输出的bundle|
+|UglifyjsWebpackPlugin|压缩JS|
+|ZipWebpackPlugin|将打包出的资源生成一个zip包|
+
+## mode内置功能
+|名称|描述|
+|---|---|
+|development|设置process.env.NODE_ENV的值为development、开启NamedChunksPlugin和NamedModulesPlugin|
+|production |设置process.env.NODE_ENV的值为production 、开启FlagDependencyUsagePlugin、FlagIncludedChunksPlugin 、ModuleconcatenationPlugin、NoEmitOnErrorsPlugin、OccurrenceorderPlugin、SideEffectsFlagPlugin和TerserPlugin|
+|none|不开启任何优化选项|
+
+## 解析ES6
+- 解析ES6，需要在rules里面匹配js文件，并use: 'babel-loader'。babel-loader是依赖babel的，需要在根目录创建babel的配置文件.babelrc。
+- 需要安装@babel/core、@babel/preset-env、babel-loader
+```json
+// .babelrc
+{
+  // 一系列plugins的集合
+  "presets": [
+    "@babel/preset-env", // 增加ES6的babel preset配置，解析ES6
+    "@babel/preset-react", // 安装该依赖，并增加react的babel preset配置，解析react相关的语法，jsx
+  ],
+  // 一个plugins对应一个功能
+  "plugins": [
+    "@babel/proposal-class-properties"
+  ]
+}
+```
 ## 为什么需要了解 Webpack？
 
 个人认为，每个前端开发者不一定要精通 Webpack，但有必要进行了解，至少要能看得懂一个 Webpack 的配置文件，以及遇到问题时能知道是 Webpack 的问题，还是自己代码的问题。
@@ -33,16 +109,32 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
+  mode: 'development', // production or development or none
+  /**
+   * 单入口entry: '路径'
+   * 多入口entry: { key: 'value' }
+   * key可自定义，value是入口文件路径
+  */
   entry: {
     // 定义应用的入口点 src/app.js，并命名为 main
-    main: path.resolve(__dirname, './src/app.js'),
+    main: path.resolve(__dirname, './src/app.js'), 
   },
+  /**
+   * filename, path
+   * [name].[hash:8].bundle.js、[name].[chunkhash:8].bundle.js
+   * hash字段是根据每次编译compilation的内容计算所得、chunkhash是根据模块内容计算出的hash值
+  */
   output: {
     // 打包输出的文件名，这里将生成 main.bundle.js
-    filename: '[name].bundle.js',
-    // 定义打包结果的输出位置
+    // name是一个占位符，通过占位符确保文件名称的唯一，一般entry多入口使用占位符区分
+    filename: '[name].bundle.js', 
+    // 定义打包结果的输出位置build目录
     path: path.resolve(__dirname, 'build'),
   },
+  /**
+   * test指定匹配规则
+   * use指定使用的loader名称
+  */
   module: {
     // 定义处理源文件的规则，rules 下会按顺序使用匹配的规则
     rules: [
@@ -56,16 +148,68 @@ module.exports = {
           loader: 'babel-loader',
           // babel-loader 的一些选项
           options: {
-            presets: ['@babel/preset-env'], //确保 Babel 能够处理 JSX 语法
+            presets: ['@babel/preset-env'], // 确保 Babel 能够处理 JSX 语法
           },
         },
+      },
+      {
+        test: /\.css$/,
+        /**
+         * css-loader用于处理加载.css文件，并且转换成commonjs对象
+         * style-loader将样式通过<style>标签插入到head中
+        */
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
       },
       {      
         // 检测 less 文件      
         test: /\.less$/,      
         // 使用了三个 loader，注意执行顺序是数组的倒序      
-        // 也就是先执行 less-loader      
+        // 也就是先执行 less-loader ，将less转换成css     
         use: ['style-loader', 'css-loader', 'less-loader'],    
+      },
+      {
+        // webpack 默认处理不了html中img图片
+        // 匹配 图片资源
+        test: /\.(jpg|png|gif|jpeg)$/,
+        // 通过 url-loader 或者 file-loader 处理图片资源
+        // url-loader内部使用了file-loader，可以设置较小的资源自动base64
+        // base64格式的图片  可打包在js中直接使用
+        loader: 'url-loader', 
+        options: {
+          // 图片大小小于8kb，就会被base64处理
+          // 优点: 减少请求数量（减轻服务器压力）
+          // 缺点：图片体积会更大（文件请求速度更慢）
+          limit: 8 * 1024,
+          // 问题：因为url-loader默认使用es6模块化解析，而html-loader引入图片是commonjs
+          // 解析时会出问题：[object Module]
+          // 解决：关闭url-loader的es6模块化，使用commonjs解析
+          esModule: false,
+          // 给图片进行重命名
+          // [hash:10]取图片的hash的前10位
+          // [ext]取文件原来扩展名
+          name: '[contenthash:10].[ext]',
+          outputPath: 'imgs',
+        }
+      },
+      {
+        test: /\.html$/,
+        // 处理html文件的img图片（负责引入img，从而能被url-loader进行处理）
+        loader: 'html-loader'
+      },
+      // 打包其他资源(除了html/js/css资源以外的资源)
+      {
+        // file-loader处理字体文件
+        // 排除css/js/html资源
+        test: /\.(woff|woff2|ttf|eot|otf)$/,
+        exclude: /\.(css|js|html|less)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[contenthash:10].[ext]',
+          outputPath: 'media'
+        }
       },
     ],
   },
@@ -80,6 +224,146 @@ module.exports = {
 ```
 
 代码中其实已经很直观了，我们不仅定义了输入输出，还配置了 babel-loader，用于编译 JavaScript 文件到兼容主流浏览器的代码。同时，还为 babel-loader 设置了参数 presets，例子中这个参数的值 @babel/preset-env 可以确保 Babel 能够处理 JSX 等语法。最后，我们通过一个 HtmlWebpackPlugin，来自动生成 index.html。
+
+### webpack文件监听的原理
+轮询判断文件的最后编辑时间是否变化，
+某个文件发生变化了，并不会立刻告诉监听者，而是先缓存起来，等aggregateTimeout.
+
+[watch 和 watchOptions](https://www.webpackjs.com/configuration/watch/#watch)
+```js
+module.exports = {
+  // 默认是false，不开起监听
+  watch: true,
+  watchOptions: {
+    // 默认为空，不监听的文件或者文件夹，支持正则匹配
+    ignored: /node_modules/,
+    // 监听到变化发生后会等300ms再去执行，默认300ms
+    aggregateTimeout: 300,
+    // 判断文件是否发生变化是通过不停询问系统指定文件有没有变化实现的，默认每秒检查1次变化
+    // 间隔xxx秒检查一次变化
+    poll: 1000
+  }
+}
+```
+
+### 热更新
+1、使用 webpack-dev-server
+
+- 自动编译并运行，不需要手动刷新浏览器，每次修改代码都需要重新执行 webpack 命令，可以使用 webpack-dev-server 自动打包运行
+- 不输出文件，而是放在内存中，watch是放在磁盘里
+- 与 HotModuleReplacementPlugin 插件配合使用
+```bash
+npm i webpack-dev-server -d
+```
+- webpack.config.js
+```js
+const path = require('path');
+const webpack = require('webpack');
+module.exports = {
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: '[name].js'
+    },
+    // 热更新一般只在开发模式使用
+    mode: 'development',
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ],
+    devServer: {
+        contentBase: './dist',  // 设置基本目录结构
+        hot: true // 开启热更新
+    }
+}
+
+```
+- package.json，--open打开浏览器
+```json
+{
+  "scripts": {
+    "dev": "webpack-dev-server --open"
+  }
+}
+```
+### 热更新原理分析
+![img.png](images/webpack-hot001.png)
+
+- 首次编译：① -> ② -> A -> B
+- 修改代码后的热更新：① -> ② -> ③ -> ④
+- HMR Server -> HMR Runtime 以json形式传递
+
+|概念|描述|
+|--|--|
+|Webpack Compiler(webpack编译器)|将JS编译成 Bundle|
+|HMR Server	| 将热更新的文件传输给 HMR Runtime|
+|Bundle Server|	提供文件在浏览器的访问，提供类似的服务器环境访问，如localhost:3003/bundle.js，服务器和浏览器是ws链接|
+|HMR Runtime|	会被注入到浏览器，更新文件的变化|
+|bundle.js|	构建输出的文件|
+
+### 文件指纹
+打包后输出的文件名的后缀，如`index_0a4dfa7c33787eec103e.chunk.js`中的0a4dfa7c33787eec103e
+- Hash：和整个项目的构建相关，只要项目文件有修改，整个项目构建的 hash 值就会更改
+- Chunkhash：对于 JS 文件，和 webpack 打包的 chunk 相关，不同的 entry 会生成不同的 chunkhash 值
+- Contenthash：对于 CSS 文件，根据文件内容来定义 hash，文件内容不变，contenthash 不变
+1. JS 的文件指纹设置，在output 的 filename，使用 [chunkhash]
+2. CSS 的文件指纹设置，可以在MiniCssExtractPlugin使用[contenthash]
+
+MiniCssExtractPlugin作用
+- 将 CSS 提取到单独的文件中
+- 为每个包含 CSS 的 JS 文件创建一个 CSS 文件
+- 支持按需加载 CSS 和 SourceMaps
+- 下载
+```bash
+npm i mini-css-extract-plugin -D
+```
+```js
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+module.exports = {
+    output: {
+        path: path.resolve(__dirname, '/dist'),
+        filename: '[name][chunkhash:8].js'
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: '[name][contenthash:8].css'
+        })
+    ]
+}
+
+```
+### 图片的文件指纹设置
+设置 file-loader 的 name，使用 [hash]
+
+|占位符名称|	含义|
+|---|---|
+|[ext]|	资源后缀名|
+|[name]	|文件名称|
+|[path]	|文件的相对路径|
+|[folder]	|文件所在的文件夹|
+|[contenthash]|	文件的内容 hash，默认是 md5 生成|
+|[hash]	|文件内容的 hash，默认是 md5 生成|
+|[emoji]|	一个随机的指代文件内容的 emoji|
+
+```js
+const path = require('path');
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name][hash:8].[ext]'
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
+
+```
 
 ## 理解 loader 和 plugin
 
