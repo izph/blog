@@ -394,7 +394,7 @@ Scope Hoisting 是 webpack3 的新功能，它可以让 webpack 打包出来的�
 1. 没有 Scope Hoisting 时用 webpack 打包下面两个文件
 ```js
 // main.js
-export default "hello leo~";
+export default "hello";
 
 // index.js
 import str from "./main.js";
@@ -410,14 +410,14 @@ console.log(str);
         console.log(__WEBPACK_IMPORTED_MODULE_0__main_js__["a"]);  
     }),  
     (function (module, __webpack_exports__, __webpack_require__) {    
-        __webpack_exports__["a"] = ('hello leo~');  
+        __webpack_exports__["a"] = ('hello');  
     })
 ]
 ```
 3. 再开启 Scope Hoisting 后，相同源码打包输出结果变为：
 ```js
 [  (function (module, __webpack_exports__, __webpack_require__) {    
-        var main = ('hello leo~');    
+        var main = ('hello');    
         console.log(main);  
     })
 ]
@@ -523,3 +523,5 @@ module.exports = {
 ```
 
 ## webpack打包库和组件
+rollup打包组件和库更纯粹、更适合
+[实现get-var-type](/%E9%A1%B9%E7%9B%AE/get-var-type/01-get-var-type.md)
