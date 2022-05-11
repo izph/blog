@@ -524,4 +524,78 @@ module.exports = {
 
 ## webpack打包库和组件
 rollup打包组件和库更纯粹、更适合
+
 [实现get-var-type](/%E9%A1%B9%E7%9B%AE/get-var-type/01-get-var-type.md)
+
+## 服务端渲染(ssr)
+所有模板的资源的存储在服务端，内网机器获取数据更快，核心的优势是减少请求，减少白屏时间，对SEO友好。
+
+大致的思路是：将需要的服务端渲染的组件打包component，再通过一个renderToString(component)的方法将组件转化成字符串，最终将字符串拼接到html模板字符串中，由服务器路由将对应html模板返回给客户端。
+
+### next.js(react的ssr)
+
+## 优化构建时命令行的显示日志
+
+### 统计信息stats
+
+|Preset|Alternative|Description|
+|---|---|---|
+|"errors-ondy"|none|只在发生错误时输出|
+|"minimal"|none|只在发生错误或有新的编译时输出|
+|"none"|false|没有输出|
+|"normal"|true|标准输出|
+|"verbose"|none|全部输出|
+```js
+module.exports = {
+    // 开发阶段使用的是develop-server是
+    devServer:{
+        contentBase: './dist',
+        hot: true,
+        stats: "errors-ondy"
+    },
+    // 生产构建时
+    stats:"errors-ondy"
+}
+```
+
+### 优化构建信息
+
+- 安装`npm i friendly-errors-webpack-plugin -d`
+- 构建提示`success/waring/error`
+```js
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+module.exports = {
+    plugins: [
+        new FriendlyErrorsWebpackPlugin(),
+    ]
+}
+```
+
+## webpack错误捕获和异常处理
+
+### Node.js中的process.exit规范
+- 0表示成功完成，回调函数中，err 为null
+- 非0表示执行失败，回调函数中，err 不为 null，err.code 就是传给exit的数字
+
+### 如何主动捕获并处理构建错误
+- compiler在每次构建结束后会触发done这个hook
+- process.exit主动处理构建错误
+
+```js
+// webpack4，捕获错误
+module.exports = {
+    plugins: [
+        // 
+        function() {
+            // compiler里有hook，如果是done，代表这个构建完成
+            this.hooks.done.tap('done', (stats) => { // 监听
+                // stats的compilation是否存在errors，存在则构建失败
+                if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') == -1){
+                    console.log('build error');
+                    process.exit(1); // errno 1
+                }
+            })
+        }    
+    ]
+}
+```

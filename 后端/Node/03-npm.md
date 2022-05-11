@@ -79,3 +79,14 @@ node安装教程和更改全局模块的安装路径可参考：[Node.js的安�
 - 简单理解为：cross-env Attr=value，可以在 process.env这个对象上挂载Attr属性，值为value，在项目中通过process.env.Attr拿到value。
 - 在 scripts 中配置`cross-env BABEL_ENV=test`，当前环境可通过 process.env.BABEL_ENV 来获得。
 - `cross-env DEPLOY=server1`，通过process.env.DEPLOY获取DEPLOY的值
+
+## 语义化版本(Semantic version) 规范格式
+- 主版本号:当你做了不兼容的API修改；做一些总要特性的升级、前一个版本有很多不兼容的地方。
+- 次版本号:当你做了向下兼容的功能性新增；新增一个功能feture。
+- 修订号:当你做了向下兼容的问题修正。修复bug，修复问题
+### 版本例子
+X.Y.Z三位组成、版本是严格递增，发布重要的版本，可以发布先行版本号alpha（内部测试）、beta（外部小范围测试）、rc（公测）。
+在版本修订好后面加上一个链接号(-)，如`16.3.0-alpha.0`、`16.3.0-alpha.2`
+### 遵守semver规范的优势
+- 避免出现循环依赖
+- 减少依赖冲突
