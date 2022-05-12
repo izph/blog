@@ -49,7 +49,7 @@ tags:
 | less-loader   | 将less文件转换成css                                                   |
 | ts-loader     | 将TS转换成JS                                                          |
 | file-loader   | 进行图片、字体、媒体等的打包                                          |
-| raw-loader    | 首屏资源需要内联情况下，raw-loader可以将文件以字符串的形式导入        |
+| raw-loader    | 首屏资源需要内联情况下，raw-loader可以将文件转化成字符串的形式导入    |
 | thread-loader | 正常情况下webpack开一个进程打包，thread-loader作用是多进程打包JS和CSS |
 
 ## 常见的plugins
@@ -168,10 +168,10 @@ module.exports = {
           'css-loader'
         ]
       },
-      {    
-        // 检测 less 文件    
-        test: /\.less$/,    
-        // 使用了三个 loader，注意执行顺序是数组的倒序    
+      {  
+        // 检测 less 文件  
+        test: /\.less$/,  
+        // 使用了三个 loader，注意执行顺序是数组的倒序  
         // 也就是先执行 less-loader ，将less转换成css   
         use: ['style-loader', 'css-loader', 'less-loader'],  
       },

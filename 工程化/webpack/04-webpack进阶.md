@@ -385,6 +385,7 @@ Scope Hoisting 是 webpack3 的新功能，它可以让 webpack 打包出来的�
 - __webpack_require()根据moduleId来查看installModules里是否存在，不存在会创建一个新的module存放到installModules；
 - 通过 __webpack_require__(__webpack_require__.s = 0)，entry入口依赖，启动程序。
 
+
 ## Scope Hoisting原理（从rollup借鉴）
 - 原理：将所有模块的代码按照引用顺序放在一个函数作用域里，然后适当的重命名一些变量以防止变量名冲突，消除包裹
 - Scope Hoisting的使用：webpack4以上，模式为production默认开启，必须是ESM，不支持cjs
