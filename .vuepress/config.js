@@ -3,7 +3,7 @@ module.exports = {
   title: "iZph",
   // 文档说明
   base: "/blog/",
-  description: 'Stick to your original intention and become a better self.',
+  description: 'Stick to your original intention and become a better self',
   dest: "public",
   head: [
     ['link', { rel: 'shortcut icon', type: "image/x-icon", href: `/favicon.ico` }],
@@ -22,57 +22,56 @@ module.exports = {
         text: "前端",
         icon: "reco-blog",
         items: [
-          { text: 'HTML', link: '/前端/HTML/HTMLNoteOne.md' },
-          { text: 'CSS', link: '/前端/CSS/CSSNoteOne.md' },
+          { text: 'HTML', link: '/docs/front-end/html/01-html-note-01.md' },
+          { text: 'CSS', link: '/docs/front-end/css/01-css-note-01.md' },
           {
             text: 'JavaScript',
-            link: '/前端/JavaScript/01-初识V8底层.md',
             items: [
-              { text: 'ECMAScript', link: '/前端/JavaScript/02-高质量的JS代码.md' },
-              { text: 'DOM', link: '/前端/JavaScript/DOM/01-dom笔记.md' },
-              { text: 'BOM', link: '/前端/JavaScript/BOM/01-bom笔记.md' },
+              { text: 'ECMAScript', link: '/docs/front-end/javascript/02-high-quality-code.md' },
+              { text: 'DOM', link: '/docs/front-end/javascript/dom/01-dom-note-01.md' },
+              { text: 'BOM', link: '/docs/front-end/javascript/bom/01-bom-note-01.md' },
             ]
           },
-          { text: 'React', link: '/前端/React/01-React基础知识笔记.md' },
-          { text: 'TypeScript', link: '/前端/TypeScript/01-ts-basics.md' },
+          { text: 'React', link: '/docs/front-end/react/01-react-bascis.md' },
+          { text: 'TypeScript', link: '/docs/front-end/typescript/01-ts-basics.md' },
         ]
       },
       {
-        text: "后端",
+        text: "Node",
         icon: "reco-blog",
         items: [
-          { text: 'Node', link: '/后端/Node/01-观察者模式.md' },
-          { text: 'Koa', link: '/后端/Koa/01-koa-basics.md' },
+          { text: 'Node', link: '/docs/node/node/01-observer-mode.md' },
+          { text: 'Koa', link: '/docs/node/koa/01-koa-basics.md' },
         ]
       },
       {
         text: "工程化",
         icon: "reco-api",
         items: [
-          { text: '计网', link: '/工程化/计网/http.md' },
-          { text: '计算机基础', link: '/工程化/计算机基础/01-计算机操作系统.md' },
-          { text: '浏览器', link: '/工程化/浏览器/01-febrowsercache.md' },
-          { text: 'webpack', link: '/工程化/webpack/01-webpacknotes01.md' },
-          { text: 'git', link: '/工程化/git/01-gitbase-use.md' },
-          { text: 'SQL', link: '/工程化/SQL/01-sqlbasics.md' },
-          { text: '性能优化', link: '/工程化/性能优化/01-性能优化.md' },
-          { text: '其他', link: '/工程化/其他/lerna.md' },
+          { text: '计算机网络', link: '/docs/engineering/computer-network/01-http.md' },
+          { text: '计算机基础', link: '/docs/engineering/computer-basics/01-computer-operating-system.md' },
+          { text: '浏览器', link: '/docs/engineering/browser/01-fe-browser-cache.md' },
+          { text: 'webpack', link: '/docs/engineering/webpack/01-webpack-notes-01.md' },
+          { text: 'git', link: '/docs/engineering/git/01-git-usage.md' },
+          { text: 'SQL', link: '/docs/engineering/sql/01-sql-basics.md' },
+          { text: '性能优化', link: '/docs/engineering/performance/01-performance-optimization.md' },
+          { text: '其他', link: '/docs/engineering/other/01-vscode-shortcutkey.md' },
         ]
       },
       {
         text: "算法",
         icon: "reco-document",
         items: [
-          { text: 'DataStructure', link: '/算法/数据结构/01-复杂度.md' },
-          { text: 'LeetCode', link: '/算法/LeetCode/02-字符串.md' },
+          { text: 'DataStructure', link: '/docs/algorithm/data-structure/01-complexity.md' },
+          { text: 'LeetCode', link: '/docs/algorithm/leetcode/02-string.md' },
         ]
       },
       {
         text: "项目",
         icon: "reco-coding",
         items: [
-          { text: 'yolo-ui', link: '/项目/yolo-ui/01-yolo-preface.md' },
-          { text: 'md-to-html', link: '/项目/md-to-html/01-handwritten-md-to-html.md' },
+          { text: 'yolo-ui', link: '/docs/project/yolo-ui/01-yolo-preface.md' },
+          { text: 'md-to-html', link: '/docs/project/md-to-html/01-handwritten-md-to-html.md' },
         ]
       },
       {
@@ -134,13 +133,13 @@ module.exports = {
   plugins: {
     // 自动生成侧边栏
     "vuepress-plugin-auto-sidebar": {
-      title: {
-        mode: "titlecase",
-        map: {
-          "/前端/React/": "React",
-          "/前端/HTML/": "HTMLNotes",
-        }
-      }
+      // title: {
+      //   mode: "titlecase",
+      //   map: {
+      //     "/前端/React/": "React",
+      //     "/前端/HTML/": "HTMLNotes",
+      //   }
+      // }
     },
 
   }
