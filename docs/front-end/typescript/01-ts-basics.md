@@ -9,19 +9,19 @@ tags:
   - 前端
   - TypeScript
 ---
-
 ### 1.ts基础
+
 ```javascript
 // npm install -g typescript
 // 将ts文件转化为js文件：tsc hello.ts => hello.js
+
 // npm install -g ts-node 
 // 直接运行ts文件: ts-node hello.ts
 // 运行ts-node hello.ts报错：consol.log(add(1,2))  
 // 解决: npm install -g tslib @types/node
 
-
 // 错误提示：找不到模块 “xxx” 或其相应的类型声明
-// 在项目中 npm i @types/node --D
+// 在项目中 npm i @types/node -D
 
 // 确定的类型 方法提示
 let firstName: string = 'yolo'
@@ -137,7 +137,9 @@ push(a, 1, 2, 3);
 // 联合类型
 type combination = number|string|boolean;
 ```
+
 ### 2.ts-class和interface
+
 ```javascript
 class Animal {
     name: string;
@@ -147,7 +149,7 @@ class Animal {
     // private 只能在该类通过this.name访问，它的实例和子类都不能访问，在外部Animal.name不能访问
 
     // protected和private类似，但是它允许子类访问属性，实例化不能访问，在外部Animal.age不能访问
-    
+  
     // readonly 只读属性，不能重新赋值，初始化时一般会定义它的值
 
     // static静态属性 只能该类Animal直接调用，实例和子类不能调用，
@@ -267,15 +269,18 @@ abstract class Animal{
 
 
 ```
+
 ### 3.枚举enum
+
 枚举成员是只读的类型，不能修改
+
 ```javascript
 // 枚举的类型有两种：
 // 一种是常量类型 用const number  编译的时候被计算
 // 一种是计算类型 compute number  运行的时候才会被计算, 如C = 1+2, D = Math.random()
 
 // 常量枚举用const修饰，会在编译的时候移除，编译后没有任何代码
-const enum Word {    
+const enum Word {  
   A,
   B,
   C,
@@ -310,7 +315,9 @@ if (value === Direction.Up) {
   console.log('go up!')
 }
 ```
+
 ### 4.泛型generics
+
 ```javascript
 // 泛型：generics定义函数、接口、类的时候，我们先不指定类型，而再使用的时候在指定类型 的一种特征
 // 泛型很奇妙，它就像一个占位符，变量。
@@ -414,7 +421,9 @@ function test<T extends Length>(value: T): T{
 test([1,2,3,4])
 test('1234')
 ```
+
 #### 使用泛型的好处
+
 1. 函数和类可以轻松地支持多种类型，增强程序的扩展性
 2. 不必写多条函数的重载，联合类型说明，增加代码的可读性
 3. 灵活控制类型之间的约束
@@ -424,18 +433,21 @@ test('1234')
 #### 类型推断
 
 #### 类型兼容
+
 当一个类型y可以被赋值给另一个类型x时，则可以说类型x兼容类型y，也就是说y是x的子类型。
 也就是说源类型必须具备目标类型的必要属性，才能赋值给目标类型。
 成员少的，可以兼容成员多的
-```x兼容y: x(目标类型) = y(源类型) ```
+``x兼容y: x(目标类型) = y(源类型) ``
 
 #### 函数的兼容性
+
 ```ts
 let Helper = (a:number, b:number) => void;
 function test(helper: Helper){}
 // 传入的函数helper的参数个数  要小于等于 Helper的个数，参数多的 可以 兼容少的
 // (注：这个和接口兼容相反)
 ```
+
 - 普通函数可以兼容 含有可选参数和剩余参数的函数
 - 可选参数 不能兼容 普通函数和剩余参数的函数
 - 剩余参数 可以兼容 普通函数、可选参数的函数
@@ -453,6 +465,7 @@ function test(helper: Helper){}
 - typeof
 
 ### 5.类型别名和类型断言
+
 ```javascript
 // type aliases 类型别名
 // 类型别名常用场景： 联合类型应用
@@ -490,7 +503,9 @@ function getLength(input: string | number): number {
     }
 }
 ```
+
 ### 6.declare:声明文件
+
 ```javascript
 // declare声明文件必须以：name.d.ts （.d.ts）为后缀的
 
@@ -505,9 +520,11 @@ function getLength(input: string | number): number {
 // 安装第三方库 @types/***  @types/jquery  
 // 就可以直接在ts文件中使用
 ```
+
 ### 7. 索引类型
 
 keyof Obj 获取Obj的所有的键
+
 ```ts
 let obj = {
     a: 1,
@@ -520,10 +537,13 @@ function getValues<T, K extends keyof T>(obj: T, keys: K[]): T[K][] {
 console.log(getValues(obj, ['a', 'b']))
 console.log(getValues(obj, ['d', 'e'])) // 报错，传入的字符串不属于类型 'a' | 'b' | 'c'
 ```
+
 ### 8. namespace命名空间
+
 在一个完全模块化的项目里很少使用命名空间namespace
 
 ### 9
+
 有些第三方库不是用ts写的，而是用js写的，在ts项目中直接用ES6模块引入会报错，提示找不到该模块的声明文件。
 我们在用非ts编写的库时，必须为该类库编写声明文件，对外暴露它的API。大多数的声明文件社区已经写好，使用的方法就是安装类型声明包。
 包的名字: @types/包名。

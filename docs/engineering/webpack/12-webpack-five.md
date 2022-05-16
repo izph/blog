@@ -42,7 +42,7 @@ tags:
 | deterministic | 被哈希转化成的小位数值模块名。       |
 | size          | 专注于让初始下载包大小更小的数字id。 |
 
-## 持久化缓存
+## cache持久化缓存
 
 在webpack4里面，可以使用cache-loader将编译结果写入硬盘缓存，还可以使用babel-loader，设置option.cacheDirectory将babel-loader编译的结果写进磁盘。
 

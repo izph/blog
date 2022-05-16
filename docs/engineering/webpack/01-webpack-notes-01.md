@@ -11,6 +11,10 @@ tags:
 ---
 # webpack笔记（一)
 
+参考 [webpack知识体系](https://juejin.cn/post/7023242274876162084)
+
+[从v4升级到v5](https://webpack.docschina.org/migrate/5/#update-outdated-options)
+
 ## 为什么需要构建工具
 
 - 本质上来讲，构建工具的作用是连接开发者使用高效率的语言语法、开发工具与实现浏览器高效可读代码的桥梁。
@@ -27,6 +31,7 @@ tags:
 - webpack仅支持js和json文件，想对其他类型的文件打包需要使用loader，转化成为有效的模块。loader本身是一个函数，接受源文件作为参数，返回转换的结果。
 - plugins是增强webpack功能，打包输出js文件（bundle）的一个优化，资源管理和环境变量的注入，作用于整个构建过程。可以理解为任何loader没办法做的事情，都可以用plugins去完成。比如构建之前需要手动删除目录，其实可以通过plugins很灵活的去完成。
 - 简单理解：chunk是webpack打包过程中依赖，bundle是输出的产物。
+- Loader 就是将 Webpack 不认识的内容转化为认识的内容
 
 ### webpack指令
 
@@ -45,37 +50,63 @@ tags:
 | 名称          | 描述                                                                  |
 | ------------- | --------------------------------------------------------------------- |
 | babel-loader  | 转换ES6、ES7等JS新特性语法                                            |
-| css-loader    | 支持.css文件的加载和解析                                              |
+| css-loader    | 支持.css文件的加载和解析，不会将样式加载到页面上                       |
+| style-loader   | 将处理好的 css 通过style标签的形式添加到页面上                       |
+| postcss-loader | 添加 CSS3 部分属性的浏览器前缀（先添加前缀，再使用css-loader）        |
 | less-loader   | 将less文件转换成css                                                   |
 | ts-loader     | 将TS转换成JS                                                          |
-| file-loader   | 进行图片、字体、媒体等的打包                                          |
-| raw-loader    | 首屏资源需要内联情况下，raw-loader可以将文件转化成字符串的形式导入    |
 | thread-loader | 正常情况下webpack开一个进程打包，thread-loader作用是多进程打包JS和CSS |
+| file-loader   | 解决图片、字体、媒体等资源引入问题，并将资源copy到指定目录，默认为 dist |
+| url-loader    | url-loader内部使用了file-loader，可以设置较小的资源自动base64，多了一个limit的配置|
+| raw-loader    | raw-loader可以将文件转化成字符串的形式导入                            |
+
+webpack5，内置了资源处理模块，file-loader、url-loader和raw-loader都可以不用安装。
+[webpack5资源模块](https://webpack.docschina.org/guides/asset-modules/)
+[webpack5资源模块的使用](https://juejin.cn/post/7023242274876162084#heading-15)
+
+- style-loader核心实现：
+```js
+// 通过动态添加 style 标签的方式，将样式引入页面
+const content = `${样式内容}`
+const style = document.createElement('style');
+style.innerHTML = content;
+document.head.appendChild(style);
+```
+
+
 
 ## 常见的plugins
 
-| 名称                    | 描述                                        |
-| ----------------------- | ------------------------------------------- |
-| splitchunksplugin       | 将chunks相同的模块代码提取成公共js          |
-| CleanWebpackPlugin      | 清理构建目录                                |
-| mini-css-extract-plugin | 将CSS从 bunlde文件里提取成一个独立的CSS文件 |
-| copyWebpackPlugin       | 将文件或者文件夹拷贝到构建的输出目录        |
-| HtmlWebpackPlugin       | 创建html文件，去承载输出的bundle            |
-| UglifyjsWebpackPlugin   | 压缩JS                                      |
-| ZipWebpackPlugin        | 将打包出的资源生成一个zip包                 |
+| 名称 | 描述  |
+| --- | --- |
+| splitchunksplugin       | 将chunks相同的模块代码提取成公共js   |
+| CleanWebpackPlugin      | 自动清空打包目录  |
+| mini-css-extract-plugin | 将CSS从 bunlde文件里提取成一个独立的CSS文件(MiniCssExtractPlugin.loader) |
+| copyWebpackPlugin       | 将文件或者文件夹拷贝到构建的输出目录   |
+| HtmlWebpackPlugin       | 将打包好的bundle如js、css 文件可以自动引入到html中 |
+| UglifyjsWebpackPlugin   | 压缩JS     |
+| ZipWebpackPlugin        | 将打包出的资源生成一个zip包   |
+| hard-source-webpack-plugin | 模块提供了中间缓存，重复构建时间大大减少，webpack5已经内置|
 
 ## mode内置功能
 
-| 名称        | 描述                                                                                                                                                                                                             |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| development | 设置process.env.NODE_ENV的值为development、开启NamedChunksPlugin和NamedModulesPlugin                                                                                                                             |
-| production  | 设置process.env.NODE_ENV的值为production 、开启FlagDependencyUsagePlugin、FlagIncludedChunksPlugin 、ModuleconcatenationPlugin、NoEmitOnErrorsPlugin、OccurrenceorderPlugin、SideEffectsFlagPlugin和TerserPlugin |
-| none        | 不开启任何优化选项                                                                                                                                                                                               |
+| 名称        | 描述                                                                                                                                                                                                                                                                                                                                                                                           |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| development | 设置process.env.NODE_ENV的值为development，打包更加快速                                                                                                                                                                                                                                                                                                                                        |
+| production  | 生产模式，打包比较慢，会开启 tree-shaking 和 压缩代码设置、process.env.NODE_ENV的值为production、开启FlagDependencyUsagePlugin（删除无用代码）、FlagIncludedChunksPlugin（删除无用代码） 、ModuleConcatenationPlugin（作用域提升）、NoEmitOnErrorsPlugin（编译出现错误，跳过输出阶段）、OccurrenceorderPlugin（按照chunk引用次数来安排出现顺序）、TerserPlugin（压缩JS，支持ES6，清除console） |
+| none        | 不开启任何优化选项                                                                                                                                                                                                                                                                                                                                                                             |
+
+- development：更快的构建速度、热更新(hot)、快速定位问题(sourcemap )
+- production: 构建体积小（代码压缩 + tree-shaking）、代码分割、压缩images
 
 ## 解析ES6
 
 - 解析ES6，需要在rules里面匹配js文件，并use: 'babel-loader'。babel-loader是依赖babel的，需要在根目录创建babel的配置文件.babelrc。
 - 需要安装@babel/core、@babel/preset-env、babel-loader
+
+- babel-loader 使用 Babel 加载 ES2015+ 代码并将其转换为 ES5
+- @babel/core Babel 编译的核心包
+- @babel/preset-env Babel 编译的预设，可以理解为 Babel 插件的超集
 
 ```json
 // .babelrc
@@ -84,12 +115,22 @@ tags:
   "presets": [
     "@babel/preset-env", // 增加ES6的babel preset配置，解析ES6
     "@babel/preset-react", // 安装该依赖，并增加react的babel preset配置，解析react相关的语法，jsx
+    // @babel/preset-typescript
   ],
   // 一个plugins对应一个功能
   "plugins": [
-    "@babel/proposal-class-properties"
+    // 处理 装饰器的使用
+    ["@babel/plugin-proposal-decorators", { legacy: true }],
+    ["@babel/plugin-proposal-class-properties", { loose: true }],
   ]
 }
+```
+
+### 为 JSON 模块使用具名导出
+
+```js
+import pkg from './package.json';
+console.log(pkg.version);
 ```
 
 ## 为什么需要了解 Webpack？
@@ -135,6 +176,7 @@ module.exports = {
     filename: '[name].bundle.js', 
     // 定义打包结果的输出位置build目录
     path: path.resolve(__dirname, 'build'),
+    // publicPath表示的是打包生成的index.html文件里面引用资源的前缀
   },
   /**
    * test指定匹配规则
@@ -147,13 +189,19 @@ module.exports = {
         // 遇到 .js 结尾的文件则使用这个规则
         test: /\.js$/,
         // 忽略 node_modules 目录下的 js 文件
-        exclude: /node_modules/,
+
+        // 在配置 loader 的时候，我们需要更精确的去指定 loader 的作用目录或者需要排除的目录，
+        // 通过使用 include 和 exclude 两个配置项
+        include: path.join(__dirname, 'src'), // 符合条件的模块进行解析
+        exclude: /node_modules/, // 排除符合条件的模块，不解析
         use: {
           // 使用 babel-loader 处理 js
           loader: 'babel-loader',
           // babel-loader 的一些选项
           options: {
             presets: ['@babel/preset-env'], // 确保 Babel 能够处理 JSX 语法
+            // babel 在转译 js 过程中时间开销比价大，将 babel-loader 的执行结果缓存起来，重新打包的时候，直接读取缓存
+            cacheDirectory: true // 启用缓存，缓存位置： node_modules/.cache/babel-loader
           },
         },
       },
@@ -164,7 +212,8 @@ module.exports = {
          * style-loader将样式通过<style>标签插入到head中
         */
         use: [
-          'style-loader',
+          // 'style-loader',
+          MiniCssExtractPlugin.loader, // 一般是将css单独提取出来
           'css-loader'
         ]
       },
@@ -173,7 +222,14 @@ module.exports = {
         test: /\.less$/,  
         // 使用了三个 loader，注意执行顺序是数组的倒序  
         // 也就是先执行 less-loader ，将less转换成css   
-        use: ['style-loader', 'css-loader', 'less-loader'],  
+        use: [
+          // 'style-loader', 
+          MiniCssExtractPlugin.loader,
+          // 缓存一些性能开销比较大的 loader 的处理结果，缓存位置：node_modules/.cache/cache-loader
+          'cache-loader', 
+          'css-loader', 
+          'less-loader'
+        ],  
       },
       {
         // webpack 默认处理不了html中img图片
@@ -223,6 +279,9 @@ module.exports = {
     // 并配置了页面的 title
     new HtmlWebpackPlugin({
       title: 'Webpack Output',
+    }),
+    new MiniCssExtractPlugin({ // 添加插件
+      filename: '[name].[hash:8].css'
     }),
   ],
 };
@@ -281,8 +340,14 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-        contentBase: './dist',  // 设置基本目录结构
+        // 告诉服务器从哪里提供静态资源（只有想提供静态文件时才需要）
+        contentBase: path.resolve(__dirname, 'public'), // 静态资源所在的路径，默认为项目根目录
         hot: true // 开启热更新
+	port: 8888, // 端口号
+        // compress: true, //是否启动压缩 gzip
+	// open:true  // 是否自动打开浏览器
+        // devServer里面的publicPath表示的是打包生成的静态文件所在的位置
+        //（若是devServer里面的publicPath没有设置，则会认为是output里面设置的publicPath的值）
     }
 }
 
@@ -358,7 +423,9 @@ module.exports = {
 
 ### 图片的文件指纹设置
 
-在 file-loader或者url-loader 的options参数中设置name，使用[hash]
+在 file-loader或者url-loader 的options参数中设置name，使用[contenthash]
+
+当 webpack 配置中使用了 `[hash]` 占位符时，请考虑将它改为 `[contenthash]`
 
 | 占位符名称    | 含义                                                      |
 | ------------- | --------------------------------------------------------- |
@@ -366,9 +433,14 @@ module.exports = {
 | [name]        | 文件名称                                                  |
 | [path]        | 文件的相对路径                                            |
 | [folder]      | 文件所在的文件夹                                          |
-| [contenthash] | 文件的内容 hash，默认是 md5 生成，默认有32位，一般取前8位 |
-| [hash]        | 文件内容的 hash，默认是 md5 生成                          |
+| [hash]        | 每次构建生成的唯一 hash 值，默认是 md5 生成               |
+| [chunkhash]   | 根据chunk生成hash值 |
+| [contenthash] | 根据文件内容生成hash 值，默认是md5生成，默认有32位，一般取前8位|
 | [emoji]       | 一个随机的指代文件内容的 emoji                            |
+
+- hash：任何一个文件改动，整个项目的构建 hash 值都会改变；
+- chunkhash：文件的改动只会影响其所在 chunk 的 hash 值；
+- contenthash：每个文件都有单独的 hash 值，文件的改动只会影响自身的 hash 值；
 
 ```js
 const path = require('path');
@@ -394,7 +466,7 @@ module.exports = {
 
 ## webpack之JS、css和html文件的压缩
 
-webpack4 内置了uglifyjs-webpack-plugin 插件（mode为production），默认打包出的 JS 文件已压缩过
+webpack4 内置了uglifyjs-webpack-plugin 插件（mode为production），默认打包出的 JS 文件已压缩过， webpack5 内置了terser-webpack-plugin 插件
 
 1. CSS 文件的压缩
 
@@ -408,7 +480,8 @@ npm i optimize-css-assets-webpack-plugin cssnano -D
 ```js
 const path = require('path');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
     entry: {
         index: './src/index.js',
@@ -418,6 +491,7 @@ module.exports = {
         filename: '[name][chunkhash:8].js'
     },
     plugins: [
+        // 添加 css 压缩配置
         new OptimizeCssAssetsPlugin({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano')
@@ -440,7 +514,16 @@ module.exports = {
                 removeComments: false
             }
         })
+    ],
+    optimization: {
+    minimize: true,
+    minimizer: [
+      // 添加 css 压缩配置
+      new OptimizeCssAssetsPlugin({}),
+      // 压缩JS
+      new TerserPlugin({})
     ]
+  },
 }
 ```
 

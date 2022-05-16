@@ -26,6 +26,7 @@ module.exports = function(source){
 loader-runner运行你在不安装webpack的情况下运行loaders，进行loader的开发和调试，其实像是提供了一个loader运行的环境。
 
 ### 手写loader
+- Webpack5在loader的上下文中，会带有内置的this.getOptions方法。
 
 [webpack-study](https://github.com/izph/webpack-study)
 

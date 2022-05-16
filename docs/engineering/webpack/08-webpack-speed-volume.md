@@ -23,7 +23,7 @@ tags:
 
 - 分析整个打包的总耗时
 - 每个插件和loader的耗时情况
-- 这个插件和html-webpack-plugin冲突了，报错
+- 和一些Loader或者Plugin新版本会不兼容，需要进行降级处理，如mini-css-extract-plugin、html-webpack-plugin
 
 ```js
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin');
@@ -34,6 +34,7 @@ module.exports = smp.wrap({
 ```
 
 ### 体积分析：使用webpack-bundle-analyzer
+可以直观的看到打包结果中，文件的体积大小、各模块依赖关系、文件是够重复等问题，极大的方便我们在进行项目优化的时候，进行问题诊断
 
 - 构建完成后会在8888端口展示大小
   ![image.png](images/webpack-bundle-analyzer-001.png)
@@ -44,7 +45,11 @@ module.exports = smp.wrap({
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 module.exports = {
     plugins: [
-        new BundleAnalyzerPlugin()
+      // 配置插件
+      new BundleAnalyzerPlugin({
+        // analyzerMode: 'disabled',  // 不启动展示打包报告的http服务器
+        // generateStatsFile: true, // 是否生成stats.json文件
+      })
     ]
 }
 ```
@@ -63,7 +68,7 @@ webpack4: 优化原因
 thread-loader
 
 - parallel-webpack
-- HappyPack
+- HappyPack（同样为开启多进程打包的工具，webpack5 已弃用）
 
 ### 多进程/多实例：并行压缩
 
@@ -76,7 +81,8 @@ module.exports = {
                 parallel: true,
                 cache: true
             })
-        ]
+        ],
+	minimize: true,
     },
 }
 ```

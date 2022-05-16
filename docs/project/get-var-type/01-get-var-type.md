@@ -56,6 +56,7 @@ module.exports = {
         minimize: true,
         minimizer: [
             // 压缩插件，webpack4生产环境默认开启，对ES6的语法友好
+	    // 压缩JS代码，清除console
             new TerserPlugin({
                 // 针对.min.js 才做压缩
                 include: /\.min\.js$/,

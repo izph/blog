@@ -119,7 +119,7 @@ module.exports = {
     author: "iZph",
     // 头像
     authorAvatar: "/z.jpg",
-    "record": "xxxx",
+    record: "xxxx",
     startYear: "2020",
     subSidebar: 'auto' //在所有页面中启用自动生成子侧边栏，原sidebar仍然兼容
   },

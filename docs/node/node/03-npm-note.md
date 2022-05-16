@@ -60,6 +60,10 @@ node安装教程和更改全局模块的安装路径可参考：[Node.js的安�
 
 `npm config set registry xxxUrl`
 
+## .npmrc文件
+[.npmrc文件](https://juejin.cn/post/6983522411647860766)
+
+
 # cross-env
 
 ## 出现cross-env的大概原因

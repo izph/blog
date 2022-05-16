@@ -11,8 +11,11 @@ tags:
 ---
 ## tsconfig.json介绍
 
-tsconfig.json 是 TypeScript 项目的配置文件。如果一个目录下存在一个 tsconfig.json 文件，那么往往意味着这个目录就是 TypeScript 项目的根目录。
-tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置项，我们可以让 TypeScript 编译出 ES6、ES5、node 的代码。
+tsconfig.json 是 TypeScript 编译的相关配置，用于描述将TS转化为JS代码的配置文件，通过更改编译配置项，我们可以让 TypeScript 编译出 ES6、ES5、node 的代码。
+
+- 生成tsconfig.js文件：`tsc --init`
+- 查看更多配置和使用说名: `tsc -h`
+- 应当将tsc作为类型检查工具，而不是编译项目的工具，代码编译的工作应该交给babel、webpack等工具
 
 ## tsconfig.json 重要字段
 
@@ -36,8 +39,7 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
 }
 ```
 
-- exclude - 设置无需进行编译的文件，支持路径模式匹配（排除）；
-  默认排除node_modules下的所有文件、排除所有声明文件(xxx.d.ts)
+- exclude - 排除不需要进行编译的文件，支持路径模式匹配（排除）；默认排除node_modules下的所有文件、排除所有声明文件(xxx.d.ts)，只对include字段有排除效果，对file字段无影响。
 
 ```json
 // 排除src/lib的文件编译
@@ -46,7 +48,7 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
 }
 ```
 
-- extends，导入其他配置
+- extends，导入或者继承其他tsconfig配置
 
 ```json
 // 导入当前目录下的tsconfig.base.json里的配置，但是导入的配置容易被覆盖（在tsconfig.json可以覆盖导入的配置）
@@ -55,7 +57,7 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
 }
 ```
 
-- compileOnSave: true, 保存文件时自动编译文件（VScode不支持这个配置）
+- compileOnSave: true, 保存文件时自动触发tsc编译文件（VScode不支持这个配置），一般来说，代码编译过程会通过webpack等打包构建工具，并且使用热更新，因此一般不需要配置该项。
 - compilerOptions - 设置与编译流程相关的选项。
 - 如果ts.config文件为空，则会按照默认是编译当前目录下的所有ts文件
 
@@ -67,7 +69,7 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
     "tsBuildInfoFile": './buildFile',      // 指定编译后的文件放在哪里
 
     /* 基本选项 */
-    "target": "es5",                       // 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'
+    "target": "es5",                       // 指定编译后ECMAScript目标版本: 要将ts编译成js哪个版本的语法，'ES3' (default), 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'
     "module": "commonjs",                  // 指定使用模块: 'commonjs', 'amd', 'system', 'umd' or 'es2015'
     "lib": [],                             // 指定要包含在编译中的库文件
     "allowJs": true,                       // 允许编译 javascript 文件
@@ -77,7 +79,7 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
     "sourceMap": true,                     // 生成相应的 '.map' 文件
     "outFile": "./",                       // 将输出文件合并为一个文件
     "outDir": "./",                        // 指定输出目录
-    "rootDir": "./",                       // 用来控制输出目录结构 --outDir.
+    "rootDir": "./",                       // 用来控制只能引用当前目录下的ts文件.
     "removeComments": true,                // 删除编译后的所有的注释
     "noEmit": true,                        // 不生成输出文件
     "importHelpers": true,                 // 从 tslib 导入辅助工具函数
