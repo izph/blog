@@ -38,95 +38,98 @@ font-size: 1em;
 `
 ```
 
-## Less和Sass（预处理器）
+## 3. Less和Sass（预处理器）
 
 提供了变量、函数、运算和继承等等，扩展性和复用性都有了很大的提升。
 
-## 创建自己组件库的色彩体系
+# Yolo组件库的色彩体系
+## 组件库样式变量分类
 
-### Yolo 组件库的色彩体系
-
-primary（#0d6efd）、default（#ffffff）、success（#15bd02）、warning（#ffd300）、danger（#eb1e3d）、info(#009bb0)
-
-### 组件库样式变量分类
-
-- 基础色彩系统
-- 字体系统
-  font-family、font-size、line-height、font-weight、h1-h6、超链接样式、body大小。用户通过文本来理解工作，科学的字体系统将大大提升用户的阅读体验和工作效率
-- 表单
-- 按钮
-- 边框和阴影
-- 可配置开关
+- 基础色彩样式，primary（#0d6efd）、default（#ffffff）、success（#15bd02）、warning（#ffd300）、danger（#eb1e3d）、info(#009bb0)
+- 字体样式，默认font-family、默认font-size(1rem)、默认font-weight(400)、字体颜色、h1-h6(h6 默认是 1rem)
+- 超链接样式(默认primary，无下划线)
+- line-height(行高默认是字体的1.5倍大小)
+- body(字体大小是1rem、背景白色、字体淡黑色)
+- border边框(宽度1px、颜色@gray-300、radius是0.25rem)
+- 盒子阴影(@box-shadow: 0 0.5rem 1rem rgba(@black, 0.15))
+- 基础表单控件样式（input、auto-input、select等）
+## 其他配置
 - normalize.less初始化默认样式
-- babel-plugin-import 是一款babel插件，它会在编译过程中将import的写法自动转换为按需引入的方式
-- classnames、@types/classnames 处理类名的一个工具
+- classnames、@types/classnames处理类名的一个工具
 
-### Button组件需求分析
+# Button组件实现
+
 
 需要考虑padding的大小、lineHeight高度、颜色、文字居中、box-shadow，disabled时的特殊样式，鼠标的cursor的变化。
 
-- Button Size的大小其实就是padding控制，font-size不同、border的不同。
-- Button Type是变化background-color，border-color、字体颜色。
-- 同时还有添加不同的状态、hover之后要颜色发生一定的变化，focus颜色变化，disabled颜色也发生变化。
+- 使用button标签和a标签实现
+- Button Size的大小其实就是`padding`控制，`font-size`不同、`border`的不同。
+- Button Type是变化`background-color`，`border-color`、`字体颜色color`。
+- 添加不同的状态：hover之后要颜色发生一定的变化，focus颜色变化，disabled颜色也发生变化(cursor: not-allowed和opacity: .65)。
 
-### 不同的Button Type（颜色）
+## 不同的Button Type（颜色）
 
 ![ButtonType](images/yolo-button-001.png)
 
-### 不同的Button Size（padding的大小、lineHeight高度）
+## 不同的Button Size（padding的大小、lineHeight高度）
 
 利用less的混合方法，传入不同的参数，实现样式的复用和切换。
 
 ![ButtonSize](images/yolo-button-002.png)
 
-### Button的禁用状态
+## Button的禁用状态
 
 ![ButtonDisabled](images/yolo-button-002.png)
 
-### Button大致的使用方法
+## Button大致的使用方法
 
 ```js
 <Button
-  size="lg"
-  type="primary"
+  size={"lg"}
+  type={"primary"}
   disabled
-  href=""
+  href="" // 与type="link"连用
   className=""
+  onClick={}
   ...{restProps}
 >
-  primary
+  Primary Button
 </Button>
 ```
 
-### Menu组件需求分析
+# Menu组件实现
+## Menu最基本样式分为横向(horizontal)和纵向(vertical)
+- 导航在各个页面中进行跳转。一般分为顶部导航和侧边导航。
+- 横向(horizontal)：一种是没有下拉菜单的类型，一种是有下拉菜单的类型，menu上有两个重要的属性，一个是active（菜单项高亮），菜单项是可以被disabled的，disabled后有特殊样式，并且点击没有响应。
+- 纵向(vertical)：和横向差不多，只是左右展示。
+![yolo-menu](images/yolo-menu-001.png)
+## Menu需要的基本属性值
 
-Menu组件需要使用useState和useContext这两个hooks实现，用户依赖导航在各个页面中进行跳转。一般分为顶部导航和侧边导航，顶部导航提供全局性的类目和功能，侧边导航提供多级结构来收纳和排列网站架构。
-![](images/yolo-menu-001.png)
+- defaultIndex表示默认选中的key
+- onSelect选中后执行的回调
+- mode分为横向(horizontal)和纵向(vertical)
+- className自定义类名
 
-### Menu最基本样式分为横向和纵向
+- Menu.Item提取出来做单独的组件，任何属性都可以加到Item上，并且Menu.Item的children可以是任何元素，如string，jsx。
+- Menu.Item上可以有index属性（item 的唯一标志）、disabled禁用。
 
-1. 横向
-   一类没有下拉菜单的基本类型，一类是有下拉菜单的类型，menu上有两个重要的属性，一个是active（菜单项高亮），菜单项是可以被disabled的，disabled后有特殊样式，并且点击没有响应。
-   有下拉选项的菜单，可以展示更多的导航。
-2. 纵向
-   和横向差不多，只是左右展示
+- Menu.SubMenu放置子菜单项，有唯一标识index，它本身title标题。
 
-### Menu需要的基本属性值
+## Menu的具体实现思路
 
-defaultIndex表示默认选中的，onSelect选中后执行的回调，mode分为横向和纵向，
-activeIndex表示哪个高亮，className自定义类名。
+采用flex布局，ul和li这两个标签，并使用useState和useContext这两个hooks实现，useState记录当前active的元素，classes是根据传入的属性值，来判断是否需要加类名来使用某种样式，通过Context传递数据（当前活跃的菜单项index值，用index做一些判断；onSelect点击菜单项的回调；mode传给SubMenu，垂直才有下拉菜单；defaultOpenKeys，初始需要展开的菜单项，对应index，最外面是1、2、3、4，接下来是1-1, 1-2...）
 
-Menu.Item提取出来做单独的组件，任何属性都可以加到Item上，并且Menu.Item的children可以是任何元素，如string类型，jsx。Menu.Item上可以有index属性、disabled禁用，className等属性
+使用React.Children处理props.children传入的内容，React.Children.map函数第一个参数指向children，第二个参数是一个类似数组变量的函数，主要是用来为每个元素生成默认的index
 
-### Menu的实现
+MenuItem主要接收Context中的index和onSelect，点击时执行回调修改父级Menu的currentSelectedKey
 
-采用FlexBox
+SubMenu从Context获取mode来判断当前的模式，vertical垂直才有下拉菜单；有自己的title，点击切换菜单项的折叠与展开。也使用了React.Children.map，生成index
 
-## 图标Icon的解决方案
+# 图标Icon的实现
 
 图标的历史演化，上古时期的雪碧图（不能缩放），Font Icon（用字体文件的字符编码，代表图标，然后通过特定的class加伪类，加入到浏览器中），SVG（可以用任何的css控制）
 
-### Icon
+## Icon的具体实现
 
 Icon 基于 Font Awesome 封装
 

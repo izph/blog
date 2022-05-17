@@ -177,6 +177,8 @@ module.exports = {
     // 定义打包结果的输出位置build目录
     path: path.resolve(__dirname, 'build'),
     // publicPath表示的是打包生成的index.html文件里面引用资源的前缀
+    // webpack5清除输出目录可用，无需安装clean-webpack-plugin
+    clean: true
   },
   /**
    * test指定匹配规则
