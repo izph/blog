@@ -56,9 +56,17 @@ font-size: 1em;
 ## 其他配置
 - normalize.less初始化默认样式
 - classnames、@types/classnames处理类名的一个工具
+# 组件实现步骤
+
+组件正确的开发流程：组件属性的分析 -> 组件开发 -> (上生产需组件测试) -> 组件的使用说明文档
+
+大致的思路：
+- 通过组件的分析去定义一些接口或者类型别名，接口是用来描述props，声明组件的时候通过泛型传入
+- 组件开发：不同的组件有不同的实现方式，相似的组件可以复用，编写组件基础样式
+- 组件的使用说明：描述一些需要通过props传入组件的属性，方便定制不同场景
+- ......
 
 # Button组件实现
-
 
 需要考虑padding的大小、lineHeight高度、颜色、文字居中、box-shadow，disabled时的特殊样式，鼠标的cursor的变化。
 
@@ -129,48 +137,83 @@ SubMenu从Context获取mode来判断当前的模式，vertical垂直才有下拉
 
 图标的历史演化，上古时期的雪碧图（不能缩放），Font Icon（用字体文件的字符编码，代表图标，然后通过特定的class加伪类，加入到浏览器中），SVG（可以用任何的css控制）
 
-## Icon的具体实现
+# Icon的具体实现
 
-Icon 基于 Font Awesome 封装
+Icon基于Font Awesome封装，传入theme主题色可以改变图标的颜色
 
-## Transition
+# Transition
 
-封装一个Transition过渡动画，以便其他组件的使用。
+封装一个Transition过渡动画，以便其他组件的引用。基于`react-transition-group`的CSSTransition
+[CSSTransition笔记](05-css-transition-note.md)
 
-## input输入框
+[CSSTransition](https://reactcommunity.org/react-transition-group/css-transition)
 
-基本的样式、支持不同的大小、disabled状态、带图标的样式、带前缀、后缀，自动补全（在iuput的基础上扩展，多了一个下拉菜单，继承了input的所有属性）
+# input输入框
+
+- 基本的样式、支持不同的大小、disabled状态、是否带图标、前缀、后缀
+- 支持原生input的type属性，value属性
 
 ```js
 <Input 
     disabled
     size="lg|md|sm"
     icon="图标"
-    prepand="input的前缀，string或者ReactElement类型"
-    qppend="input的后缀，string或者ReactElement类型"
+    prefix="input的前缀，string或者ReactElement类型"
+    suffix="input的后缀，string或者ReactElement类型"
+    value={value}
+    type={"text"}
     {...restProps} // 支持其他所有的HTMLInput属性、用户自定义的属性
 />
-组件正确的开发流程：组件属性的分析 -> 组件开发 -> 组件测试 -> 组件的使用说明文档
+
 ```
+## input输入框的实现
+一个div包含input子元素，通过一些属性来判断是否要添加前缀、后缀和图标等。input的size属性大小由padding、fontSize、borderRadius控制，其他input原生属性放在了restProps里，onChange是输入框内容变化时执行的回调
 
-### auto-complete
+# auto-complete
+auto输入框元素相对定位，选项的展示是绝对定位
 
-要考虑是同步的、还是异步的关键词匹配
+auto-complete是基于input的基础上进行扩展，使用了useState分别记录当前的输入值(inputValue)，是否聚焦(focused)，是否显示下拉选项(showDropdown)，数据加载状态(isLoading)，数据(options)，当前高亮的index下标(highlightIndex)等，使用useRef这个hook记录了triggerSearch和DOM元素的引用，triggerSearch记录的是input输入框发生变化还是点击item项目。
 
-### Upload上传
+使用自定义的useDebounce和useClickOutside这两个hook，useDebounce对用户输入的内容，利用防抖降低频率，useClickOutside作用是当点击到AutoComplete组件外的区域，会自动关闭下拉框选项部分
+
+useEffect的第二个参数监听了debouncedValue, onSearch, focused，当这些值发生变化时，执行副作用。在副作用函数中，要考虑传入的onSearch执行结果是同步的、还是异步的关键词匹配，异步加载数据会有loading效果，点击一个选项时触发回调。次外，还设置了esc(Escape)、enter(Enter)、上移(ArrowUp)和下移(ArrowDown)选项等基本功能。
+
+# Select
+## Select的分析
+SelectProps接口的描述信息：defaultValue默认选中的选项，它可以是字符串或者字符串数组，placeholder是提示文字，disabled是否禁用，multiple是否支持多个选项，onChange值发生改变时回调，onVisibleChange是下拉框出现或者隐藏时触发，
+
+SelectOptionProps接口：选项的下标index，vaule选项的值，label选项显示的文本，disabled是否禁止选择该项。
+## Select的实现
+
+
+# Alert
+## Alert的分析
+message可以说是alert警告提示内容或者标题，description可以说是副标题或者描述信息，type是颜色分类，默认的type是info蓝色的，closable是否可关闭，showIcon是否显示图标，onClose关闭时执行的回调等等。
+
+[yolo-alert](images/yolo-alert-001.png)
+## Alert的实现
+一个外层的div包含3个子元素，分别是放message的span标签，p标签动态显示description，最后一个是span标签，根据是否传入closable，来显示关闭按钮。
+
+# Progress
+
+## Progress的分析
+percent代表当前进度条的百分比，strokeHeight设置高度，showText是否显示百分比数字，另外还提供了几种进度条的主题色theme。
+
+![image.png](images/progress001.png)
+## Progress的实现
+
+根据传入的数字，来控制一个进度条长度。最外面有一个灰色progress-outer，它的高度可以配置。progress-outer内存会有一个子元素progress-inner，通过该元素的width来显示当前进度颜色，这个宽度是继承父元素progress-outer的，并悬浮到progress-outer上。通过在progress-inner设置flex布局，flex-end表示子项目从后往前排列，设置百分比数字显示在进度条右边，百分比数字也是支持显示和隐藏。
+
+# Upload上传
 
 点击上传按钮，选择想要上传的文件，然后开始自动上传，之后会显示上传进度（progress），当进度满了就会显示上传成功，反之上传失败。鼠标悬浮到上传的文件，会显示叉号，可以取消上传的文件。
 支持用户自定义请求头headers，文件名称，上传额外的 `data（{key：vale}）`，支持input本身file的属性，如multiple（多选）、accept（限制文件类型）、是否默认携带cookie。自定义触发的元素（在Upload设置按钮、文本。。。）、支持拖动上传文件、用户点击文件执行的自定义的回调等等。
 
 ![image.png](images/upload001.png)
 
-## Progress
-
-根据传入的百分比，来显示一个进度条。最外面有一个灰色progress-outer，它的高度可以配置，prosition为相对定位。progress-outer之上会有一个进度条，颜色可以配置，prosition为absolute，垂直居中，悬浮到progress-outer上，top和left都为0，则表示在最左边（0%），同时百分比也支持显示和隐藏
-
-![image.png](images/progress001.png)
 
 ## 组件测试用例分析和编码
+刚开始有写一些简单的测试，后续由于时间的关系，没有增加新的测试代码
 
 [组件测试](02-yolo-test-notes.md)
 
