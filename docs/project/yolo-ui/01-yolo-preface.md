@@ -60,11 +60,16 @@ font-size: 1em;
 
 组件正确的开发流程：组件属性的分析 -> 组件开发 -> (上生产需组件测试) -> 组件的使用说明文档
 
-大致的思路：
+## 大致的思路
 - 通过组件的分析去定义一些接口或者类型别名，接口是用来描述props，声明组件的时候通过泛型传入
 - 组件开发：不同的组件有不同的实现方式，相似的组件可以复用，编写组件基础样式
 - 组件的使用说明：描述一些需要通过props传入组件的属性，方便定制不同场景
 - ......
+
+## 没有思路的情况
+想写什么组件，就去开源组件库官网上对应的组件，点一点，看一看效果之后，可以直接copy code(复制dom元素和样式)，自己再稍微改一下看一下，基本上就其实现的原理啦。
+
+直接看源码也可以，但是有一定的难度去读懂源码
 
 # Button组件实现
 
@@ -169,24 +174,24 @@ Icon基于Font Awesome封装，传入theme主题色可以改变图标的颜色
 ## input输入框的实现
 一个div包含input子元素，通过一些属性来判断是否要添加前缀、后缀和图标等。input的size属性大小由padding、fontSize、borderRadius控制，其他input原生属性放在了restProps里，onChange是输入框内容变化时执行的回调
 
-# auto-complete
+# auto-complete自动完成
 auto输入框元素相对定位，选项的展示是绝对定位
 
 auto-complete是基于input的基础上进行扩展，使用了useState分别记录当前的输入值(inputValue)，是否聚焦(focused)，是否显示下拉选项(showDropdown)，数据加载状态(isLoading)，数据(options)，当前高亮的index下标(highlightIndex)等，使用useRef这个hook记录了triggerSearch和DOM元素的引用，triggerSearch记录的是input输入框发生变化还是点击item项目。
 
-使用自定义的useDebounce和useClickOutside这两个hook，useDebounce对用户输入的内容，利用防抖降低频率，useClickOutside作用是当点击到AutoComplete组件外的区域，会自动关闭下拉框选项部分
+使用自定义的useDebounce和useClickOutside这两个hook，useDebounce对用户输入的内容，利用防抖降低频率，useClickOutside作用是当点击到AutoComplete组件外的区域，会自动关闭下拉框选项部分，Transition里的in属性其实就是控制下拉选项的显示与隐藏，in为true，opacity从0变成1，in为fasle，opacity从1变成0.由此实现了下拉框的显示与隐藏
 
 useEffect的第二个参数监听了debouncedValue, onSearch, focused，当这些值发生变化时，执行副作用。在副作用函数中，要考虑传入的onSearch执行结果是同步的、还是异步的关键词匹配，异步加载数据会有loading效果，点击一个选项时触发回调。次外，还设置了esc(Escape)、enter(Enter)、上移(ArrowUp)和下移(ArrowDown)选项等基本功能。
 
-# Select
+# Select选择器
 ## Select的分析
 SelectProps接口的描述信息：defaultValue默认选中的选项，它可以是字符串或者字符串数组，placeholder是提示文字，disabled是否禁用，multiple是否支持多个选项，onChange值发生改变时回调，onVisibleChange是下拉框出现或者隐藏时触发，
 
 SelectOptionProps接口：选项的下标index，vaule选项的值，label选项显示的文本，disabled是否禁止选择该项。
 ## Select的实现
+Select是基于Input实现的，最外层有一个div，是整个select的container容器，自定义的类名，样式，属性是绑定到最外层的div上。它有一个Input，type为search，用来显示当前选了哪个选项。绑定一些字段和回调。Select选项框也是引用了Transition这个通用的过渡组件，和auto-component一样，用来显示下拉选项。如果是多选，引用tag组件，显示已选择的项目。
 
-
-# Alert
+# Alert警告提示
 ## Alert的分析
 message可以说是alert警告提示内容或者标题，description可以说是副标题或者描述信息，type是颜色分类，默认的type是info蓝色的，closable是否可关闭，showIcon是否显示图标，onClose关闭时执行的回调等等。
 
@@ -194,7 +199,7 @@ message可以说是alert警告提示内容或者标题，description可以说是
 ## Alert的实现
 一个外层的div包含3个子元素，分别是放message的span标签，p标签动态显示description，最后一个是span标签，根据是否传入closable，来显示关闭按钮。
 
-# Progress
+# Progress进度条
 
 ## Progress的分析
 percent代表当前进度条的百分比，strokeHeight设置高度，showText是否显示百分比数字，另外还提供了几种进度条的主题色theme。
@@ -203,6 +208,23 @@ percent代表当前进度条的百分比，strokeHeight设置高度，showText�
 ## Progress的实现
 
 根据传入的数字，来控制一个进度条长度。最外面有一个灰色progress-outer，它的高度可以配置。progress-outer内存会有一个子元素progress-inner，通过该元素的width来显示当前进度颜色，这个宽度是继承父元素progress-outer的，并悬浮到progress-outer上。通过在progress-inner设置flex布局，flex-end表示子项目从后往前排列，设置百分比数字显示在进度条右边，百分比数字也是支持显示和隐藏。
+
+# Switch开关
+
+## Switch的分析
+Switch 开关，checked属性是最开始是否被选中，disabled是否可以被禁用，onText开启状态的文本，offText关闭状态的文本，size是组件的尺寸大小，theme组件的颜色，onChange是状态切换时执行的回调函数
+
+## Switch的实现
+基于button标签实现的，它有两个子元素div和span。div是一个白色的滑块，使用绝对定位，通过计算left值实现左右的切换，例如点击的时候，滑块的left值是`left: calc(100% - 20px);`，通过calc计算出的，这就是左右滑动的核心。同时还需要考虑background-color和background-image的优先级问题，最后span标签用来显示文本。
+
+# Tabs标签页
+## Tabs标签页的分析
+defaultActiveKey是默认显示的tabPane，type分为line、card，onTabClick切换页签时触发的回调。TabPane页签的tab是标题，disabled禁止切换到该页签。
+
+## Tabs标签页的实现
+ul包含多个li，每个小li就是一个tabs标题，通过padding撑大盒子。点击小li，切换当前activeKey，同时也会给li添加一个class类名，修改当前li的样式。代码中用到了React.Children.map生成了小li和tabs的内容区域。
+
+# Upload上传
 
 # Upload上传
 

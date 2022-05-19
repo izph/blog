@@ -8,7 +8,7 @@ categories:
 tags:
   - CSS
 ---
-## 1. CSS单行超出省略
+# 1. CSS单行超出省略
 
 ```css
    {
@@ -19,7 +19,7 @@ tags:
    }
 ```
 
-## 2. 多行超出省略
+# 2. 多行超出省略
 
 设置文本隐藏的元素不能设置高度，或者有上下padding，否则会导致超出部分不隐藏
 
@@ -35,7 +35,7 @@ tags:
    }
 ```
 
-## 3. 实现一个宽高自适应的正方形
+# 3. 实现一个宽高自适应的正方形
 
 - 第一种方式是利用vw、vh来实现
   ```css
@@ -56,7 +56,7 @@ tags:
   ```
 - 第三种方式是利用rem
 
-### 4. 实现一个三角形
+# 4. 实现一个三角形
 
 实现原理是利用了元素边框连接处的等分原理
 
@@ -71,7 +71,7 @@ tags:
   }
 ```
 
-## 5. 实现一个自适应矩形，水平垂直居中，且宽高比为 2:1
+# 5. 实现一个自适应矩形，水平垂直居中，且宽高比为 2:1
 
 ```css
 .box { 
@@ -91,7 +91,7 @@ tags:
   }
 ```
 
-## 5. 实现一个两栏布局
+# 6. 实现一个两栏布局
 
 左边固定，右边自适应
 
@@ -215,7 +215,7 @@ body {
     }
 ```
 
-## 6. css三栏布局
+# 7. css三栏布局
 
 ```html
 <head>
@@ -263,7 +263,7 @@ body {
 </body>
 ```
 
-## 7. css等高布局
+# 8. css等高布局
 
 ```html
 <div class="content">
@@ -302,7 +302,7 @@ body {
 }
 ```
 
-## 8. css上下固定中间自适应
+# 9. css上下固定中间自适应
 
 ```html
   <style>
@@ -350,4 +350,147 @@ body {
   </div>
 
 </body>
+```
+
+# 10. 水平垂直居中
+## 行内元素
+### （1）行内元素的垂直居中
+用padding实现居中，父元素不设置高度。
+html代码：
+```html
+<div>
+    <span>垂直居中</span>
+</div>
+```
+css代码：
+```css
+div { 
+  /*不设置父元素高度，由子元素撑开*/ 
+  width: 200px; 
+  /*用上下内边距实现子元素垂直居中*/
+  padding-top: 50px;  
+  padding-bottom: 50px;
+}
+span { 
+  /*随着子元素字体变大，父元素宽高也会变大*/ 
+  font-size: 40px; 
+}
+```
+### （2）行内元素的垂直居中
+用子元素的line-height等于父元素的高度(该方法一般适用于单行文字，多行文字不使用！)，如果父元素中文字不用span包裹，则在父元素中设置行高等于高度也可实现文字垂直居中。
+html代码：
+```html
+<div>
+    <span>垂直居中</span>
+</div>
+```
+css代码：
+```css
+div {  
+  width: 400px; 
+  height: 100px;  
+}
+span { 
+  /*子元素的行高等于父元素的高度*/
+  line-height: 100px; 
+}
+```
+### （3）行内元素的居中
+父元素设置text-align:center，子元素水平居中。
+html代码：
+```html
+<div>
+    <span>子元素居中</span>
+</div>
+```
+css代码：
+```css
+div {  
+  width: 100px; 
+  height: 100px; 
+  text-align:center；
+}
+
+```
+### （4）行内元素的水平居中
+父元素设置为flex弹性布局
+```css
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    
+  /* 针对单行 行内元素水平垂直居中 */
+  line-height等于height
+  text-align:center
+}
+```
+## 块级元素
+### （1）通过top:50%和left:50%定位到页面的中心，然后再通过margin 负值来调整（元素宽高已知）
+```css
+{
+   position: absolute;/*绝对定位*/ 
+   width: 100px; 
+   height: 100px; 
+   top: 50%; 
+   left: 50%; 
+   margin-left: -50px;  /*外边距为自身宽高的一半*/ 
+   margin-top: -50px; 
+
+
+   /* calc 实现*/
+   position: absolute;
+   top: calc(50% - 50px);
+   left: calc(50% - 50px);
+}
+```
+### （2）通过top:50%和left:50%定位到页面的中心，然后再通过translate移动（元素宽高未知）
+```css
+{
+  position: absolute;/*绝对定位*/ 
+  width: 100px; 
+  height: 100px; 
+  top: 50%; 
+  left: 50%; 
+  transform:translate(-50%, -50%)
+
+   /* calc 实现*/
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+}
+```
+### （3）使用flex布局，通过在父级设置 align-items:center 和 justify-content:center ，让它的子元素实现水平垂直居中
+```css
+.father { 
+  display: flex; 
+  align-items: center; /*垂直居中*/ 
+  justify-content: center; /*水平居中*/ 
+}
+.son { 
+  width: 100px; 
+  height: 100px; 
+}
+```
+### （4）利用绝对定位，设置四个方向的值都为0，并将margin设置为auto（随着浏览器窗口变化而变化兼容性好）
+```css
+div { 
+   position: absolute; 
+   width: 100px; 
+   height: 100px; 
+   margin: auto; 
+   top: 0; 
+   left: 0; 
+   bottom: 0; 
+   right: 0; 
+   background-color: pink;
+}
+```
+### （5）div水平居中
+```css
+{
+  width: 100px; 
+  height: 100px; 
+  margin: 0 auto; 
+}
 ```
