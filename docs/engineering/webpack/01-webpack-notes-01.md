@@ -230,7 +230,15 @@ module.exports = {
           // 缓存一些性能开销比较大的 loader 的处理结果，缓存位置：node_modules/.cache/cache-loader
           'cache-loader', 
           'css-loader', 
-          'less-loader'
+          // 'less-loader'
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true,
+              modifyVars: {
+                '@primary-color': '#13c2c2',　　// 修改antd主题色  入口文件样式引入@import '~antd/dist/antd.less';
+              }
+            }
         ],  
       },
       {

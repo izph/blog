@@ -29,3 +29,11 @@ tags:
 
 主要用于匹配文件路径
 [glob](https://github.com/isaacs/node-glob)
+
+## axios
+[axios 中文说明](https://www.kancloud.cn/yunye/axios/234845)
+
+- axios.CancelToken：取消发出去的请求
+[axios.CancelToken](https://juejin.cn/post/6865909895913766926)
+
+- 拦截请求和响应

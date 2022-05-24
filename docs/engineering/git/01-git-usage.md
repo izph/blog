@@ -503,6 +503,13 @@ git remote add filename file:///d/git-study/zhineng.git
 # filename  新建远端仓库别名
 
 git push filename 分支名
+
+# 修改远端仓库地址
+git remote set-url origin [url]
+
+# 先删除再修改地址
+git remote rm origin
+git remote add origin [url]
 ```
 
 ## 13、查看公私钥
