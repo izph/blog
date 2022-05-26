@@ -1,7 +1,7 @@
 ---
 title: TS基础语法（笔记）
 date: 2021-12-26 17:12:16
-permalink: /前端/TypeScript/tsbasics
+permalink: /front-end/typescript/ts-basics
 categories:
   - 前端
   - TypeScript

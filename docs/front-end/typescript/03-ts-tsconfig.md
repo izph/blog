@@ -1,7 +1,7 @@
 ---
 title: tsconfig配置
 date: 2022-01-02 10:15:06
-permalink: /前端/TypeScript/tsconfig
+permalink: /front-end/typescript/tsconfig
 categories:
   - 前端
   - TypeScript

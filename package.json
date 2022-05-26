@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vuepress dev . --open --host \"localhost\"",
     "start": "vuepress dev . --open --host \"localhost\"",
-    "build": "vuepress build .",
+    "build": "rimraf ./public && vuepress build .",
     "clean": "rimraf ./public",
     "bash": "npm run clean && bash deploy.sh"
   },

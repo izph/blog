@@ -1,7 +1,7 @@
 ---
 title: React性能优化笔记
 date: 2021-07-25 22:18:18
-permalink: /前端/React/React性能优化
+permalink: /front-end/react/react-performance
 categories:
   - 前端
   - React

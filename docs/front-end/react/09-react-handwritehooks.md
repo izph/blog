@@ -1,7 +1,7 @@
 ---
 title: 手写hooks
 date: 2021-09-26 19:27:10
-permalink: /前端/React/handwrittenhooks
+permalink: /front-end/react/handwritten-hooks
 categories:
   - 前端
   - React
@@ -33,6 +33,7 @@ function useInterval(callback, delay) {
 ```
 
 ## useDebounce
+
 ```tsx
 import { useState, useEffect } from 'react';
 
@@ -52,9 +53,11 @@ function useDebounce<T>(value: T, delay?: number): T {
 
 export default useDebounce;
 ```
+
 [react-hooks-use-debounce](https://github.com/sophister/2bugua5/blob/master/category/react/react-hooks-use-debounce/react-hooks-use-debounce.md)
 
 ## useClickOutside
+
 ```tsx
 import { RefObject, useEffect } from 'react';
 

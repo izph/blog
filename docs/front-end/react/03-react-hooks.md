@@ -1,7 +1,7 @@
 ---
 title: ReactHooks笔记
 date: 2021-07-13 22:37:42
-permalink: /前端/React/ReactHook笔记
+permalink: /front-end/react/react-hooks
 categories:
   - 前端
   - React
@@ -52,7 +52,7 @@ function useState<T>(initialState: T): [T, (newState: T) => void] {
 render(); // 首次渲染
 ```
 
-这是一个简易能用的`useState`雏形了。但如果在函数内声明多个 state，在当前代码中，只有第一个 state 是生效的(请看`state = state || initialState;`)。
+这是一个简易能用的 `useState`雏形了。但如果在函数内声明多个 state，在当前代码中，只有第一个 state 是生效的(请看 `state = state || initialState;`)。
 
 ### 让useState支持多个state
 
@@ -148,7 +148,7 @@ function App() {
 }
 ```
 
-由于在条件判断的逻辑中，重置了`tag=false`，因此此后的渲染不会再进入条件判断语句。看起来好像没有问题？但是，由于 useState 是基于 Array+Cursor 来实现的，第一次渲染时候，state 和 cursor 的对应关系如下表：
+由于在条件判断的逻辑中，重置了 `tag=false`，因此此后的渲染不会再进入条件判断语句。看起来好像没有问题？但是，由于 useState 是基于 Array+Cursor 来实现的，第一次渲染时候，state 和 cursor 的对应关系如下表：
 
 | 变量名    | cursor |
 | --------- | ------ |
@@ -156,7 +156,7 @@ function App() {
 | unusedNum | 1      |
 | num2      | 2      |
 
-当点击事件触发再次渲染，并不会进入条件判断中的 useState。所以，cursor=2 的时候对应的变量是 num2。而其实 num2 对应的 cursor 应该是 3。就会导致`setNum2`并不起作用。
+当点击事件触发再次渲染，并不会进入条件判断中的 useState。所以，cursor=2 的时候对应的变量是 num2。而其实 num2 对应的 cursor 应该是 3。就会导致 `setNum2`并不起作用。
 
 所以不建议在循环、判断内部使用 Hook。在使用 Hook 的时候，请在函数组件顶部使用！
 
@@ -256,8 +256,10 @@ function render() {
 ```
 
 参考：
+
 - [useEffect 完整指南](https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/)
 - [React Hooks 原理](https://github.com/brickspert/blog/issues/26)
+
 ## useCallback
 
 每次组件状态发生变化的时候，函数组件实际上都会重新执行一遍。在每次执行的时候，实际上都会创建一个新的事件处理函数 handleIncrement。

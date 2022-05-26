@@ -5,6 +5,7 @@ permalink: /project/yolo-ui/yolo-upload-aliyun
 categories:
   - 项目
 tags:
+  - 静态服务器
 ---
 ## 一、购买服务器
 

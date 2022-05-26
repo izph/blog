@@ -1,7 +1,7 @@
 ---
 title: React基础知识笔记
 date: 2021-07-06 17:12:16
-permalink: /前端/React/React基础知识
+permalink: /front-end/react/react-bascis
 categories:
   - 前端
   - React

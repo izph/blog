@@ -1,7 +1,7 @@
 ---
 title: React路由笔记
 date: 2021-07-10 20:22:36
-permalink: /前端/React/reactrouter
+permalink: /front-end/react/react-router
 categories:
   - 前端
   - React

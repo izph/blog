@@ -1,7 +1,7 @@
 ---
 title: 手写TS工具类
 date: 2022-01-20 23:01:16
-permalink: /前端/TypeScript/tstoolclass
+permalink: /front-end/typescript/ts-toolclass
 categories:
   - 前端
   - TypeScript
@@ -11,7 +11,7 @@ tags:
 ---
 ## Partial
 
-Partial`<T>` 将类型的属性变成可选，只支持处理第一层的属性
+Partial `<T>` 将类型的属性变成可选，只支持处理第一层的属性
 
 ```tsx
 type Partial<T> = {
@@ -21,7 +21,7 @@ type Partial<T> = {
 
 ## DeepPartial
 
-DeepPartial`<T>` 将类型的属性变成可选，只支持**多**层的属性
+DeepPartial `<T>` 将类型的属性变成可选，只支持**多**层的属性
 
 ```tsx
 type DeepPartial<T> = {
@@ -43,7 +43,7 @@ type Required<T> = {
 
 ## Readonly
 
-Readonly`<T>` 的作用是将某个类型所有属性变为只读属性，也就意味着这些属性不能被重新赋值。
+Readonly `<T>` 的作用是将某个类型所有属性变为只读属性，也就意味着这些属性不能被重新赋值。
 只对一级的属性做限制不能修改，如果是引用类型，还是可以修改的。
 
 ```tsx
@@ -137,7 +137,7 @@ const todo: TodoPreview = {
 
 ## NonNullable
 
-NonNullable`<T>` 的作用是用来过滤类型中的 null 及 undefined 类型。
+NonNullable `<T>` 的作用是用来过滤类型中的 null 及 undefined 类型。
 
 ```tsx
 type NonNullable<T> = T extends null|undefined ? never : T
@@ -150,7 +150,7 @@ type T1 = NonNullable<string[] | null | undefined>; // string[]
 
 ## Parameters
 
-Parameters`<T>` 的作用是用于获得函数的参数类型组成的元组类型。
+Parameters `<T>` 的作用是用于获得函数的参数类型组成的元组类型。
 
 ```tsx
 type Parameters<T extends (...args: any) => any> = 

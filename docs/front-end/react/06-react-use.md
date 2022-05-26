@@ -1,7 +1,7 @@
 ---
 title: react-use
 date: 2021-09-20 15:10:16
-permalink: /前端/React/reactuse
+permalink: /front-end/react/react-use
 categories:
   - 前端
   - React

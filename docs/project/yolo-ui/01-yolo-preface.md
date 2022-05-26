@@ -224,15 +224,26 @@ defaultActiveKey是默认显示的tabPane，type分为line、card，onTabClick�
 ## Tabs标签页的实现
 ul包含多个li，每个小li就是一个tabs标题，通过padding撑大盒子。点击小li，切换当前activeKey，同时也会给li添加一个class类名，修改当前li的样式。代码中用到了React.Children.map生成了小li和tabs的内容区域。
 
-# Upload上传
+# Tag 标签
+## Tag 标签的分析
+color是主题颜色，size是标签大小，text是标签的文本，closable是否显示关闭图标，onClose关闭Tag时的回调
+## Tag 标签的实现思路
+最外层引用Transition组件，in属性控制标签的隐藏。过渡组件包裹一个div，div挂载用户自定义的属性，div内有一个span，span就是显示text属性的内容，closable来控制是否显示关闭图标X号。
 
-# Upload上传
+不同的主题色如何控制？通过传入color属性，切换class类名，样式文件中使用了less的each方法，遍历了`@theme-color`这个对象，生成了不同
+主题的样式代码，比如`color: @value; background-color: rgba(@value, .1); border: 1px solid rgba(@value, .2);`，使用rgba最后一个参数来调整透明的程度，1表示不透明，0表示透明。
+
+# Upload 上传
+
+## Upload 上传的分析
 
 点击上传按钮，选择想要上传的文件，然后开始自动上传，之后会显示上传进度（progress），当进度满了就会显示上传成功，反之上传失败。鼠标悬浮到上传的文件，会显示叉号，可以取消上传的文件。
 支持用户自定义请求头headers，文件名称，上传额外的 `data（{key：vale}）`，支持input本身file的属性，如multiple（多选）、accept（限制文件类型）、是否默认携带cookie。自定义触发的元素（在Upload设置按钮、文本。。。）、支持拖动上传文件、用户点击文件执行的自定义的回调等等。
 
 ![image.png](images/upload001.png)
 
+## Upload 上传的实现
+原理是手动触发了input的点击事件，input为type，表示上传文件。这个控件是不需要显示出来的，它还挂载了一些原生的属性，比如multiple、accept等。
 
 ## 组件测试用例分析和编码
 刚开始有写一些简单的测试，后续由于时间的关系，没有增加新的测试代码

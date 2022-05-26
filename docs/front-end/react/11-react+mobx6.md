@@ -1,7 +1,7 @@
 ---
 title: React+Mobx6.0
 date: 2022-05-15 18:05:10
-permalink: /前端/React/react-mobx
+permalink: /front-end/react/react-mobx
 categories:
   - 前端
   - React
@@ -26,11 +26,8 @@ tags:
 - observable state：被 MobX 跟踪的状态。
 - action：允许修改状态的方法，在严格模式下只有 action 方法被允许修改状态。
 - computed：根据应用程序状态派生的新值，计算值。
-
 - mobx 每次都是修改的同一个状态对象，基于响应式代理，也就是 Object.defineProperty 代理 get、set 的处理，get 时把依赖收集起来，set 修改时通知所有的依赖做更新。
-
 - mobx 会在对象上添加一个 Symbol($mobx) 的隐藏属性，用来放 ObservableObjectAdministration 对象，它是用于管理属性和它的依赖的，在 get 的 时候收集依赖，然后 set 的时候就可以通知所有收集到的依赖（Reaction）做更新。
-
 
 更新mobx使用参考：
 
@@ -39,17 +36,20 @@ tags:
 [React+Mobx6从入门到实践](https://juejin.cn/post/7063329425948934180)
 
 ## 查看mobx的proxy对象的数据
+
 ```js
 import { toJS } from "mobx";
 console.log(toJS(user.token));
 ```
 
 ## 持久化存储mobx-persist-store
+
 解决页面刷新的时候数据会丢失的情况
 
 [mobx-persist-store文档](https://github.com/quarrant/mobx-persist-store)
 
 ### makePersistable例子（Persist：维持和保持）
+
 ```js
 import { makeAutoObservable, action, toJS } from "mobx";
 import { makePersistable, isHydrated } from "mobx-persist-store"; // 引入相关api
@@ -105,7 +105,9 @@ class User {
 
 export default new User();
 ```
+
 ### 使用持久数据
+
 ```js
 
 useEffect(() => {
@@ -122,11 +124,9 @@ useEffect(() => {
 ## React和Mobx
 
 - Mobx是单向数据流，利用action改变state ，进而更新所有受影响的view，而Redux是基于Flux的单向数据流实现。
-
 - Redux中数据是只读的；Mobx中的数据可读可写，并且 action 非必须，可直接改变。
-
 - Mobx 能少写很多代码，而 Redux 要通过 action, reducer 等等的编写才能实现整个流程。
-[Redux和Mobx的区别](https://juejin.cn/post/7087338460129787941)
+  [Redux和Mobx的区别](https://juejin.cn/post/7087338460129787941)
 
 ## localforage前端本地存储
 
@@ -138,4 +138,3 @@ useEffect(() => {
 [localforage库](https://www.npmjs.com/package/localforage)
 
 [localforage前端数据存储](https://juejin.cn/post/7024119821365149709)
-

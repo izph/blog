@@ -1,7 +1,7 @@
 ---
 title: Redux笔记
 date: 2021-07-16 23:10:20
-permalink: /前端/React/react-redux
+permalink: /front-end/react/react-redux
 categories:
   - 前端
   - React
