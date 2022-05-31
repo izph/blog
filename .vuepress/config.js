@@ -2,7 +2,7 @@ module.exports = {
   // 文档标题
   title: "iZph",
   // 文档说明
-  base: "/blog/",
+  // base: "/blog/",
   description: 'Stick to your original intention and become a better self',
   dest: "public",
   head: [
@@ -119,7 +119,7 @@ module.exports = {
     author: "iZph",
     // 头像
     authorAvatar: "/z.jpg",
-    record: "xxxx",
+    record: "京ICP备2022014857号",
     startYear: "2020",
     subSidebar: 'auto' //在所有页面中启用自动生成子侧边栏，原sidebar仍然兼容
   },

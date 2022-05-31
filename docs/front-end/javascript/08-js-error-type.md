@@ -73,3 +73,17 @@ try{
 捕获到的错误信息，ReferenceError : a is not defined，并且会打印"finally"
 
 e.name就是错误的类型(ReferenceError)，e.message是错误信息(a is not defined)，e就是一个错误对象
+
+## 处理错误的方法
+- try catch
+- Promise.catch()
+- unhandledrejection
+- window.onerror
+- window.addEventListener
+
+## 总结
+在具体到实际工作中，我们要处理的异常分为以下几种：
+1. 语法错误及代码异常：对可疑区域增加 try-catch，全局增加 window.onerror;
+2. 数据请求异常：使用 promise-catch 处理 Promise 异常，使用 unhandledrejection 处理未捕获的Promise异常，使用 try-catch 处理 async/await 异常;
+3. 静态资源加载异常：在元素上添加 onerror，全局增加 window.addEventListener；
+

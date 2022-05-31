@@ -95,7 +95,13 @@ document.querySelector('.btn').click();
 - memory disk，内存
 - cache disk，硬盘缓存
 
-### 16、
+### 16、for ... in 和 for ... of 区别
+for ... in 获取的是对象的键名；for ... of 遍历获取的是对象的键值
+for ... in 会遍历对象的整个原型链，性能非常差，不推荐使用；而 for ... of 只遍历当前对象，不会遍历原型链
+对于数组的遍历，for ... in 会返回数组中所有可枚举的属性(包括原型链上可枚举的属性)；for ... of 只返回数组的下标对应的属性值
+对于普通对象，没有部署原生的 iterator 接口，直接使用 for...of 会报错，也可以使用 Object.keys(obj) 方法将对象的键名生成一个数组，然后遍历这个数组
+forEach 循环无法中途跳出，break 命令或 return 命令都不能奏效；for...of 循环可以与 break、continue 和 return 配合使用，跳出循环
+for...in 循环主要是为了遍历对象而生，不适用于遍历数组；for...of 循环可以用来遍历数组、类数组对象，字符串、Set、Map 以及 Generator 对象
 
 ### 17、Commonjs 和 ES Module区别
 

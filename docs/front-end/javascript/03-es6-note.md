@@ -654,11 +654,28 @@ console.log(union);
 let diff = [...new Set(arr)].filter(item => !(new Set(arr2).has(item)));
 console.log(diff);
 ```
+### WeakSet
+WeakSet 对象中只能存放对象引用，不能存放值，而 Set 对象都可以。
+WeakSet 对象中存储的对象值都是被弱引用的，如果没有其他的变量或属性引用这个对象值，则这个对象值会被当成垃圾回收掉。正因为这样，WeakSet 对象是无法被枚举的，没有办法拿到它包含的所有元素。
+```js
+const ws = new WeakSet()
+const obj = {}
+const foo = {}
 
+ws.add(window)
+ws.add(obj)
+
+ws.has(window)  // true
+ws.has(foo)  // false, 对象 foo 并没有被添加进 ws 中 
+
+ws.delete(window)  // 从集合中删除 window 对象
+ws.has(window)  // false, window 对象已经被删除了
+
+ws.clear()  // 清空整个 WeakSet 对象
+```
 ## 14.Map集合
 
-ES6 提供了 Map 数据结构。它类似于对象，也是键值对的集合。但是键的范围不限于字符串，各种类型的值（包括对象）都可以当作键。Map也实现了
-iterator 接口，所以可以使用『扩展运算符』和『for…of』进行遍历。Map 的属性和方法：
+ES6 提供了 Map 数据结构。它类似于对象，也是键值对的集合。但是键的范围不限于字符串，各种类型的值（包括对象）都可以当作键，甚至可以使用 NaN 来作为键值。Map也实现了iterator 接口，所以可以使用『扩展运算符』和『for…of』进行遍历。Map 的属性和方法：
 
 1) map.size  返回 Map 的元素个数
 2) map.set(key,value)   增加一个新元素，返回当前 Map
@@ -672,7 +689,40 @@ iterator 接口，所以可以使用『扩展运算符』和『for…of』进行
 //创建 Map  
 // const m = new Map(Object.entries(obj));
 ```
+### WeakMap
+WeakMap 对象是一组键 / 值对的集合，其中的键是弱引用的。其键必须是对象，而值可以是任意的。
+```js
+const o1 = {};
+const o2 = function(){};
+const o3 = window;
 
+const wm1 = new WeakMap();
+wm1.set(o1, 37);
+wm1.has(o1);  // true
+wm1.delete(o1);
+wm1.has(o1);  // false
+
+wm1.set(o2, "azerty");
+wm1.get(o2);  // "azerty"
+wm1.has(o2);  // true
+
+const wm2 = new WeakMap();
+wm2.set(o1, o2);  // value可以是任意值,包括一个对象
+wm2.get(o2);  // undefined,wm2中没有o2这个键
+wm2.has(o2);  // false
+
+wm2.set(o3, undefined);
+wm2.get(o3);  // undefined,值就是undefined
+wm2.has(o3);  // true (即使值是undefined)
+
+wm2.set(wm1, wm2);  // 键和值可以是任意对象,甚至另外一个WeakMap对象
+ 
+const wm3 = new WeakMap();
+wm3.set(o1, 37);
+wm3.get(o1);  // 37
+wm3.clear();
+wm3.get(o1);  // undefined,wm3已被清空
+```
 ## 15.JS的Class
 
 ES6 提供了更接近传统语言的写法，引入了 Class（类）这个概念，作为对
