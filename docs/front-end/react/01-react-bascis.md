@@ -470,3 +470,32 @@ React V15 在渲染时，会递归比对 VirtualDOM 树，找出需要变动的�
    class MyTestableClass {
 }
 ```
+## 25、React Object
+
+React Object包含属性：
+
+- key: 组件的key，主要用在virtual dom上，compare diff和move element
+
+- props：组件属性，来源于父组件或者HOC，或者类似的外部传递
+
+- ref：当前的dom引用
+
+- type: 组件类型（组件挂载的属性可以在type中获取，如常用的displayName）
+
+- _owner: 是React Component，创建react component的组件，空值为null
+
+- $$typeof: 早期的React（0.13）版本中很容易受到 XSS 攻击，为了解决此问题，字段名是使用$$typeof，value使用的是Symbol
+
+## React.isValidElement
+
+如何区分一个对象是否是react object？React提供了isValidElement方法
+
+```js
+export function isValidElement(object) {
+    return (
+        typeof object === 'object' &&
+        object !== null &&
+        object.$$typeof === REACT_ELEMENT_TYPE
+    );
+}
+```

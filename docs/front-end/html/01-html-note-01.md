@@ -8,11 +8,49 @@ categories:
 tags:
   - HTML
 ---
-### 1. HTML
+### 1. HTML常识
+- html和body都是block元素，不设置宽度，默认是浏览器宽度的100%。不设置高度，默认由内容撑高。body是html子元素。通过Elements面板的Computed查看元素的属性值，如display、color、font-size、width、height属性等等。
+![image.png](images/html-base-001.png)
 
-### 2. 行内元素的margin、padding
+- 标签内的文字默认不换行，如果文字有空格，则会以这些空格分为几段，一段一段填充到一行上，如果标签宽度不够，另外的分段会换行显示。
 
-行内元素的margin、padding在水平方向有效，垂直方向是无效的。
+- 常见块级元素div、p、h1-h6、ul、li、html5语义化标签，常见行内元素span、a、label、strong、b、em、del等。
+
+- img是行内元素，但是能设置宽高。input是display: inline-block行内块元素
+
+- 一旦设置浮动，就没有分块状元素和行内元素，原本的行内元素也能设置宽高
+
+- 相邻的行内元素（行内块）在一行上，但是中间会有空白的间隙
+
+- 行内块级元素默认的宽度就是本身内容的宽度，它的高度，行高，内边距和外边距都可以设置
+
+- 块级元素宽度默认是父元素100%，行内元素默认的宽高是auto，依靠文字内容撑开。行内元素一般容纳纯文本和其他行内元素（a标签除外）
+
+- a标签内可以放置块级元素和行内元素，a链接里面不能再存放链接，a标签里放a标签会自动放到外面。
+```css
+/* a标签的默认样式 
+  通常去掉下划线：text-decoration: none;
+*/
+a:-webkit-any-link {
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: underline;
+}
+```
+
+- p标签不能放块级元素div，而且还能放行内元素，放在p标签内的span垂直的margin、padding、border会生效，影响布局。放在div内的span垂直的margin、padding、border不影响布局。
+
+- h1-h6可以放置div标签，div会继承h标签的属性
+![image.png](images/html-base-002.png)
+
+- 在Properties面板可以查看某个DOM上的属性：
+![image.png](images/html-base-003.png)![image.png](images/html-base-004.png)
+
+attributes是我们定义在dom元素上的属性，children是存放子元素（不包括text），childNodes是存放子元素，包括文本。classList是存放class类名的数组，dataset存放自定义属性(data-*), style对象挂载样式属性，innerHTML、nodeType、nodeName（tagName）等等
+
+### 2. 行内元素的margin、padding、border
+
+，设置宽高无效，行内元素的margin、padding、border在水平方向有效，并且会影响布局。而垂直方向是不影响布局的，能看出DOM元素效果，如果给该元素设置了背景色和边框色，并设置垂直的padding和border后，则会显示特定颜色的效果，不影响布局。
 
 ### 3. link和@import
 
