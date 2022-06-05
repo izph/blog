@@ -49,6 +49,7 @@ $.ajax({
 - 没有办法原生检测请求的进度
 
 ```js
+
 fetch("http://www.example.com/test").then(function(response){
     return response.json();
 }).then(function(data){
@@ -82,6 +83,8 @@ postData('https://example.com/answer', { answer: 42 })
   });
 
 ```
+### 浏览器支持async/await
+![image.png](images/browser-fetch001.png)
 
 ## axios
 

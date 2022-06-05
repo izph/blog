@@ -332,6 +332,8 @@ function TextInputWithFocusButton() {
 
 所以在 React 的开发中，我们很少会使用 Context 来做太多数据的共享，Context 更多的是提供了一个强大的机制，让 React 应用具备定义全局的响应式数据的能力。主要是用来实现 Theme(主题)、Language (多语)等功能
 
+## useImperativeHandle(use命令处理)
+
 ## 自定义Hooks
 
 如何创建自定义 Hooks？

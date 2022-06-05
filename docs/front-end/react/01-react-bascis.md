@@ -22,6 +22,9 @@ tags:
 渲染虚拟DOM到页面，ReactDOM来自react-dom（用于支持react操作DOM）
 ReactDOM.render(VDOM, document.getElementById('root'))
 
+- 类组件的render函数和函数组件的return，它们的render阶段作用是什么？
+根据一次更新中产生的新状态值，通过 React.createElement ，替换成新的状态，得到新的 React element 对象，新的 element 对象上，保存了最新状态值。 createElement 会产生一个全新的props。到此 render 函数使命完成了。
+
 ## 3、虚拟DOM创建方式
 
 1. JSX（小写html标签，大写组件，可写表达式）
@@ -499,3 +502,29 @@ export function isValidElement(object) {
     );
 }
 ```
+
+## React样式解决方案
+
+### CSS Modules
+组合方案：css 全局样式 + less / scss CSS Modules 方案
+
+#### CSS Modules注意事项
+- 仅用 class 类名定义 css ，不使用其他选择器。
+- 不要嵌套 .a{ .b{} } 或者重叠.a .b {} 。
+
+### CSS IN JS
+CSS IN JS 本质上放弃了css ，以根本上解决了全局污染，样式混乱等问题.
+```js
+const boxStyle = {
+    backgroundColor: 'red'
+}
+
+<div  style={ boxStyle }  >
+```
+
+### style-components库
+
+## immutable.js(不变的)
+
+
+## Suspense(担心)

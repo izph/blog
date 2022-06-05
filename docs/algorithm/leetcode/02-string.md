@@ -25,19 +25,19 @@ tags:
 ### 题解：
 
 ```javascript
-// 1、创建一个空数组str，存放不重复的子字符串
-// 2、遍历字符串，如果字符串的某个值在str中存在，则删除str中的重复字符；
-//    若字符串中的字符在str中不存在，则push进去；
-// 3、str数组中保存的一直是以s[i]为结尾的最大不重复的字符串。
+// 1、创建一个空数组arr，存放不重复的子字符串
+// 2、遍历字符串，如果字符串的某个值在arr中存在，则删除arr中的重复字符；
+//    若字符串中的字符在arr中不存在，则push进去；
+// 3、arr数组中保存的一直是以s[i]为结尾的最大不重复的字符串。
 var lengthOfLongestSubstring = function(s) {
-   var str = [], maxLength = 0;
+   var arr = [], maxLength = 0;
    for(let i = 0; i < s.length; i++){
-       let index = str.indexOf(s[i]);
+       let index = arr.indexOf(s[i]);
        if(index != -1){
-           str.splice(0, index + 1);
+           arr.splice(0, index + 1);
        }
-       str.push(s[i]);
-       maxLength = Math.max(maxLength, str.length);
+       arr.push(s[i]);
+       maxLength = Math.max(maxLength, arr.length);
    }
    return maxLength;
 };
@@ -620,7 +620,7 @@ var decodeString = function(s) {
         } else if (char == ']') {  // 遇到 ]，两个栈的栈顶出栈
             let repeatTimes = numStack.pop(); // 获取拷贝次数
             result = strStack.pop() + result.repeat(repeatTimes); // 构建子串
-        } else {         
+        } else {       
             result += char;        // 遇到字母，追加给result串
         }
     }

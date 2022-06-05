@@ -38,15 +38,17 @@ function bubbleSort(arr) {
 
 ### 优化后的冒泡排序
 
+遍历一圈后，如果没有将flag 置为 0，则说明已经不需要交换，完成了整个排序
+
 ```javascript
 function bubble(arr) {  // [1, 3, 2, 4]
   // 需要排序n-1趟
   for (let i = 0; i < arr.length; i++) {
     let flag = i;
-    for (let j = 0; j < arr.length - i - 1; j++) {
+    for (let j = 1; j < arr.length - i; j++) {
       // 碰到前面比后面大的数，进行交换
-      if (arr[j] > arr[j + 1]) {
-        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      if (arr[j - 1] > arr[j]) {
+        [arr[j - 1], arr[j]] = [arr[j], arr[j - 1]];
         flag = 0;
       }
     }
@@ -79,7 +81,9 @@ function insertSort(arr) {
 }
 ```
 
-### 优化后的排序算法
+### 优化后的插入排序
+
+再次遍历时 arr[target] < arr[j] 不满足，并且arr[j]往前的是有序的，则说明arr[j]往前的元素不在需要比较，没有优化的排序算法是需要比较的。
 
 ```javascript
 function insertSort(arr) {
