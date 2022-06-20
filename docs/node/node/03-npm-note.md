@@ -60,6 +60,25 @@ node安装教程和更改全局模块的安装路径可参考：[Node.js的安�
 
 `npm config set registry xxxUrl`
 
+## npm注册登录
+```bash
+# 注册
+npm adduser
+Username: your name
+Password: your password
+Email: your email
+
+# 查看当前使用的用户
+npm whoami
+
+# npm登录
+npm login
+
+# npm发布
+npm publish
+```
+
+
 ## .npmrc文件
 [.npmrc文件](https://juejin.cn/post/6983522411647860766)
 

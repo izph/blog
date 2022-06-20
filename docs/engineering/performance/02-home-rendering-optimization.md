@@ -66,3 +66,60 @@ tags:
 - 同构
   - 优点：SEO 友好首屏性能高，FMP 比 CSR 和预渲染快客户端用户体验好内存数据共享客户端与服务端代码公用，开发效率高
   - 缺点：Node 容易形成性能瓶颈
+
+# webpack首屏渲染优化
+[webpack优化](https://juejin.cn/post/7071928099847274509)
+
+## 生产环境关闭productionSourceMap、css sourceMap
+```js
+const isProduction = process.env.NODE_ENV === 'production' // 判断是否是生产环境
+module.exports = {
+    productionSourceMap: !isProduction, //关闭生产环境下的SourceMap映射文件
+    css: {
+        sourceMap: !isProduction, // css sourceMap 配置
+        loaderOptions: {
+           // ...其它代码
+        }
+    },
+    // ...其它代码
+}
+
+```
+## 分析大文件，改用CDN引入
+- 先使用webpack-bundle-analyzer分析文件大小，分析下前端加载速度慢原因
+- 在打包时排除这些第三方依赖，webpack的externals
+- html模板中引入cdn（免费的cdn服务: BootCDN）
+
+## moment.js的优化（使用day.js）
+
+## 生产环境开启js、css压缩
+提取css为单独文件并压缩:  mini-css-extract-plugin
+
+## 使用懒加载组件
+```js
+{
+    path: '/Login',
+    name: 'Login',
+    component: () = >import( /* webpackChunkName: "Login" */  '@/view/Login')
+}
+```
+### 组件库的按需加载
+## 开启gizp压缩(配置nginx优化)
+gizp压缩是一种http请求优化方式，通过减少文件体积来提高加载速度。html、js、css文件甚至json数据都可以用它压缩，可以减小60%以上的体积。前端配置gzip压缩，并且服务端使用nginx开启gzip，用来减小网络传输的流量大小。
+
+```js
+// npm i compression-webpack-plugin -D
+
+// dev开发配置文件
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+
+plugins: [
+   new CompressionWebpackPlugin()
+]
+// 自动生成.gz为后缀的包
+// 配置好之后，打开浏览器访问线上，F12查看控制台，如果该文件资源的响应头里显示有Content-Encoding: gzip，表示浏览器支持并且启用了Gzip压缩的资源
+```
+## 缩小文件搜索范围 减小不必要的编译工作
+- Loader 时可以通过 test、include、 exclude三个配置项来命中 Loader
+- resolve.alias 配置，路径别名
+- 优化 resolve.extensions 配置，文件后缀名优先匹配

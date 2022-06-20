@@ -11,11 +11,14 @@ tags:
 
 [lerna](https://github.com/lerna/lerna)
 
-用于管理具有多个包的 JavaScript 项目的工具
+用于管理具有多个包的JavaScript项目的工具，将所有模块都放到同一个仓库里
 
 1. 自动解决packages之间的依赖关系
 2. 通过git 检测文件改动，自动发布
-3. 根据git 提交记录，自动生成CHANGELOG
+3. 根据git 提交记录，自动生成changelog
+
+安装：`npm install -g lerna`
+初始化Lerna仓库：`lerna init`
 
 
 ## shelljs

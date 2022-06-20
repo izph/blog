@@ -2,7 +2,7 @@ module.exports = {
   // 文档标题
   title: "iZph",
   // 文档说明
-  // base: "/blog/",
+  base: "/blog/",
   description: 'Stick to your original intention and become a better self',
   dest: "public",
   head: [

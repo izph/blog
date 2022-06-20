@@ -136,6 +136,94 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
   ]
 }
 ```
+### babel-plugin vs babel-preset（预设）
+[Babel polyfill 常见配置对比](https://juejin.cn/post/6975556168752037919)
+
+babel存在太多的plugin，实现某种功能，比如ES2015语法兼容时需要用到众多的插件。preset是plugin的集合，将多个plugin合并在一起（预设是插件的集合）
+
+1. 插件plugin和预设preset的执行顺序
+- plugin先执行，preset后执行
+- plugin集从前往后执行
+- preset集从后往前执行
+
+@babel/preset-env（官方提供），作用是根据 targets 的配置引入对应插件来实现编译和 polyfill，自动根据 targets 来引入需要的插件
+
+所谓Polyfill就是这样解决API的兼容问题的，抹平差异化
+
+2. 官方给出了两种 polyfill 方案：
+- babel-polyfill：会污染全局适合在业务项目中使用。（Babel7.4.0版本开始，babel/polyfill 已经被废弃，推荐直接使用core-js）
+- babel-runtime：不污染全局适合在组件或类库项目中使用。
+
+开启 polyfill 功能要指定它的引入方式，也就是 useBuiltIns。设置为 usage 是在每个模块引入用到的，设置为 entry 是统一在入口处引入 targets 需要的。
+
+polyfill 的实现就是 core-js，需要再指定下 corejs 版本，一般是指定 3
+
+@babel/preset-env 会导致多个模块重复注入同样的代码，会污染全局环境。解决这个问题就要使用 @babel/plugin-transform-runtime 插件
+
+这样就不会多个模块重复注入同样的实现代码了，而且 core-js 的 api 也不是全局引入了，变成了模块化引入。
+
+这样就解决了 corejs 的重复注入和全局引入 polyfill 的两个问题
+
+@babel/plugin-transform-runtime 的功能，把注入的代码和 core-js 全局引入的代码转换成从 @babel/runtime-corejs3 中引入的形式
+
+@babel/runtime-corejs3 就包含了 helpers、core-js、regenerator 这 3 部分
+```js
+{
+    presets: [
+        ['@babel/preset-env', {
+            targets: 'chrome 30',
+            debug: true,
+            useBuiltIns: 'usage',
+            corejs: 3
+        }]
+    ],
+    plugins: [
+        ['@babel/plugin-transform-runtime', {
+            corejs: 3 // 插件也是处理 polyfill ，也就同样需要指定 corejs 的版本
+        }]
+    ]
+}
+
+```
+### babel的原理
+babel是一个JS、JSX、TS 的编译器，能把新语法写的代码转换成目标环境支持的语法的代码
+
+#### babel工作的三个步骤
+1. 解析：将源码解析为AST（词法解析和语法解析）
+2. 转换：旧AST转换成为新的AST（应用插件/预设中，对AST节点增删改查的操作）
+3. 生成：根据AST生成源码（深度优先遍历AST生成转译后的源码）
+
+
+
+#### @bable/core
+- 内核@bable/core类似一个调度器，并不直接实现功能细节，而是调度各模块插件去实现相关功能
+- @babel/core的功能可以简单概况为 向外读取配置 => 向内调度插件模块协同工作 => 向外输出转译后的源码。详细版本如下：
+
+加载配置文件，读取所需使用的插件、预处理器等等
+- 调用@babel/parser进行词法分析、语法分析后转换为AST
+- 调用@babel/traverse对AST进行遍历，并采用visitor模式应用配置项中的插件对AST进行转换
+- 调用@babel/generator生成源码和源码对应的sourceMap
+
+#### 解析（parse）
+解析的核心是：词法分析将源码分词、语法分析将分词后的源码按照JS语法逻辑转换为AST（抽象语法树）。
+
+- 词法分析：简单理解为：将源码分割为不同种类，保留关键词（如function）、条件判断词（if/else）、运算符、数字、字符串、空格等
+- 语法分析：将词法分析生成的分词，组合为各类型的语法短语（抽象语法树AST）
+#### 转换（Traverser）
+转换器会遍历AST树，然后按照配置的插件对其中需要转换的节点进行操作
+
+#### 生成（generator）
+调度器调用generator插件将AST转译成源码
+
+#### babel-cli
+babel官方提供的脚手架，允许你以命令行的方式运行babel
+```js
+$ npm install babel-cli -g
+​
+# 将示例js输出到编译后的js中
+$ babel example.js -o compiled.js
+
+```
 
 ### 为 JSON 模块使用具名导出
 
