@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>如何搭建一个通用的基础组件库 | iZph-FE</title>
+  <meta name="description" content="前言作为一名前端程序员，一直以来，我都只是停留在会使用各种优秀的组件库，包括开源和公司内部自研的，从来没有了解过这些组件库是如何开发的。直到现在，自己参考了多个开源组件库，由浅入深，尝试去实现一个简单的组件库，学习和探索组件库设计以及开发思路。 技术选择经过查阅资料，觉得dumi非常的合适。dumi是专门为组件开发场景而生的文档工具，开箱即用，支持TypeScript 和 Markdown，可以将">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何搭建一个通用的基础组件库">
+<meta property="og:url" content="http://example.com/2022/03/30/engineering/component-library/index.html">
+<meta property="og:site_name" content="前端点点滴滴">
+<meta property="og:description" content="前言作为一名前端程序员，一直以来，我都只是停留在会使用各种优秀的组件库，包括开源和公司内部自研的，从来没有了解过这些组件库是如何开发的。直到现在，自己参考了多个开源组件库，由浅入深，尝试去实现一个简单的组件库，学习和探索组件库设计以及开发思路。 技术选择经过查阅资料，觉得dumi非常的合适。dumi是专门为组件开发场景而生的文档工具，开箱即用，支持TypeScript 和 Markdown，可以将">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/engineering/component001.png">
+<meta property="og:image" content="http://example.com/images/engineering/project-name001.png">
+<meta property="og:image" content="http://example.com/images/engineering/component002.png">
+<meta property="og:image" content="http://example.com/images/engineering/component003.png">
+<meta property="og:image" content="http://example.com/images/engineering/component-btn-001.png">
+<meta property="og:image" content="http://example.com/images/engineering/component-progress001.png">
+<meta property="og:image" content="http://example.com/images/engineering/component-progress002.png">
+<meta property="og:image" content="http://example.com/images/engineering/component-switch001.png">
+<meta property="og:image" content="http://example.com/images/engineering/yolo-build-001.png">
+<meta property="og:image" content="http://example.com/images/engineering/yolo-npm-publish.png">
+<meta property="og:image" content="http://example.com/images/engineering/yolo-upload001.png">
+<meta property="article:published_time" content="2022-03-29T20:39:18.000Z">
+<meta property="article:modified_time" content="2022-07-10T09:18:13.112Z">
+<meta property="article:author" content="zhongph">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/engineering/component001.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2022/03/30/engineering/component-library/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="前端点点滴滴" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center theme-purple" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/izph" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">iZph</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Front End Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>iZph's Blog：欢迎交流与分享经验哈!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Koa/" rel="tag">Koa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/JavaScript/" style="font-size: 13.5px;">JavaScript</a> <a href="/tags/Koa/" style="font-size: 13px;">Koa</a> <a href="/tags/Node/" style="font-size: 13.5px;">Node</a> <a href="/tags/React/" style="font-size: 14px;">React</a> <a href="/tags/TypeScript/" style="font-size: 13px;">TypeScript</a> <a href="/tags/Webpack/" style="font-size: 13.5px;">Webpack</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" style="font-size: 13px;">数据结构与算法</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 13px;">浏览器</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 13px;">面试</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/04/17/front_end/react-mobx6/" class="title">React+Mobx6.0</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-04-16T18:05:10.000Z" itemprop="datePublished">2022-04-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/30/engineering/component-library/" class="title">如何搭建一个通用的基础组件库</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-29T20:39:18.000Z" itemprop="datePublished">2022-03-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/02/21/front_end/koa-base/" class="title">Koa 基础开发</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-02-20T19:35:10.000Z" itemprop="datePublished">2022-02-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/01/06/front_end/node-base/" class="title">Node 知识梳理（一）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-01-05T22:15:33.000Z" itemprop="datePublished">2022-01-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/28/front_end/typescript/" class="title">TypeScript 知识汇总</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-27T18:32:14.000Z" itemprop="datePublished">2021-12-27</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E6%8B%A9"><span class="toc-number">2.</span> <span class="toc-text">技术选择</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">3.</span> <span class="toc-text">环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">3.1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.1.1.</span> <span class="toc-text">初始化项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91%E8%84%9A%E6%89%8B%E6%9E%B6"><span class="toc-number">3.1.2.</span> <span class="toc-text">组件开发脚手架</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E8%AF%B4%E6%98%8E"><span class="toc-number">3.2.</span> <span class="toc-text">目录结构说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C"><span class="toc-number">3.3.</span> <span class="toc-text">运行</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E5%BC%80%E5%8F%91"><span class="toc-number">4.</span> <span class="toc-text">组件的开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%A0%B7%E5%BC%8F%E6%90%AD%E5%BB%BA"><span class="toc-number">4.1.</span> <span class="toc-text">全局样式搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%9F%BA%E7%A1%80%E6%A0%B7%E5%BC%8F"><span class="toc-number">4.1.1.</span> <span class="toc-text">定义基础样式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E5%AE%9A%E5%8D%95%E4%B8%AA%E7%BB%84%E4%BB%B6%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-number">4.2.</span> <span class="toc-text">约定单个组件的文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.3.</span> <span class="toc-text">组件的开发步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Button%E6%8C%89%E9%92%AE"><span class="toc-number">5.</span> <span class="toc-text">Button按钮</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E"><span class="toc-number">5.1.</span> <span class="toc-text">类型声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Button%E6%8C%89%E9%92%AE%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.2.</span> <span class="toc-text">Button按钮实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Button%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E"><span class="toc-number">5.3.</span> <span class="toc-text">Button使用说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%92%AE%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">5.3.1.</span> <span class="toc-text">按钮的类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%92%AE%E5%B0%BA%E5%AF%B8"><span class="toc-number">5.3.2.</span> <span class="toc-text">按钮尺寸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%92%AE%E7%9A%84%E7%A6%81%E7%94%A8%E7%8A%B6%E6%80%81"><span class="toc-number">5.3.3.</span> <span class="toc-text">按钮的禁用状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API"><span class="toc-number">5.3.4.</span> <span class="toc-text">API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Button%E6%96%87%E6%A1%A3%E9%A2%84%E8%A7%88"><span class="toc-number">5.3.5.</span> <span class="toc-text">Button文档预览</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Progress%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="toc-number">6.</span> <span class="toc-text">Progress进度条</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E-1"><span class="toc-number">6.1.</span> <span class="toc-text">类型声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Progress%E8%BF%9B%E5%BA%A6%E6%9D%A1%E5%AE%9E%E7%8E%B0"><span class="toc-number">6.2.</span> <span class="toc-text">Progress进度条实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Progress%E8%BF%9B%E5%BA%A6%E6%9D%A1%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3"><span class="toc-number">6.3.</span> <span class="toc-text">Progress进度条说明文档</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">6.3.1.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%AB%98%E5%BA%A6"><span class="toc-number">6.3.2.</span> <span class="toc-text">自定义高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%AF%E5%90%A6%E6%98%BE%E7%A4%BA%E7%99%BE%E5%88%86%E6%AF%94%E6%96%87%E5%AD%97"><span class="toc-number">6.3.3.</span> <span class="toc-text">是否显示百分比文字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-1"><span class="toc-number">6.3.4.</span> <span class="toc-text">API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Progress%E6%96%87%E6%A1%A3%E9%A2%84%E8%A7%88"><span class="toc-number">6.3.5.</span> <span class="toc-text">Progress文档预览</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Switch%E5%BC%80%E5%85%B3"><span class="toc-number">7.</span> <span class="toc-text">Switch开关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E-2"><span class="toc-number">7.1.</span> <span class="toc-text">类型声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Switch%E5%BC%80%E5%85%B3%E5%AE%9E%E7%8E%B0"><span class="toc-number">7.2.</span> <span class="toc-text">Switch开关实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Switch%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3"><span class="toc-number">7.3.</span> <span class="toc-text">Switch说明文档</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-1"><span class="toc-number">7.3.1.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%81%E6%AD%A2%E4%BD%BF%E7%94%A8"><span class="toc-number">7.3.2.</span> <span class="toc-text">禁止使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E5%88%B6%E4%B8%BB%E9%A2%98%E9%A2%9C%E8%89%B2"><span class="toc-number">7.3.3.</span> <span class="toc-text">定制主题颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%B0%BA%E5%AF%B8"><span class="toc-number">7.3.4.</span> <span class="toc-text">组件尺寸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%85%B3%E5%86%85%E5%AE%B9"><span class="toc-number">7.3.5.</span> <span class="toc-text">开关内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-2"><span class="toc-number">7.3.6.</span> <span class="toc-text">API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Switch%E6%96%87%E6%A1%A3%E9%A2%84%E8%A7%88"><span class="toc-number">7.3.7.</span> <span class="toc-text">Switch文档预览</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%89%93%E5%8C%85%E8%BE%93%E5%87%BA%E5%92%8C%E5%8F%91%E5%B8%83"><span class="toc-number">8.</span> <span class="toc-text">代码打包输出和发布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%BA%93%E7%9A%84%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6"><span class="toc-number">8.1.</span> <span class="toc-text">组件库的入口文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E6%89%93%E5%8C%85"><span class="toc-number">8.2.</span> <span class="toc-text">组件的打包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%96%B0%E5%BB%BAtsconfig-build-json%E6%96%87%E4%BB%B6"><span class="toc-number">8.2.1.</span> <span class="toc-text">在根目录新建tsconfig.build.json文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8package-json%E6%96%87%E4%BB%B6%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%91%BD%E4%BB%A4"><span class="toc-number">8.2.2.</span> <span class="toc-text">在package.json文件中添加命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95-npm-link"><span class="toc-number">8.3.</span> <span class="toc-text">本地测试(npm link)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86yolo-ui%E5%8F%91%E5%B8%83%E5%88%B0npm"><span class="toc-number">8.4.</span> <span class="toc-text">将yolo-ui发布到npm</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#yolo-ui%E9%9D%99%E6%80%81%E6%96%87%E6%A1%A3%E4%B8%8A%E4%BC%A0%E8%87%B3%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">9.</span> <span class="toc-text">yolo-ui静态文档上传至阿里云服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">9.1.</span> <span class="toc-text">购买服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%A1%8C%E9%9D%A2-windows"><span class="toc-number">9.2.</span> <span class="toc-text">远程登录服务器桌面(windows)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85node%E7%8E%AF%E5%A2%83"><span class="toc-number">9.3.</span> <span class="toc-text">安装node环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E9%9D%99%E6%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">9.4.</span> <span class="toc-text">启动静态服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E7%9A%84%E6%B3%A8%E5%86%8C%E5%92%8C%E5%A4%87%E6%A1%88"><span class="toc-number">9.5.</span> <span class="toc-text">域名的注册和备案</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nginx%E5%BC%80%E5%90%AF%E9%9D%99%E6%80%81%E6%9C%8D%E5%8A%A1%EF%BC%8C%E5%B9%B6%E9%85%8D%E7%BD%AE%E4%BA%8C%E7%BA%A7%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE"><span class="toc-number">10.</span> <span class="toc-text">nginx开启静态服务，并配置二级域名访问</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nginx%EF%BC%88windows%E7%89%88%EF%BC%89"><span class="toc-number">10.1.</span> <span class="toc-text">安装nginx（windows版）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nginx%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">10.2.</span> <span class="toc-text">nginx其他常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nginx-conf%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">10.3.</span> <span class="toc-text">nginx.conf配置文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#YoloUI%E9%A2%84%E8%A7%88%E5%9C%B0%E5%9D%80"><span class="toc-number">11.</span> <span class="toc-text">YoloUI预览地址</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">12.</span> <span class="toc-text">参考</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-engineering/component-library" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何搭建一个通用的基础组件库
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/03/30/engineering/component-library/" class="article-date">
+	  <time datetime="2022-03-29T20:39:18.000Z" itemprop="datePublished">2022-03-29</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/React/" rel="tag">React</a>
+  </span>
+
+
+        
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2022/03/30/engineering/component-library/" class="leancloud_visitors"  data-flag-title="如何搭建一个通用的基础组件库">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/03/30/engineering/component-library/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>作为一名前端程序员，一直以来，我都只是停留在会使用各种优秀的组件库，包括开源和公司内部自研的，从来没有了解过这些组件库是如何开发的。直到现在，自己参考了多个开源组件库，由浅入深，尝试去实现一个简单的组件库，学习和探索组件库设计以及开发思路。</p>
+<h1 id="技术选择"><a href="#技术选择" class="headerlink" title="技术选择"></a>技术选择</h1><p>经过查阅资料，觉得dumi非常的合适。dumi是专门为组件开发场景而生的文档工具，开箱即用，支持TypeScript 和 Markdown，可以将更多的精力集中在组件开发上，核心技术栈为：<code>React + TypeScript + less + dumi</code></p>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">mkdir</span> project-name <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> project-name <span class="token comment"># 创建空目录</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="组件开发脚手架"><a href="#组件开发脚手架" class="headerlink" title="组件开发脚手架"></a>组件开发脚手架</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">$ npx @umijs<span class="token operator">/</span>create<span class="token operator">-</span>dumi<span class="token operator">-</span>lib <span class="token operator">--</span>site # 初始化一个站点模式的组件库开发脚手架
+# or
+$ yarn create @umijs<span class="token operator">/</span>dumi<span class="token operator">-</span>lib <span class="token operator">--</span>site<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="目录结构说明"><a href="#目录结构说明" class="headerlink" title="目录结构说明"></a>目录结构说明</h2><img src="/images/engineering/component001.png">
+
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><ul>
+<li>执行 <code>npm install</code>，安装依赖。</li>
+<li>执行 <code>npm run start</code> 或 <code>npx dumi dev</code> ，开始调试组件或编写文档，预览效果如下图：</li>
+</ul>
+<img src="/images/engineering/project-name001.png">
+
+<h1 id="组件的开发"><a href="#组件的开发" class="headerlink" title="组件的开发"></a>组件的开发</h1><h2 id="全局样式搭建"><a href="#全局样式搭建" class="headerlink" title="全局样式搭建"></a>全局样式搭建</h2><p>新建<code>src/style</code>文件夹，放在全局的样式文件。其中theme文件下放通用的基础样式，<code>global.less</code>中引用<code>style/inde.less</code>的样式，dumi默认引入全局样式<code>global.less</code>。</p>
+<img src="/images/engineering/component002.png">
+
+<h3 id="定义基础样式"><a href="#定义基础样式" class="headerlink" title="定义基础样式"></a>定义基础样式</h3><ul>
+<li>基础色彩样式，primary、default、success、warning、danger、info；</li>
+<li>字体样式，默认font-family、默认font-size(1rem)、默认font-weight(400)、字体颜色、h1-h6(h6 默认是 1rem)；</li>
+<li>超链接样式(默认primary，无下划线)；</li>
+<li>line-height(行高默认是字体的1.5倍大小)；</li>
+<li>body(字体大小是1rem、背景白色、字体淡黑色)；</li>
+<li>border边框(宽度1px、颜色@gray-300、radius是0.25rem)；</li>
+<li>盒子阴影(@box-shadow: 0 0.5rem 1rem rgba(@black, 0.15))；</li>
+</ul>
+<h2 id="约定单个组件的文件结构"><a href="#约定单个组件的文件结构" class="headerlink" title="约定单个组件的文件结构"></a>约定单个组件的文件结构</h2><p>以button组件为例，其中<code>src/button/style/index.less</code>为单个组件的内部样式文件，需要在<code>src/style/index.less</code>中引入，目录结构如下：</p>
+<img src="/images/engineering/component003.png">
+
+<h2 id="组件的开发步骤"><a href="#组件的开发步骤" class="headerlink" title="组件的开发步骤"></a>组件的开发步骤</h2><p>组件正确的开发流程：组件属性的分析 -&gt; 组件的开发 -&gt; (上生产环境需要组件测试) -&gt; 组件的使用说明文档</p>
+<ul>
+<li>组件的分析：去定义一些接口或者类型别名，接口是用来描述props，声明组件的时候通过泛型传入；</li>
+<li>组件的开发：不同的组件有不同的实现方式，相似的组件可以复用，编写组件基础样式；</li>
+<li>组件的使用说明：描述一些需要通过props传入组件的属性，方便定制不同场景；</li>
+</ul>
+<h1 id="Button按钮"><a href="#Button按钮" class="headerlink" title="Button按钮"></a>Button按钮</h1><h2 id="类型声明"><a href="#类型声明" class="headerlink" title="类型声明"></a>类型声明</h2><p>类型声明在<code>src/button/interface.ts</code>文件中写入，设置不同按钮的大小、按钮的主题类型、按钮的原生类型等</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token comment">// 按钮大小</span>
+<span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">ButtonSize</span> <span class="token operator">=</span> <span class="token string">'lg'</span> <span class="token operator">|</span> <span class="token string">'md'</span> <span class="token operator">|</span> <span class="token string">'sm'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 按钮的主题类型</span>
+<span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">ButtonType</span> <span class="token operator">=</span> <span class="token string">'primary'</span> <span class="token operator">|</span> <span class="token string">'default'</span> <span class="token operator">|</span> <span class="token string">'danger'</span> <span class="token operator">|</span> <span class="token string">'link'</span> <span class="token operator">|</span> <span class="token string">'info'</span> <span class="token operator">|</span> <span class="token string">'dashed'</span> <span class="token operator">|</span> <span class="token string">'warning'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 按钮的原生类型</span>
+<span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">ButtonHTMLTypes</span> <span class="token operator">=</span> <span class="token string">'submit'</span> <span class="token operator">|</span> <span class="token string">'button'</span> <span class="token operator">|</span> <span class="token string">'reset'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">BaseButtonProps</span> <span class="token punctuation">&#123;</span>
+  className<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  <span class="token comment">/** 按钮禁用 */</span>
+  disabled<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+  <span class="token comment">/** 按钮大小 */</span>
+  size<span class="token operator">?</span><span class="token operator">:</span> ButtonSize<span class="token punctuation">;</span>
+  <span class="token comment">/** 按钮类型 */</span>
+  type<span class="token operator">?</span><span class="token operator">:</span> ButtonType<span class="token punctuation">;</span>
+  <span class="token comment">/** 按钮children */</span>
+  children<span class="token operator">:</span> React<span class="token punctuation">.</span>ReactNode<span class="token punctuation">;</span>
+  <span class="token comment">/** type为link时的url */</span>
+  href<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// button 和 a链接 的原生属性太多了，可以直接把全部属性加上</span>
+<span class="token comment">// 从哪里可以找到button所有的props？react已经提供好的</span>
+
+<span class="token comment">// 合并交叉类型</span>
+<span class="token keyword">type</span> <span class="token class-name">NativeButtonProps</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  htmlType<span class="token operator">?</span><span class="token operator">:</span> ButtonHTMLTypes<span class="token punctuation">;</span>
+  target<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  onClick<span class="token operator">?</span><span class="token operator">:</span> React<span class="token punctuation">.</span>MouseEventHandler<span class="token operator">&lt;</span>HTMLElement<span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token operator">&amp;</span> BaseButtonProps <span class="token operator">&amp;</span>
+  Omit<span class="token operator">&lt;</span>React<span class="token punctuation">.</span>ButtonHTMLAttributes<span class="token operator">&lt;</span>HTMLElement<span class="token operator">></span><span class="token punctuation">,</span> <span class="token string">'type'</span><span class="token operator">></span><span class="token punctuation">;</span> <span class="token comment">// ButtonHTMLAttributes&lt;HTMLElement> 所有button属性</span>
+
+<span class="token keyword">type</span> <span class="token class-name">AnchorButtonProps</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  href<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  onClick<span class="token operator">?</span><span class="token operator">:</span> React<span class="token punctuation">.</span>MouseEventHandler<span class="token operator">&lt;</span>HTMLElement<span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token operator">&amp;</span> BaseButtonProps <span class="token operator">&amp;</span>
+  Omit<span class="token operator">&lt;</span>React<span class="token punctuation">.</span>AnchorHTMLAttributes<span class="token operator">&lt;</span>HTMLElement<span class="token operator">></span><span class="token punctuation">,</span> <span class="token string">'type'</span><span class="token operator">></span><span class="token punctuation">;</span> <span class="token comment">// AnchorHTMLAttributes&lt;HTMLElement> 所有a标签属性</span>
+
+<span class="token comment">// Partial&lt;T> 将类型的属性变成可选，只支持处理第一层的属性</span>
+<span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">ButtonProps</span> <span class="token operator">=</span> Partial<span class="token operator">&lt;</span>NativeButtonProps <span class="token operator">&amp;</span> AnchorButtonProps<span class="token operator">></span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Button按钮实现"><a href="#Button按钮实现" class="headerlink" title="Button按钮实现"></a>Button按钮实现</h2><p>在<code>src/button/index.tsx</code>写入核心代码，需要考虑<code>padding</code>的大小、<code>lineHeight</code>高度、<code>color</code>颜色、<code>textAlien</code>文字居中、<code>box-shadow</code>盒子阴影，<code>disabled</code>时的特殊样式，鼠标的<code>cursor</code>的变化。</p>
+<ul>
+<li>使用<code>button</code>标签和<code>a</code>标签实现；</li>
+<li><code>Button Size</code>的大小其实就是<code>padding</code>控制，<code>font-size</code>不同、<code>border</code>的不同；</li>
+<li><code>Button Type</code>是变化<code>background-color</code>、<code>border-color</code>、字体颜色<code>color</code>；</li>
+<li>添加不同的状态：<code>hover</code>之后要颜色发生一定的变化，<code>focus</code>颜色变化，<code>disabled</code>颜色也发生变化(<code>cursor: not-allowed</code>和<code>opacity: .65</code>)。<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> classNames <span class="token keyword">from</span> <span class="token string">'classnames'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> ButtonProps <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'./interface'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> Button<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span>ButtonProps<span class="token operator">></span> <span class="token operator">=</span> <span class="token punctuation">(</span>props<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// className用户自定义的</span>
+  <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> type<span class="token punctuation">,</span> className<span class="token punctuation">,</span> disabled<span class="token punctuation">,</span> size<span class="token punctuation">,</span> children<span class="token punctuation">,</span> href<span class="token punctuation">,</span> <span class="token operator">...</span>restProps <span class="token punctuation">&#125;</span> <span class="token operator">=</span> props<span class="token punctuation">;</span>
+
+  <span class="token comment">// yolo-btn yolo-btn-lg yolo-btn-primary</span>
+  <span class="token comment">// 因为我们的key是变化的，所有用[`$&#123; &#125;`]</span>
+  <span class="token keyword">const</span> classes <span class="token operator">=</span> <span class="token function">classNames</span><span class="token punctuation">(</span><span class="token string">'yolo-btn'</span><span class="token punctuation">,</span> className<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">[</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">yolo-btn-</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token keyword">type</span><span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">]</span><span class="token operator">:</span> type<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">yolo-btn-</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>size<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">]</span><span class="token operator">:</span> size<span class="token punctuation">,</span>
+    disabled<span class="token operator">:</span> type <span class="token operator">===</span> <span class="token string">'link'</span> <span class="token operator">&amp;&amp;</span> disabled<span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">===</span> <span class="token string">'link'</span> <span class="token operator">&amp;&amp;</span> href<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">className</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>classes<span class="token punctuation">&#125;</span></span> <span class="token attr-name">href</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>href<span class="token punctuation">&#125;</span></span> <span class="token spread"><span class="token punctuation">&#123;</span><span class="token operator">...</span>restProps<span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token punctuation">&#123;</span>children<span class="token punctuation">&#125;</span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">className</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>classes<span class="token punctuation">&#125;</span></span> <span class="token attr-name">disabled</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>disabled<span class="token punctuation">&#125;</span></span> <span class="token spread"><span class="token punctuation">&#123;</span><span class="token operator">...</span>restProps<span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token punctuation">&#123;</span>children<span class="token punctuation">&#125;</span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+Button<span class="token punctuation">.</span>defaultProps <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  disabled<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  type<span class="token operator">:</span> <span class="token string">'default'</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> Button<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h2 id="Button使用说明"><a href="#Button使用说明" class="headerlink" title="Button使用说明"></a>Button使用说明</h2><p><code>src/button/index.md</code></p>
+<h3 id="按钮的类型"><a href="#按钮的类型" class="headerlink" title="按钮的类型"></a>按钮的类型</h3><p>按钮分为七种类型 <code>type</code>，默认是 <code>default</code>。</p>
+<p><code>default</code> | <code>primary</code> | <code>info</code> | <code>warning</code> | <code>danger</code> | <code>dashed</code> | <code>link</code></p>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Button <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>button-demo-display-type<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>default<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">default</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>primary<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">primary</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>info<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">info</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>warning<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">warning</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>danger<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">danger</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dashed<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">dashed</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>link<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://github.com/izph<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        link
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="按钮尺寸"><a href="#按钮尺寸" class="headerlink" title="按钮尺寸"></a>按钮尺寸</h3><p>尺寸 <code>size</code>分为 <code>lg</code> | <code>md</code> | <code>sm</code>，即大、中、小，默认的尺寸是中。</p>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Button <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>button-demo-display-size<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>lg<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>primary<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        Large
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>danger<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        Medium
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sm<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>warning<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        Small
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="按钮的禁用状态"><a href="#按钮的禁用状态" class="headerlink" title="按钮的禁用状态"></a>按钮的禁用状态</h3><p>添加 <code>disabled</code>属性即可让按钮处于禁用状态，同时按钮样式也会改变。</p>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Button <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>button-demo-display-size<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>primary<span class="token punctuation">"</span></span> <span class="token attr-name">disabled</span><span class="token punctuation">></span></span><span class="token plain-text">
+        primary
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>danger<span class="token punctuation">"</span></span> <span class="token attr-name">disabled</span><span class="token punctuation">></span></span><span class="token plain-text">
+        danger
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">disabled</span><span class="token punctuation">></span></span><span class="token plain-text">default</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>link<span class="token punctuation">"</span></span> <span class="token attr-name">disabled</span><span class="token punctuation">></span></span><span class="token plain-text">
+        link
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>通过设置 <code>Button</code>的属性来产生不同的按钮样式，按钮的属性说明如下：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+<th>类型</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>设置按钮类型</td>
+<td><code>default</code>、<code>primary</code>、<code>info</code>、 <code>warning</code>、<code>danger</code>、<code>dashed</code>、<code>link</code></td>
+<td><code>default</code></td>
+</tr>
+<tr>
+<td>size</td>
+<td>设置按钮大小</td>
+<td><code>lg</code>、<code>md</code>、<code>sm</code>，非必填</td>
+<td><code>md</code></td>
+</tr>
+<tr>
+<td>disabled</td>
+<td>按钮禁用状态</td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>href</td>
+<td>点击跳转的地址，指定此属性 <code>button</code>的行为和 a 链接一致</td>
+<td><code>string</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>onClick</td>
+<td>点击按钮时的回调</td>
+<td><code>(event) =&gt; void</code></td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h3 id="Button文档预览"><a href="#Button文档预览" class="headerlink" title="Button文档预览"></a>Button文档预览</h3><img src="/images/engineering/component-btn-001.png">
+
+<h1 id="Progress进度条"><a href="#Progress进度条" class="headerlink" title="Progress进度条"></a>Progress进度条</h1><h2 id="类型声明-1"><a href="#类型声明-1" class="headerlink" title="类型声明"></a>类型声明</h2><p>类型声明在<code>src/progress/interface.ts</code>文件中写入，设置进度条主题颜色的类型、进度条组件的类型<code>ProgressProps</code>。percent代表当前进度条的百分比，strokeHeight设置高度，showText是否显示百分比数字。</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">ProgressThemeProps</span> <span class="token operator">=</span>
+  <span class="token operator">|</span> <span class="token string">'primary'</span>
+  <span class="token operator">|</span> <span class="token string">'secondary'</span>
+  <span class="token operator">|</span> <span class="token string">'success'</span>
+  <span class="token operator">|</span> <span class="token string">'info'</span>
+  <span class="token operator">|</span> <span class="token string">'warning'</span>
+  <span class="token operator">|</span> <span class="token string">'danger'</span>
+  <span class="token operator">|</span> <span class="token string">'light'</span>
+  <span class="token operator">|</span> <span class="token string">'dark'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">ProgressProps</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">/* 百分比 */</span>
+  percent<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  <span class="token comment">/* 设置高度 */</span>
+  strokeHeight<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+  <span class="token comment">/* 是否显示百分比文字 */</span>
+  showText<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+  <span class="token comment">/* 用户自定义样式 */</span>
+  style<span class="token operator">?</span><span class="token operator">:</span> React<span class="token punctuation">.</span>CSSProperties<span class="token punctuation">;</span>
+  <span class="token comment">/* 进度条主题颜色 */</span>
+  theme<span class="token operator">?</span><span class="token operator">:</span> ProgressThemeProps<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Progress进度条实现"><a href="#Progress进度条实现" class="headerlink" title="Progress进度条实现"></a>Progress进度条实现</h2><p>在<code>src/progress/index.tsx</code>写入核心代码，根据传入的数字，来控制一个进度条长度；最外面有一个灰色progress-outer，它的高度可以配置，progress-outer内有一个子元素progress-inner，通过该元素的width来显示当前进度颜色，这个宽度是继承父元素progress-outer的，并悬浮到progress-outer上；通过在progress-inner设置flex布局，flex-end表示子项目从后往前排列，设置百分比数字显示在进度条右边，百分比数字也是支持显示和隐藏。</p>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token comment">// progress/index.tsx</span>
+<span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token constant">FC</span> <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> ProgressProps <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'./interface'</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* 
+  percent: number 百分比
+  strokeHeight: number 高度
+  showText: boolean 是否显示百分比数字
+  theme: string 进度条主题色
+  style: React.CSSProperties 用户自定义样式
+*/</span>
+<span class="token keyword">const</span> Progress<span class="token operator">:</span> <span class="token constant">FC</span><span class="token operator">&lt;</span>ProgressProps<span class="token operator">></span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  percent<span class="token punctuation">,</span>
+  strokeHeight<span class="token punctuation">,</span>
+  showText<span class="token punctuation">,</span>
+  style<span class="token punctuation">,</span>
+  theme<span class="token punctuation">,</span>
+  <span class="token operator">...</span>restProps
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>yolo-progress<span class="token punctuation">"</span></span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>style<span class="token punctuation">&#125;</span></span> <span class="token spread"><span class="token punctuation">&#123;</span><span class="token operator">...</span>restProps<span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token punctuation">&#123;</span><span class="token comment">/* 灰色最外层 */</span><span class="token punctuation">&#125;</span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>yolo-progress-outer<span class="token punctuation">"</span></span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> height<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>strokeHeight<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">px</span><span class="token template-punctuation string">`</span></span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">yolo-progress-inner color-</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>theme<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">&#125;</span></span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> width<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>percent<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">%</span><span class="token template-punctuation string">`</span></span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+          </span><span class="token punctuation">&#123;</span>showText <span class="token operator">&amp;&amp;</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>inner-text<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token punctuation">&#123;</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>percent<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">%</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">&#125;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span><span class="token punctuation">&#125;</span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* 
+  初始化默认值
+*/</span>
+Progress<span class="token punctuation">.</span>defaultProps <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  strokeHeight<span class="token operator">:</span> <span class="token number">15</span><span class="token punctuation">,</span>
+  showText<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  theme<span class="token operator">:</span> <span class="token string">'primary'</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> Progress<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Progress进度条说明文档"><a href="#Progress进度条说明文档" class="headerlink" title="Progress进度条说明文档"></a>Progress进度条说明文档</h2><p><code>src/progress/index.md</code></p>
+<h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><p>基本样式分为 7 种，默认类型为 <code>primary</code>。</p>
+<p><code>primary</code> | <code>secondary</code> | <code>success</code> | <code>info</code> | <code>warning</code> | <code>danger</code> | <code>dark</code></p>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Progress <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">20</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>secondary<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">30</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>success<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">40</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>info<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">50</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>warning<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">60</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>danger<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">70</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dark<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">80</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>primary<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">100</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="自定义高度"><a href="#自定义高度" class="headerlink" title="自定义高度"></a>自定义高度</h3><pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Progress <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">20</span><span class="token punctuation">&#125;</span></span> <span class="token attr-name">strokeHeight</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">15</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>success<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">40</span><span class="token punctuation">&#125;</span></span> <span class="token attr-name">strokeHeight</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">20</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>warning<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">60</span><span class="token punctuation">&#125;</span></span> <span class="token attr-name">strokeHeight</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">30</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>danger<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">70</span><span class="token punctuation">&#125;</span></span> <span class="token attr-name">strokeHeight</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">40</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="是否显示百分比文字"><a href="#是否显示百分比文字" class="headerlink" title="是否显示百分比文字"></a>是否显示百分比文字</h3><p>通过设置 <code>showText</code>属性。</p>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Progress <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">30</span><span class="token punctuation">&#125;</span></span> <span class="token attr-name">showText</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token boolean">false</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>success<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">40</span><span class="token punctuation">&#125;</span></span> <span class="token attr-name">strokeHeight</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">20</span><span class="token punctuation">&#125;</span></span> <span class="token attr-name">showText</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token boolean">true</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Progress</span></span> <span class="token attr-name">theme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>warning<span class="token punctuation">"</span></span> <span class="token attr-name">percent</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">60</span><span class="token punctuation">&#125;</span></span> <span class="token attr-name">strokeHeight</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token number">30</span><span class="token punctuation">&#125;</span></span> <span class="token attr-name">showText</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token boolean">true</span><span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+<th>类型</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>theme</td>
+<td>主题颜色</td>
+<td><code>primary</code> | <code>secondary</code> | <code>success</code> | <code>info</code> | <code>warning</code> | <code>danger</code> | <code>dark</code>，非必填</td>
+<td><code>primary</code></td>
+</tr>
+<tr>
+<td>percent</td>
+<td>百分比</td>
+<td><code>number</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>strokeHeight</td>
+<td>进度条高度</td>
+<td><code>number</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>showText</td>
+<td>是否显示百分比文字</td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>style</td>
+<td>自定义样式</td>
+<td><code>React.CSSProperties</code></td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h3 id="Progress文档预览"><a href="#Progress文档预览" class="headerlink" title="Progress文档预览"></a>Progress文档预览</h3><img src="/images/engineering/component-progress001.png">
+
+<img src="/images/engineering/component-progress002.png">
+
+
+<h1 id="Switch开关"><a href="#Switch开关" class="headerlink" title="Switch开关"></a>Switch开关</h1><h2 id="类型声明-2"><a href="#类型声明-2" class="headerlink" title="类型声明"></a>类型声明</h2><p>类型声明在<code>src/switch/interface.ts</code>文件中写入，checked属性是最开始是否被选中，disabled是否可以被禁用，onText开启状态的文本，offText关闭状态的文本，size是组件的尺寸大小，theme组件的颜色，onChange是状态切换时执行的回调函数。</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">SwitchSize</span> <span class="token operator">=</span> <span class="token string">'default'</span> <span class="token operator">|</span> <span class="token string">'sm'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">SwitchChangeEventHandler</span> <span class="token operator">=</span> <span class="token punctuation">(</span>
+  checked<span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">,</span>
+  event<span class="token operator">:</span> React<span class="token punctuation">.</span>MouseEvent<span class="token operator">&lt;</span>HTMLButtonElement<span class="token operator">></span> <span class="token operator">|</span> React<span class="token punctuation">.</span>KeyboardEvent<span class="token operator">&lt;</span>HTMLButtonElement<span class="token operator">></span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">SwitchProps</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">/* 用户自定义样式 */</span>
+  style<span class="token operator">?</span><span class="token operator">:</span> React<span class="token punctuation">.</span>CSSProperties<span class="token punctuation">;</span>
+  <span class="token comment">/** 是否被选中 */</span>
+  checked<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+  <span class="token comment">/* 用户自定义类名 */</span>
+  className<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  <span class="token comment">/** 组件的尺寸 */</span>
+  size<span class="token operator">?</span><span class="token operator">:</span> SwitchSize<span class="token punctuation">;</span>
+  <span class="token comment">/** 是否被禁用 */</span>
+  disabled<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+  <span class="token comment">/** 开启状态的文本 */</span>
+  onText<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  <span class="token comment">/** 关闭状态的文本 */</span>
+  offText<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  <span class="token comment">/** 状态切换时的回调 */</span>
+  onChange<span class="token operator">?</span><span class="token operator">:</span> SwitchChangeEventHandler<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Switch开关实现"><a href="#Switch开关实现" class="headerlink" title="Switch开关实现"></a>Switch开关实现</h2><p>在<code>src/switch/index.tsx</code>写入核心代码，基于button标签实现的，它有两个子元素<code>div</code>和<code>span</code>。div是一个白色的滑块，使用绝对定位，通过计算left值实现左右的切换，例如点击的时候，滑块的left值是<code>left: calc(100% - 20px);</code>，通过calc计算出的，这就是左右滑动的核心。同时还需要考虑<code>background-color</code>和<code>background-image</code>的优先级问题，最后span标签用来显示文本。</p>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token comment">// switch/index.tsx</span>
+<span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> useState <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> classNames <span class="token keyword">from</span> <span class="token string">'classnames'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> SwitchProps <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'./interface'</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * switch
+ * @param &#123;checked&#125; bool 是否被选中
+ * @param &#123;disabled&#125; bool 是否被禁用
+ * @param &#123;onText&#125; string 开启状态的文本
+ * @param &#123;offText&#125; string 关闭状态的文本
+ * @param &#123;onChange&#125; func 状态切换时的回调
+ * @param &#123;size&#125; string Switch组件的尺寸大小
+ * @param &#123;theme&#125; string 组件的颜色
+ */</span>
+<span class="token keyword">const</span> Switch<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span>SwitchProps<span class="token operator">></span> <span class="token operator">=</span> <span class="token punctuation">(</span>props<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> size<span class="token punctuation">,</span> checked<span class="token punctuation">,</span> disabled<span class="token punctuation">,</span> onText<span class="token punctuation">,</span> offText<span class="token punctuation">,</span> onChange<span class="token punctuation">,</span> className<span class="token punctuation">,</span> style<span class="token punctuation">,</span> <span class="token operator">...</span>restProps <span class="token punctuation">&#125;</span> <span class="token operator">=</span>
+    props<span class="token punctuation">;</span>
+  <span class="token comment">/** 
+   * 设置初始背景色
+  */</span>
+  <span class="token keyword">const</span> defaultStyle <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token operator">...</span>style<span class="token punctuation">,</span>
+    backgroundColor<span class="token operator">:</span> style<span class="token operator">?.</span>backgroundColor <span class="token operator">||</span> <span class="token string">'#0099ff'</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>isChecked<span class="token punctuation">,</span> setChecked<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token generic-function"><span class="token function">useState</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token builtin">boolean</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token operator">!</span>checked<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> classes <span class="token operator">=</span> <span class="token function">classNames</span><span class="token punctuation">(</span><span class="token string">'yolo-switch'</span><span class="token punctuation">,</span> className<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token string-property property">'yolo-switch-checked'</span><span class="token operator">:</span> <span class="token operator">!</span><span class="token operator">!</span>isChecked<span class="token punctuation">,</span>
+    <span class="token string-property property">'yolo-switch-disabled'</span><span class="token operator">:</span> disabled<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">yolo-switch-</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>size<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">]</span><span class="token operator">:</span> size<span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> <span class="token function-variable function">handleClick</span> <span class="token operator">=</span> <span class="token punctuation">(</span>e<span class="token operator">:</span> React<span class="token punctuation">.</span>MouseEvent<span class="token operator">&lt;</span>HTMLButtonElement<span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>disabled<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      onChange <span class="token operator">&amp;&amp;</span> <span class="token function">onChange</span><span class="token punctuation">(</span><span class="token operator">!</span>isChecked<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">setChecked</span><span class="token punctuation">(</span><span class="token operator">!</span>isChecked<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span>
+      <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span>
+      <span class="token attr-name">className</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>classes<span class="token punctuation">&#125;</span></span>
+      <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>handleClick<span class="token punctuation">&#125;</span></span>
+      <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>defaultStyle<span class="token punctuation">&#125;</span></span>
+      <span class="token spread"><span class="token punctuation">&#123;</span><span class="token operator">...</span>restProps<span class="token punctuation">&#125;</span></span>
+    <span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>yolo-switch-handle<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>yolo-switch-inner<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token punctuation">&#123;</span>isChecked <span class="token operator">?</span> onText <span class="token operator">:</span> offText<span class="token punctuation">&#125;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> Switch<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Switch说明文档"><a href="#Switch说明文档" class="headerlink" title="Switch说明文档"></a>Switch说明文档</h2><p><code>src/switch/index.md</code></p>
+<h3 id="基本使用-1"><a href="#基本使用-1" class="headerlink" title="基本使用"></a>基本使用</h3><pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Switch <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span> <span class="token attr-name">checked</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span><span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="禁止使用"><a href="#禁止使用" class="headerlink" title="禁止使用"></a>禁止使用</h3><pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Switch <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span> <span class="token attr-name">disabled</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span> <span class="token attr-name">disabled</span> <span class="token attr-name">checked</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="定制主题颜色"><a href="#定制主题颜色" class="headerlink" title="定制主题颜色"></a>定制主题颜色</h3><pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Switch <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span> <span class="token attr-name">checked</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> backgroundColor<span class="token operator">:</span> <span class="token string">'green'</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></span><span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span>  <span class="token attr-name">checked</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>backgroundColor<span class="token operator">:</span> <span class="token string">'red'</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></span><span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span>  <span class="token attr-name">checked</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>backgroundColor<span class="token operator">:</span> <span class="token string">'yellow'</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></span><span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span>  <span class="token attr-name">checked</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>backgroundColor<span class="token operator">:</span> <span class="token string">'pink'</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></span><span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span>  <span class="token attr-name">checked</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>backgroundColor<span class="token operator">:</span> <span class="token string">'blue'</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></span><span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="组件尺寸"><a href="#组件尺寸" class="headerlink" title="组件尺寸"></a>组件尺寸</h3><pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Switch <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span> <span class="token attr-name">checked</span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sm<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span> <span class="token attr-name">checked</span> <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="开关内容"><a href="#开关内容" class="headerlink" title="开关内容"></a>开关内容</h3><pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Switch <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Switch</span></span>
+        <span class="token attr-name">onText</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token string">'开'</span><span class="token punctuation">&#125;</span></span>
+        <span class="token attr-name">offText</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token string">'关'</span><span class="token punctuation">&#125;</span></span>
+        <span class="token attr-name">onChange</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">(</span>checked<span class="token punctuation">,</span> e<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+          <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>checked<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></span>
+        <span class="token attr-name">checked</span>
+      <span class="token punctuation">/></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="API-2"><a href="#API-2" class="headerlink" title="API"></a>API</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>类型</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>style</td>
+<td>自定义样式，<code>backgroundColor</code>可自定义颜色</td>
+<td><code>string</code></td>
+<td><code>#09f</code></td>
+</tr>
+<tr>
+<td>checked</td>
+<td>是否被选中</td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>size</td>
+<td>开关大学</td>
+<td><code>default | sm</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>disabled</td>
+<td>是否被禁用</td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>onText</td>
+<td>开启状态的文本</td>
+<td><code>string | ReactNode</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>offText</td>
+<td>关闭状态的文本</td>
+<td><code>string | ReactNode</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td>onChange</td>
+<td>选中值发生变化时触发</td>
+<td><code>function(checked: boolean, event: Event)</code></td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h3 id="Switch文档预览"><a href="#Switch文档预览" class="headerlink" title="Switch文档预览"></a>Switch文档预览</h3><img src="/images/engineering/component-switch001.png">
+
+<h1 id="代码打包输出和发布"><a href="#代码打包输出和发布" class="headerlink" title="代码打包输出和发布"></a>代码打包输出和发布</h1><h2 id="组件库的入口文件"><a href="#组件库的入口文件" class="headerlink" title="组件库的入口文件"></a>组件库的入口文件</h2><ul>
+<li>组件库的入口文件为 <code>src/index.ts</code></li>
+<li>组件库的全局样式文件为 <code>src/style/index.less</code>或者 <code>src/global.less</code>，两者都可以用来全局样式的提取。</li>
+</ul>
+<h2 id="组件的打包"><a href="#组件的打包" class="headerlink" title="组件的打包"></a>组件的打包</h2><h3 id="在根目录新建tsconfig-build-json文件"><a href="#在根目录新建tsconfig-build-json文件" class="headerlink" title="在根目录新建tsconfig.build.json文件"></a>在根目录新建tsconfig.build.json文件</h3><pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"outDir"</span><span class="token operator">:</span> <span class="token string">"dist"</span><span class="token punctuation">,</span> <span class="token comment">// 编译之后的存放路径</span>
+    <span class="token property">"module"</span><span class="token operator">:</span> <span class="token string">"ESNext"</span><span class="token punctuation">,</span>
+    <span class="token property">"target"</span><span class="token operator">:</span> <span class="token string">"ES5"</span><span class="token punctuation">,</span> <span class="token comment">// 指定编译之后的目标版本</span>
+    <span class="token property">"declaration"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 为每一个js文件生成 .d.ts类型声明文件</span>
+    <span class="token property">"jsx"</span><span class="token operator">:</span> <span class="token string">"react"</span><span class="token punctuation">,</span>
+    <span class="token property">"moduleResolution"</span><span class="token operator">:</span> <span class="token string">"node"</span><span class="token punctuation">,</span> <span class="token comment">// classic 和 Node</span>
+    <span class="token property">"allowSyntheticDefaultImports"</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token comment">//  true 支持 defalut 引入的方式</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"include"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"src/"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"exclude"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"src/**/style"</span><span class="token punctuation">,</span> <span class="token string">"src/**/*.md"</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="在package-json文件中添加命令"><a href="#在package-json文件中添加命令" class="headerlink" title="在package.json文件中添加命令"></a>在package.json文件中添加命令</h3><p>分别安装<code>lessc</code>和<code>rimraf</code>依赖，<code>lessc</code>将<code>less</code>转化为<code>css</code>，<code>rimraf</code>用来删除<code>dist</code>目录。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span> 
+  <span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"clean"</span><span class="token operator">:</span> <span class="token string">"rimraf ./dist"</span><span class="token punctuation">,</span>
+    <span class="token property">"build:lib"</span><span class="token operator">:</span> <span class="token string">"npm run clean &amp;&amp; npm run build-ts &amp;&amp; npm run build-css"</span><span class="token punctuation">,</span>
+    <span class="token property">"build-ts"</span><span class="token operator">:</span> <span class="token string">"tsc -p tsconfig.build.json"</span><span class="token punctuation">,</span>
+    <span class="token property">"build-css"</span><span class="token operator">:</span> <span class="token string">"lessc ./src/style/index.less ./dist/index.css"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在执行<code>build-ts</code>发生了很多个报错如下，经过在<a target="_blank" rel="noopener" href="https://stackoverflow.com/">stackoverflow</a>上查找相关资料得知，是 <code>@types/react-router-dom</code>和 <code>@types/react-router</code>的版本太低了导致了，把这两个依赖升级到最新版本后，就可以正常打包了。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">xxx<span class="token operator">/</span>node_modules<span class="token operator">/</span>@types<span class="token operator">/</span>react<span class="token operator">-</span>router<span class="token operator">-</span>dom<span class="token operator">/</span>index<span class="token punctuation">.</span>d<span class="token punctuation">.</span><span class="token function">ts</span><span class="token punctuation">(</span><span class="token number">59</span><span class="token punctuation">,</span><span class="token number">34</span><span class="token punctuation">)</span><span class="token operator">:</span> error <span class="token constant">TS2694</span><span class="token operator">:</span> Namespace <span class="token string">'"/node_modules/history/index"'</span> has no exported member <span class="token string">'LocationState'</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="本地测试-npm-link"><a href="#本地测试-npm-link" class="headerlink" title="本地测试(npm link)"></a>本地测试(npm link)</h2><ul>
+<li>在<code>yolo-ui</code>的根目录下执行<code>npm link</code>命令，<code>npm link</code>的作用是可以让未发布的npm包，做本地测试，映射脚本；</li>
+<li>在<code>yolo-ui-test</code>（create-react-app生成的测试项目）工程下执行<code>npm link yolo-ui</code>；</li>
+<li>在<code>yolo-ui-test</code>的<code>package.json</code>中加入<code>yolo-ui</code>依赖。</li>
+</ul>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span> 
+  <span class="token property">"dependencies"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"yolo-ui"</span><span class="token operator">:</span> <span class="token string">"^0.1.0"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>分别在 <code>App.tsx</code>和 <code>index.tsx</code>引入组件和组件的样式</li>
+</ul>
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token comment">// App.tsx</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Button <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'yolo-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>App<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>primary<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">Hello Yolo</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> App<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-tsx" data-language="tsx"><code class="language-tsx"><span class="token comment">// index.tsx</span>
+<span class="token keyword">import</span> <span class="token string">"yolo-ui/dist/index.css"</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>测试结果如下，本地测试没问题。</li>
+</ul>
+<img src="/images/engineering/yolo-build-001.png">
+
+<h2 id="将yolo-ui发布到npm"><a href="#将yolo-ui发布到npm" class="headerlink" title="将yolo-ui发布到npm"></a>将yolo-ui发布到npm</h2><ul>
+<li>切换npm的源镜像为npm的原生源</li>
+<li>在命令行工具执行npm adduser，填写username、password and email 登录(sign in)</li>
+<li>在package.json添加一些必要信息</li>
+</ul>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span> 
+  <span class="token property">"files"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token string">"dist"</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// 发布哪些文件到npm</span>
+  <span class="token comment">// 添加prepublish命令</span>
+  <span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"clean"</span><span class="token operator">:</span> <span class="token string">"rimraf ./dist"</span><span class="token punctuation">,</span>
+    <span class="token property">"build:lib"</span><span class="token operator">:</span> <span class="token string">"npm run clean &amp;&amp; npm run build-ts &amp;&amp; npm run build-css"</span><span class="token punctuation">,</span>
+    <span class="token property">"build-ts"</span><span class="token operator">:</span> <span class="token string">"tsc -p tsconfig.build.json"</span><span class="token punctuation">,</span>
+    <span class="token property">"build-css"</span><span class="token operator">:</span> <span class="token string">"lessc ./src/style/index.less ./dist/index.css"</span><span class="token punctuation">,</span>
+    <span class="token property">"prepublish"</span><span class="token operator">:</span> <span class="token string">"npm run build:lib"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>执行npm publish即可发布到npm</p>
+<img src="/images/engineering/yolo-npm-publish.png">
+</li>
+<li><p>此外，还可以在<code>peerDependencies</code>中告诉用户，要使用某某依赖需要安装什么依赖，如下：<br>要使用<code>yolo-ui</code>库，需要安装<code>react</code>和<code>react-dom</code>的16.8.0版本以上。当<code>npm i yolo-ui</code>时，<code>peerDependencies</code>里面的依赖不会被安装，会有一个日志输出，<code>npm warning</code>会提示用户需要安装<code>react</code>和<code>react-dom</code>的依赖。</p>
+</li>
+</ul>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token comment">// package.json</span>
+<span class="token punctuation">&#123;</span> 
+  <span class="token property">"peerDependencies"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"react"</span><span class="token operator">:</span> <span class="token string">"≥16.8.0"</span><span class="token punctuation">,</span>
+    <span class="token property">"react-dom"</span><span class="token operator">:</span> <span class="token string">"≥16.8.0"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="yolo-ui静态文档上传至阿里云服务器"><a href="#yolo-ui静态文档上传至阿里云服务器" class="headerlink" title="yolo-ui静态文档上传至阿里云服务器"></a>yolo-ui静态文档上传至阿里云服务器</h1><h2 id="购买服务器"><a href="#购买服务器" class="headerlink" title="购买服务器"></a>购买服务器</h2><p>本人买的是阿里云服务器</p>
+<h2 id="远程登录服务器桌面-windows"><a href="#远程登录服务器桌面-windows" class="headerlink" title="远程登录服务器桌面(windows)"></a>远程登录服务器桌面(windows)</h2><ul>
+<li>在window桌面上按 <code>win + R</code>，输入 <code>mstsc</code>，进入远程桌面连接</li>
+<li>如果没有添加windows凭据的，先在 <code>控制面板-&gt;凭据管理器-&gt;windows凭据里添加服务器的凭据</code></li>
+<li>输入账号和密码即可登录服务器远程桌面</li>
+</ul>
+<h2 id="安装node环境"><a href="#安装node环境" class="headerlink" title="安装node环境"></a>安装node环境</h2><ul>
+<li>将node的安装包上传到云服务器，并安装，<code>node -v</code>可以查看版本和是否安装成功</li>
+</ul>
+<h2 id="启动静态服务器"><a href="#启动静态服务器" class="headerlink" title="启动静态服务器"></a>启动静态服务器</h2><ul>
+<li><p>在根目录下 <code>npm init -y</code>，初始化 <code>package.json</code>文件，新建index.js文件</p>
+</li>
+<li><p>上传静态文件docs-dist（dumi 打包的产物）到根目录，docs-dist文件内容如下：</p>
+<img src="/images/engineering/yolo-upload001.png">
+</li>
+<li><p>安装 <code>koa</code>和 <code>koa-static</code>，用来启动一个静态资源服务器。</p>
+</li>
+<li><p>在index.js写入代码：</p>
+</li>
+</ul>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> Koa <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'koa'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'path'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'koa-static'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Koa</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 静态资源目录对于相对入口文件index.js的路径</span>
+<span class="token keyword">const</span> staticPath <span class="token operator">=</span> <span class="token string">'./docs-dist'</span><span class="token punctuation">;</span>
+
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">static</span><span class="token punctuation">(</span>
+    path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> staticPath<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'server is running, port is 80'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>在根目录下执行 <code>node index.js</code>，开启服务器成功</li>
+<li>最后在浏览器地址输入云服务器ip地址即可访问</li>
+</ul>
+<h2 id="域名的注册和备案"><a href="#域名的注册和备案" class="headerlink" title="域名的注册和备案"></a>域名的注册和备案</h2><h1 id="nginx开启静态服务，并配置二级域名访问"><a href="#nginx开启静态服务，并配置二级域名访问" class="headerlink" title="nginx开启静态服务，并配置二级域名访问"></a>nginx开启静态服务，并配置二级域名访问</h1><h2 id="安装nginx（windows版）"><a href="#安装nginx（windows版）" class="headerlink" title="安装nginx（windows版）"></a>安装nginx（windows版）</h2><ul>
+<li>进入nginx官网下载安装包: <a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">nginx下载</a></li>
+<li>解压下载完成的nginx压缩包</li>
+<li>打开<code>cmd</code>，进入nginx安装包根路径</li>
+<li>输入命令<code>nginx -t</code>：检查nginx是否配置成功</li>
+<li>输入命令<code>start nginx</code>：启动nginx服务</li>
+</ul>
+<h2 id="nginx其他常用命令"><a href="#nginx其他常用命令" class="headerlink" title="nginx其他常用命令"></a>nginx其他常用命令</h2><ul>
+<li><p>修改了配置文件，如nginx.conf，要使修改生效，重启Nginx服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nginx -s reload<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>关闭nginx服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nginx -s quit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>强制关闭Nginx服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nginx -s stop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+<h2 id="nginx-conf配置文件"><a href="#nginx-conf配置文件" class="headerlink" title="nginx.conf配置文件"></a>nginx.conf配置文件</h2><ul>
+<li><p>nginx的配置在根目录conf文件夹下的nginx.conf文件中</p>
+</li>
+<li><p>server：代理服务器，可以设定多个代理服务器（每一个server就是一个虚拟服务器），请求进来之后由server的server_name决定该请求访问哪一个服务。</p>
+</li>
+<li><p>以下是在阿里云服务器nginx配置不同域名，访问不同的静态资源的例子，比如访问home和detial，我们只需要把静态文件分别放到<code>C:/v1/home</code>和<code>C:/v1/detial</code>目录下，即可通过<code>http://home.xxxxx.com</code>和<code>http://detial.xxxxx.com</code>分别访问对应的静态资源。</p>
+</li>
+<li><p>与此同时，需要在云服务器官网添加记录，二级域名的<code>home</code>和<code>detial</code>的解析设置</p>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">server &#123;
+    # 设置监听端口
+    listen      80;
+    server_name  home.xxxxx.com;
+    
+    # 设置url编码格式，解决参数中文乱码问题
+    charset utf-8;
+		
+    location &#x2F; &#123;
+        root C:&#x2F;v1&#x2F;home;  # 设置 root-指定请求资源在服务器上的真实路径，可以写相对路径（相对于nginx安装目录）也可写绝对路径；
+        index index.html index.htm;  # 指定访问主页，会在root设定目录下去找，后面可跟多个页面，依次查找，找到一个即返回；
+    &#125; 
+&#125;
+
+server &#123;
+    # 设置监听端口
+    listen      80;
+    server_name  detial.xxxxx.com;
+    
+    # 设置url编码格式，解决参数中文乱码问题
+    charset utf-8;
+		
+    location &#x2F; &#123;
+        root C:&#x2F;v1&#x2F;detial;  
+        index index.html index.htm;  
+    &#125; 
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h1 id="YoloUI预览地址"><a href="#YoloUI预览地址" class="headerlink" title="YoloUI预览地址"></a>YoloUI预览地址</h1><p><a target="_blank" rel="noopener" href="http://yolo-ui.xyz/">YoloUI官网</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://d.umijs.org/zh-CN/guide">dumi官方网站</a></li>
+<li><a target="_blank" rel="noopener" href="https://ant.design/index-cn">ant-design</a></li>
+<li><a target="_blank" rel="noopener" href="https://arco.design/">arco-design</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Jacky-Summer/monki-ui">monki-ui</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904160568016910">最详细的React组件库搭建总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/zorro_jin/article/details/84927408?spm=1001.2014.3001.5506">Nginx在windows下的安装、运行，以及配置文件讲解</a></li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      
+  <blockquote class="mt-2x">
+    <ul class="post-copyright list-unstyled"></ul>
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2022/03/30/engineering/component-library/" title="如何搭建一个通用的基础组件库" target="_blank" rel="external">
+        http://example.com/2022/03/30/engineering/component-library/
+      </a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh"
+        target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+    </ul>
+  </blockquote>
+  
+
+    <!-- 
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/izph" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/izph" target="_blank"><span class="text-dark">iZph</span><small class="ml-1x">Front End Developer</small></a></h3>
+        <div>来自HQU、信息与计算科学（数学方向）、前端开发程序员</div>
+      </div>
+    </figure>
+  </div>
+</div>
+ -->
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/04/17/front_end/react-mobx6/" title="React+Mobx6.0"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/02/21/front_end/koa-base/" title="Koa 基础开发"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">    <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+        <div class="copyright">
+            
+                            <!-- <div class="publishby">
+        	copyright.theme_by <a href="https://github.com/cofess" target="_blank"> cofess </a>copyright.base_on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+        </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
