@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>【React源码】React的设计理念 | iZph-FE</title>
+  <meta name="description" content="React简介 React 是用 JavaScript 构建快速响应的大型 Web 应用程序的前端框架，其设计理念就是快速响应。  React 吸收了函数式编程中代数效应的思想。从数据结构来讲，React 大量使用了链表，在调度阶段使用了小顶堆，并且使用了许多的闭包。   什么因素制约了 React 快速响应？什么因素导致应用不流畅呢？可能是因为进行了大量的计算，或者是因为当前网络状况不佳，正在等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【React源码】React的设计理念">
+<meta property="og:url" content="http://example.com/2022/05/14/front_end/react-idea/index.html">
+<meta property="og:site_name" content="前端点点滴滴">
+<meta property="og:description" content="React简介 React 是用 JavaScript 构建快速响应的大型 Web 应用程序的前端框架，其设计理念就是快速响应。  React 吸收了函数式编程中代数效应的思想。从数据结构来讲，React 大量使用了链表，在调度阶段使用了小顶堆，并且使用了许多的闭包。   什么因素制约了 React 快速响应？什么因素导致应用不流畅呢？可能是因为进行了大量的计算，或者是因为当前网络状况不佳，正在等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/fiber.png">
+<meta property="og:image" content="http://example.com/images/rootfiber.png">
+<meta property="og:image" content="http://example.com/images/rootfiber-2cache.png">
+<meta property="og:image" content="http://example.com/images/rootfiber-update.png">
+<meta property="og:image" content="http://example.com/images/rootfiber-afterupdate.png">
+<meta property="og:image" content="http://example.com/images/rootfiber-update01.png">
+<meta property="og:image" content="http://example.com/images/rootfiber-update02.png">
+<meta property="og:image" content="http://example.com/images/first-render001.png">
+<meta property="og:image" content="http://example.com/images/first-render002.png">
+<meta property="og:image" content="http://example.com/images/first-render003.png">
+<meta property="og:image" content="http://example.com/images/first-render004.png">
+<meta property="og:image" content="http://example.com/images/first-render005.png">
+<meta property="og:image" content="http://example.com/images/first-render006.png">
+<meta property="og:image" content="http://example.com/images/react-jsx001.png">
+<meta property="article:published_time" content="2022-05-14T08:15:20.000Z">
+<meta property="article:modified_time" content="2022-07-25T14:33:42.286Z">
+<meta property="article:author" content="zhongph">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/fiber.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2022/05/14/front_end/react-idea/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="前端点点滴滴" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center theme-purple" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/izph" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">iZph</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Front End Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>iZph's Blog：欢迎交流与分享经验哈!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Koa/" rel="tag">Koa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/JavaScript/" style="font-size: 13.5px;">JavaScript</a> <a href="/tags/Koa/" style="font-size: 13px;">Koa</a> <a href="/tags/Node/" style="font-size: 13.5px;">Node</a> <a href="/tags/React/" style="font-size: 14px;">React</a> <a href="/tags/TypeScript/" style="font-size: 13px;">TypeScript</a> <a href="/tags/Webpack/" style="font-size: 13.5px;">Webpack</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" style="font-size: 13px;">数据结构与算法</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 13px;">浏览器</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 13px;">面试</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/14/front_end/react-idea/" class="title">【React源码】React的设计理念</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-14T08:15:20.000Z" itemprop="datePublished">2022-05-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/04/17/front_end/react-mobx6/" class="title">React+Mobx6.0</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-04-16T18:05:10.000Z" itemprop="datePublished">2022-04-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/30/engineering/component-library/" class="title">如何搭建一个通用的基础组件库</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-29T20:39:18.000Z" itemprop="datePublished">2022-03-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/02/21/front_end/koa-base/" class="title">Koa 基础开发</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-02-20T19:35:10.000Z" itemprop="datePublished">2022-02-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/01/06/front_end/node-base/" class="title">Node 知识梳理（一）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-01-05T22:15:33.000Z" itemprop="datePublished">2022-01-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#React%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">React简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E5%9B%A0%E7%B4%A0%E5%88%B6%E7%BA%A6%E4%BA%86-React-%E5%BF%AB%E9%80%9F%E5%93%8D%E5%BA%94%EF%BC%9F%E4%BB%80%E4%B9%88%E5%9B%A0%E7%B4%A0%E5%AF%BC%E8%87%B4%E5%BA%94%E7%94%A8%E4%B8%8D%E6%B5%81%E7%95%85%E5%91%A2%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">什么因素制约了 React 快速响应？什么因素导致应用不流畅呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reeact-%E4%B8%BA%E4%BA%86%E8%B7%B5%E8%A1%8C%E5%BF%AB%E9%80%9F%E5%93%8D%E5%BA%94%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%EF%BC%8C%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3CPU%E5%92%8CIO%E7%9A%84%E7%93%B6%E9%A2%88%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">Reeact 为了践行快速响应的设计理念，是如何解决CPU和IO的瓶颈？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#React%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3IO%E7%9A%84%E7%93%B6%E9%A2%88%E5%91%A2%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">React是如何解决IO的瓶颈呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#React%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">React设计理念的总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#React%E6%9E%B6%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">React架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#React15-%E8%80%81%E6%9E%B6%E6%9E%84"><span class="toc-number">2.1.</span> <span class="toc-text">React15 老架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reconciler%EF%BC%88%E5%8D%8F%E8%B0%83%E5%99%A8%EF%BC%89"><span class="toc-number">2.1.1.</span> <span class="toc-text">Reconciler（协调器）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Render%EF%BC%88%E6%B8%B2%E6%9F%93%E5%99%A8%EF%BC%89"><span class="toc-number">2.1.2.</span> <span class="toc-text">Render（渲染器）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#React15%E6%9E%B6%E6%9E%84%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">2.2.</span> <span class="toc-text">React15架构的缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#React16-%E6%96%B0%E6%9E%B6%E6%9E%84%EF%BC%88%E6%96%B0%E7%9A%84React%E6%9E%B6%E6%9E%84%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">React16 新架构（新的React架构）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Scheduler%EF%BC%88%E8%B0%83%E5%BA%A6%E5%99%A8%EF%BC%89"><span class="toc-number">2.3.1.</span> <span class="toc-text">Scheduler（调度器）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Scheduler%EF%BC%88%E8%B0%83%E5%BA%A6%E5%99%A8%EF%BC%89%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">2.3.1.1.</span> <span class="toc-text">Scheduler（调度器）工作原理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reconciler%EF%BC%88%E5%8D%8F%E8%B0%83%E5%99%A8%EF%BC%89-1"><span class="toc-number">2.3.2.</span> <span class="toc-text">Reconciler（协调器）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#React-%E5%8D%8F%E8%B0%83%E5%99%A8%EF%BC%88Reconciler%EF%BC%89%E7%9A%84%E6%96%B0%E6%9E%B6%E6%9E%84Fiber"><span class="toc-number">3.</span> <span class="toc-text">React 协调器（Reconciler）的新架构Fiber</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fiber%E6%9E%B6%E6%9E%84"><span class="toc-number">4.</span> <span class="toc-text">Fiber架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Fiber%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text">Fiber的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fiber%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">4.2.</span> <span class="toc-text">Fiber的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fiber%E8%8A%82%E7%82%B9%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-number">4.3.</span> <span class="toc-text">Fiber节点的连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fiber%E6%9E%B6%E6%9E%84%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">4.4.</span> <span class="toc-text">Fiber架构的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E7%BC%93%E5%AD%98"><span class="toc-number">4.4.1.</span> <span class="toc-text">双缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#React%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8%E5%8F%8C%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2%EF%BC%9F"><span class="toc-number">4.4.2.</span> <span class="toc-text">React如何利用双缓存更新页面？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#React%E9%A6%96%E5%B1%8F%E6%B8%B2%E6%9F%93%E5%85%B7%E4%BD%93%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">React首屏渲染具体执行流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSX"><span class="toc-number">5.1.</span> <span class="toc-text">JSX</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#babel"><span class="toc-number">5.1.1.</span> <span class="toc-text">babel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#React-createElement"><span class="toc-number">5.1.2.</span> <span class="toc-text">React.createElement</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#REACT-DEVTOOLS-GLOBAL-HOOK"><span class="toc-number">5.1.3.</span> <span class="toc-text">REACT_DEVTOOLS_GLOBAL_HOOK</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-front_end/react-idea" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【React源码】React的设计理念
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/05/14/front_end/react-idea/" class="article-date">
+	  <time datetime="2022-05-14T08:15:20.000Z" itemprop="datePublished">2022-05-14</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/React/" rel="tag">React</a>
+  </span>
+
+
+        
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2022/05/14/front_end/react-idea/" class="leancloud_visitors"  data-flag-title="【React源码】React的设计理念">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/05/14/front_end/react-idea/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="React简介"><a href="#React简介" class="headerlink" title="React简介"></a>React简介</h1><ul>
+<li><p>React 是用 JavaScript 构建<code>快速响应</code>的大型 Web 应用程序的前端框架，其设计理念就是快速响应。</p>
+</li>
+<li><p>React 吸收了函数式编程中代数效应的思想。从数据结构来讲，React 大量使用了链表，在调度阶段使用了小顶堆，并且使用了许多的闭包。</p>
+</li>
+</ul>
+<h2 id="什么因素制约了-React-快速响应？什么因素导致应用不流畅呢？"><a href="#什么因素制约了-React-快速响应？什么因素导致应用不流畅呢？" class="headerlink" title="什么因素制约了 React 快速响应？什么因素导致应用不流畅呢？"></a>什么因素制约了 React 快速响应？什么因素导致应用不流畅呢？</h2><p>可能是因为进行了大量的计算，或者是因为当前网络状况不佳，正在等待请求的返回才能进一步操作导致不能快速响应等，可以说是计算能力和网络延迟的原因，制约了React快速响应，最终可归结为CPU的瓶颈和IO的瓶颈。</p>
+<h2 id="Reeact-为了践行快速响应的设计理念，是如何解决CPU和IO的瓶颈？"><a href="#Reeact-为了践行快速响应的设计理念，是如何解决CPU和IO的瓶颈？" class="headerlink" title="Reeact 为了践行快速响应的设计理念，是如何解决CPU和IO的瓶颈？"></a>Reeact 为了践行快速响应的设计理念，是如何解决CPU和IO的瓶颈？</h2><ol>
+<li><p>主流的浏览器刷新频率为60Hz，也就是说每16.6ms（<code>1000ms/60Hz=16.6ms</code>）浏览器刷新一次。在这16.6ms过程中，会依次执行JS脚本、样式布局、样式绘制。如果JS脚本的执行时间超过了16.6ms，那么这一帧就没有时间留给样式布局、样式绘制。浏览器就会掉帧，表现形式就是浏览器的滚动不流畅、在输入框输入的字符不能及时的响应在页面上。对于这种情况，一般采用防抖（一段输入只会触发一次更新）和节流（限制触发更新的频率）来优化，本质上来说，这两个都是限制我们触发更新的频率，来减少掉帧的可能性，但是这是治标不治本的办法。随着我们输入的字符越来越多，我们每一次更新所需要的时间，都超过了浏览器一帧的时间时，那么使用防抖和节流也会造成浏览器的掉帧，那么有没有解决的办法呢？React给出的办法是将同步的更新改为异步更新。</p>
+</li>
+<li><p>简单来说，React 和浏览器做了一个约定，将自己一帧的时间预留给 React，React 利用这一部分时间来完成自己的工作，如果某个工作需要的时间特别长，超出了这个预留时间，React 会中断自己的工作，并将控制权交给浏览器，等到下一帧，浏览器给到自己预留的那部分时间到来之后，再继续之前被中断的工作，这样浏览器在每一帧都会有时间执行<code>样式布局</code>与<code>样式绘制</code>，这样就有可能减少掉帧的可能性。</p>
+</li>
+<li><p>所以，当采用了<code>异步更新</code>的形式，即使是更新了大量的节点，这样 CPU 密集型操作，React 也能有效的减少掉帧的可能性。</p>
+</li>
+</ol>
+<h2 id="React是如何解决IO的瓶颈呢？"><a href="#React是如何解决IO的瓶颈呢？" class="headerlink" title="React是如何解决IO的瓶颈呢？"></a>React是如何解决IO的瓶颈呢？</h2><ol>
+<li>比如需要等待数据请求的结果返回，才能做出进一步的响应的场景下，用户才能感知到快速响应呢？将人机交互的研究结果整合到真实的UI中，研究表明，在屏幕之间切换时显示过多的中间加载状态会使切换的速度变慢。对于UI交互来说，延迟显示中间加载的状态能让用户感觉更流畅。</li>
+</ol>
+<p>React为了解决IO的瓶颈，以实现快速响应的理念，React更逐步在框架的层面实现异步可中断的更新机制，不管是CPU的瓶颈，还是IO的瓶颈，最重要的是实现一套异步的更新机制。</p>
+<h2 id="React设计理念的总结"><a href="#React设计理念的总结" class="headerlink" title="React设计理念的总结"></a>React设计理念的总结</h2><p>React设计理念是快速响应，制约<code>快速响应</code>的因素是CPU瓶颈与IO瓶颈，解决办法是实现<code>异步可中断更新</code>。</p>
+<h1 id="React架构"><a href="#React架构" class="headerlink" title="React架构"></a>React架构</h1><p>React 从 v15 升级到 v16 后重构了整个架构。</p>
+<h2 id="React15-老架构"><a href="#React15-老架构" class="headerlink" title="React15 老架构"></a>React15 老架构</h2><p>React15架构分为两部分，分别是决定渲染什么组件（Reconciler 协调器）、将组件渲染到视图中（Renderer 渲染器）。对应于 Reconciler 协调器和 Renderer 渲染器，老的架构无法实现<code>中断更新</code>，需要新的 React16 架构，才能实现<code>异步可中断更新</code>。</p>
+<h3 id="Reconciler（协调器）"><a href="#Reconciler（协调器）" class="headerlink" title="Reconciler（协调器）"></a>Reconciler（协调器）</h3><ol>
+<li><p>在 React 中可以通过<code>this.setState</code>、<code>this.forceUpdate</code>、<code>ReactDOM.render</code>等API触发更新。</p>
+</li>
+<li><p>每当有更新发生时，Reconciler会做如下工作：</p>
+</li>
+</ol>
+<ul>
+<li>直接调用函数组件或 class 组件的 render 方法，将返回的 JSX 转化为虚拟 DOM</li>
+<li>将虚拟 DOM 和上次更新时的虚拟 DOM 对比</li>
+<li>通过对比找出本次更新中变化的虚拟 DOM</li>
+<li>通知 Renderer（渲染器）将变化的虚拟 DOM 渲染到页面上</li>
+</ul>
+<ol start="3">
+<li>协调器负责决定本次更新有什么组件需要渲染，diff 算法就是发生在协调器中。在 diff 算法中，会将上一次更新的虚拟 DOM 与本次更新的 DOM 做一个对比，最终只有变化的部分会被渲染到视图中，diff 算法的官方名称是 reconcile，就是协调的意思，这也是协调器的由来。经过 diff 算法判定为本次需要更新的 虚拟DOM，会交给渲染器，渲染到视图中，不同的渲染器会将组件渲染到不同的宿主环境视图中。</li>
+</ol>
+<h3 id="Render（渲染器）"><a href="#Render（渲染器）" class="headerlink" title="Render（渲染器）"></a>Render（渲染器）</h3><p>在每次更新发生时，Renderer（渲染器）接到 Reconciler（协调器）通知，将变化的组件渲染在当前宿主环境。</p>
+<ul>
+<li>ReactDOM 渲染器，渲染到浏览器；</li>
+<li>ReactNative 渲染器，渲染App原生组件；</li>
+<li>ReactTest 渲染器，渲染出纯JS对象用于测试；</li>
+<li>ReactArt 渲染器，渲染出Canvas、SVG。</li>
+</ul>
+<h2 id="React15架构的缺点"><a href="#React15架构的缺点" class="headerlink" title="React15架构的缺点"></a>React15架构的缺点</h2><p>采用递归执行更新，更新一旦开始，中途就无法中断。当层级很深时，递归更新时间超过了浏览器间隔刷新一帧的时间（16.6ms），页面的交互就会出现卡顿。</p>
+<h2 id="React16-新架构（新的React架构）"><a href="#React16-新架构（新的React架构）" class="headerlink" title="React16 新架构（新的React架构）"></a>React16 新架构（新的React架构）</h2><ol>
+<li><p>由于更新是异步可中断的，在新的架构中，新增了一个模块来管理这些异步更新，每一个更新会被赋予一个优先级，高优先级的更新会被更快的调度。这个模块的被称为Scheduler（调度器）。</p>
+</li>
+<li><p>React16新的架构：</p>
+</li>
+</ol>
+<ul>
+<li>Scheduler（调度器）—— 调度任务的优先级，高优任务优先进入Reconciler</li>
+<li>Reconciler（协调器）—— 负责找出变化的组件</li>
+<li>Renderer（渲染器）—— 负责将变化的组件渲染到页面上</li>
+</ul>
+<h3 id="Scheduler（调度器）"><a href="#Scheduler（调度器）" class="headerlink" title="Scheduler（调度器）"></a>Scheduler（调度器）</h3><h4 id="Scheduler（调度器）工作原理"><a href="#Scheduler（调度器）工作原理" class="headerlink" title="Scheduler（调度器）工作原理"></a>Scheduler（调度器）工作原理</h4><p>对于老的架构，更新会直接被 <code>Reconciler（协调器）</code>处理。在新的架构中，更新首先会被 <code>Scheduler（调度器）</code>处理，<code>调度器</code>会调度这些更新的优先级，更高优先级的更新会优先进入 Reconciler（协调器），在<code>协调器</code>正在执行 diff 算法时，如果此时产生了一个更高优先级的更新，那么正在<code>协调器</code>的<code>协调的更新</code>会被中断，由于<code>调度器</code>与<code>协调器</code>都是在内存中工作，不会执行具体的视图操作。即使有中断发生，用户也不会看到更新不完全的视图。当某次更新中，完成了在协调器的工作时，<code>协调器</code>会通知<code>渲染器</code>，本次更新有哪些组件，需要执行对应的视图操作，由<code>渲染器</code>来分别执行这些视图操作。对应我们常见的ReactDOM来说，这些视图操作包含了 DOM 节点的增删改查操作。当高优先级的更新最终完成了渲染，协调器又会调度新一轮的调度。</p>
+<p>diff 算法的目的是创建一颗虚拟 DOM 树，每一个视图上存在的节点，都有一个虚拟 DOM 节点与其对应，被更新的节点会被打上<code>Update</code>标记（flags），最终<code>协调器</code>会将打了标记的虚拟 DOM 交给<code>渲染器</code>。 <code>渲染器</code>接收到通知后，会查看有哪些被打记号的虚拟DOM，被标记为<code>Update</code>的虚拟 DOM 节点对应的<code>真实DOM</code>会被<code>渲染器</code>执行<code>更新DOM</code>的操作。通过调度器、协调器、渲染器互相配合，React新的架构实现了异步可中断的更新。</p>
+<h3 id="Reconciler（协调器）-1"><a href="#Reconciler（协调器）-1" class="headerlink" title="Reconciler（协调器）"></a>Reconciler（协调器）</h3><p>当我们开启了Concurrent模式后（React18），更新工作中会调用<code>workLoopConcurrent</code>方法，从递归变成了可以中断的循环过程，每次循环都会调用shouldYield判断当前是否有剩余时间。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">workLoopConcurrent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// workInProgress是当前fiber节点</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>workInProgress <span class="token operator">!==</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">shouldYield</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    workInProgress <span class="token operator">=</span> <span class="token function">performUnitOfWork</span><span class="token punctuation">(</span>workInProgress<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="React-协调器（Reconciler）的新架构Fiber"><a href="#React-协调器（Reconciler）的新架构Fiber" class="headerlink" title="React 协调器（Reconciler）的新架构Fiber"></a>React 协调器（Reconciler）的新架构Fiber</h1><p>React 践行<code>代数效应</code>，那<code>代数效应</code>与<code>Fiber架构</code>有什么联系吗？<code>代数效应</code>是函数式编程中的概念，用于将<code>副作用</code>从<code>函数</code>调用中分离，使得函数的关注点保持纯粹。</p>
+<ul>
+<li>为了演示代数效应，虚构的语法 perform、handle、resume。执行 getTotalPicNum 函数，perform 语法会被 try handle 捕获，在 handle 处理 case。</li>
+<li><code>resume with num</code>会回到 getPicNum 函数调用栈，再中断执行完任务，回到之前的<code>getTotalPicNum</code>调用栈后，会继续执行接下来<code>return num1 + num2</code>的工作。</li>
+<li>参考<a target="_blank" rel="noopener" href="https://react.iamkasong.com/process/fiber-mental.htm">代数效应</a><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 异步可中断更新原理</span>
+<span class="token keyword">function</span> <span class="token function">getTotalPicNum</span><span class="token punctuation">(</span><span class="token parameter">user1<span class="token punctuation">,</span> user2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> num1 <span class="token operator">=</span> <span class="token function">getPicNum</span><span class="token punctuation">(</span>user1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> num2 <span class="token operator">=</span> <span class="token function">getPicNum</span><span class="token punctuation">(</span>user2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> num1 <span class="token operator">+</span> num2<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> <span class="token function">getPicNum</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> picNum <span class="token operator">=</span> perform name<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> picNum<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">getTotalPicNum</span><span class="token punctuation">(</span><span class="token string">'SouthStar'</span><span class="token punctuation">,</span> <span class="token string">'Nanxing'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token function">handle</span> <span class="token punctuation">(</span><span class="token parameter">who</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span>who<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">case</span> <span class="token string">'SouthStar'</span><span class="token operator">:</span>
+                resume <span class="token keyword">with</span> <span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> <span class="token string">'Nanxing'</span><span class="token operator">:</span>
+                resume <span class="token keyword">with</span> <span class="token number">12</span><span class="token punctuation">;</span>
+            <span class="token keyword">default</span><span class="token operator">:</span>
+                resume <span class="token keyword">with</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<ol>
+<li><p><code>代数效应</code>与<code>React</code>关系：Hooks。比如<code>useState</code>的值如何保存在函数组件，我们不太需要关注，这个由 React 处理。还有就是请求数据的写法如果是同步的，至于如何异步的请求数据，中间的加载状态是如何展示的，这完全是交由 React 来处理。</p>
+</li>
+<li><p>Fiber 就是利用了代数效应的中断、恢复，来完成了<code>异步可中断的更新</code>。</p>
+</li>
+<li><p>Fiber 的中文名是纤程，与进程(Process)、线程(Thread)、协程(Coroutine)同为操作系统的程序的执行过程，纤程可以理解为协程的一种实现，在JS中协程已经有了一种实现，就是 generator。</p>
+</li>
+<li><p>React团队为什么不直接使用generator来实现异步的更新，而是自己去实现一套 Fiber 纤程呢？</p>
+</li>
+</ol>
+<ul>
+<li>generator和async&#x2F;await一样，具有传染性，当一个函数成为generator函数后，这个函数调用链上的其他函数也会受到影响。</li>
+<li>设计Fiber架构的目的是：更新可以中断并继续，更新可以拥有不同的优先级，高优先级的更新可以打断低优先级的更新</li>
+<li>使用generator可以达到更新可以中断并继续的目的，但是不能实现不同的优先级的更新，所有React团队决定重头实现一套Fiber架构。</li>
+</ul>
+<h1 id="Fiber架构"><a href="#Fiber架构" class="headerlink" title="Fiber架构"></a>Fiber架构</h1><h2 id="Fiber的含义"><a href="#Fiber的含义" class="headerlink" title="Fiber的含义"></a>Fiber的含义</h2><p><code>Fiber</code>和<code>JSX</code>都可以理解为一种数据结构，在<code>React16新架构</code>中，<code>Fiber节点</code>就是<code>虚拟DOM</code>。<code>Fiber</code>包含三层含义：</p>
+<ol>
+<li><p>作为架构来说，之前<code>React15</code>的<code>Reconciler</code>采用递归的方式执行，数据保存在递归调用栈中，所以被称为<code>stack Reconciler</code>，stack就是调用栈。<code>React16</code>的协调器<code>Reconciler</code>是基于<code>Fiber节点</code>实现，被称为<code>Fiber Reconciler</code>。</p>
+</li>
+<li><p>作为静态的数据结构来说，每个<code>Fiber节点</code>对应一个<code>React element</code>（React组件），保存了该组件的类型（函数组件&#x2F;类组件&#x2F;原生组件…）、对应的DOM节点等信息，这是的<code>Fiber节点</code>也就是我们所说的<code>虚拟DOM</code>。举个例子，有一个 App 组件，当首次调用<code>ReactDOM.render</code>时，会创建整个应用的根节点<code>FiberRootNode</code>，我们是可以多次调用<code>ReactDOM.render</code>，将不同的应用挂载到不同的应用节点下，每个应用都有自己的<code>根RootFiber节点</code>。在一个页面中，可以有多个<code>RootFiber</code>，但是只能有一个<code>FiberRootNode</code>来管理这些<code>RootFiber</code>。</p>
+</li>
+</ol>
+<h2 id="Fiber的结构"><a href="#Fiber的结构" class="headerlink" title="Fiber的结构"></a>Fiber的结构</h2><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">FiberNode</span><span class="token punctuation">(</span>
+  <span class="token parameter"><span class="token literal-property property">tag</span><span class="token operator">:</span> WorkTag<span class="token punctuation">,</span>
+  <span class="token literal-property property">pendingProps</span><span class="token operator">:</span> mixed<span class="token punctuation">,</span>
+  <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token keyword">null</span> <span class="token operator">|</span> string<span class="token punctuation">,</span>
+  <span class="token literal-property property">mode</span><span class="token operator">:</span> TypeOfMode<span class="token punctuation">,</span></span>
+<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 作为静态数据结构的属性</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>tag <span class="token operator">=</span> tag<span class="token punctuation">;</span> <span class="token comment">// 组件的类型，如function组件、class组件、DOM对应的Fiber节点（原生）</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>key <span class="token operator">=</span> key<span class="token punctuation">;</span> <span class="token comment">// 我们常用的key属性</span>
+  <span class="token comment">// 大部分情况elementType与type是一致的。在某些情况下，FunctionComponent被React.memo包裹时，它的elementType与type不同。</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>elementType <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token comment">// 对于 FunctionComponent，指函数本身，对于ClassComponent，指class，对于HostComponent，指DOM节点tagName</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token comment">// Fiber对应的真实DOM节点，对于HostComponent，指真实的DOM节点，</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>stateNode <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 用于连接其他Fiber节点形成Fiber树</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>return <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>child <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>sibling <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token comment">// 对于多个同级Fiber节点，代表它们插入DOM的位置索引</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+
+  <span class="token keyword">this</span><span class="token punctuation">.</span>ref <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment">// 常用的ref属性</span>
+
+  <span class="token comment">// 作为动态的工作单元的属性，保存本次更新造成的状态改变相关信息</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>pendingProps <span class="token operator">=</span> pendingProps<span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>memoizedProps <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 存放属性的 增删改 </span>
+  <span class="token comment">// 存在updateQueue时，会调用markUpdate，为workInProgress的flags 标记为Update</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>updateQueue <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">this</span><span class="token punctuation">.</span>memoizedState <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>dependencies <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">this</span><span class="token punctuation">.</span>mode <span class="token operator">=</span> mode<span class="token punctuation">;</span>
+
+  <span class="token comment">// HostComponent的副作用是增删查改，对应FunctionComponent使用了useEffect、useLayoutEffect</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>flags <span class="token operator">=</span> NoEffect<span class="token punctuation">;</span>
+
+  <span class="token comment">// 带有effect与副作用相关，标记flag的 fiber节点与fiber节点之间的 通过链表连接</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>nextEffect <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>firstEffect <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>lastEffect <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// lanes属性与调度优先级相关</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>lanes <span class="token operator">=</span> NoLanes<span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>childLanes <span class="token operator">=</span> NoLanes<span class="token punctuation">;</span>
+
+  <span class="token comment">// 指向该fiber在另一次更新时对应的fiber</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>alternate <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Fiber节点的连接"><a href="#Fiber节点的连接" class="headerlink" title="Fiber节点的连接"></a>Fiber节点的连接</h2><ol>
+<li>每个Fiber节点有个对应的<code>React element</code>，多个<code>Fiber节点</code>是如何连接形成树呢？靠如下三个属性：</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 指向父级Fiber节点</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>return <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token comment">// 指向第一个子Fiber节点</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>child <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token comment">// 指向右边第一个兄弟Fiber节点</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>sibling <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>组件结构如下：</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">></span>
+      title
+      <span class="token operator">&lt;</span>span<span class="token operator">></span>标题<span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><p>对应的<code>Fiber树</code>结构：<br><img src="/./images/fiber.png" alt="Fiber树"></p>
+</li>
+<li><p>为什么父级指针叫做<code>return</code>而不是<code>parent</code>或者<code>father</code>呢？<br>这是因为React15的<code>stack Reconciler</code>以递归的形式工作，当从根节点执行递归操作时，首先会从根节点递归向下到子节点，再从子节点一路向上归到根节点，所以在这个递归阶段，函数处理完子节点后，会返回它的父节点。在<code>Fiber Reconciler</code>使用遍历的形式使用可中断的递归，也复用了这种思想。这就是为什么采用return指向父节点。</p>
+</li>
+<li><p>RootFiber采用stateNode指向FiberRootNode<br><img src="/./images/rootfiber.png" alt="Fiber树"></p>
+</li>
+</ul>
+<ol start="3">
+<li>作为动态的工作单元来说，每个<code>Fiber节点</code>保存了本次更新中该组件改变的状态、要执行的工作、要执行的副作用（需要被删除&#x2F;被插入页面中&#x2F;被更新…）。</li>
+</ol>
+<h2 id="Fiber架构的工作原理"><a href="#Fiber架构的工作原理" class="headerlink" title="Fiber架构的工作原理"></a>Fiber架构的工作原理</h2><h3 id="双缓存"><a href="#双缓存" class="headerlink" title="双缓存"></a>双缓存</h3><p>Fiber架构使用双缓存的一种机制</p>
+<h3 id="React如何利用双缓存更新页面？"><a href="#React如何利用双缓存更新页面？" class="headerlink" title="React如何利用双缓存更新页面？"></a>React如何利用双缓存更新页面？</h3><p>当首次调用ReactDOM.render时，会创建整个应用的根节点FiberRootNode（源码中叫fiberRoot），每次调用ReactDOM.render，都会常见当前应用的根节点rootFiber，其中FiberRootNode.current指向rootFiber（fiberRootNode.current &#x3D; rootFiber;），由于在首次渲染页面之前，页面是空白的，所以rootFiber没有子节点（页面中还没有挂载任何DOM，所以fiberRootNode.current指向的rootFiber没有任何子Fiber节点，即current Fiber树为空）。接下来进入首屏渲染的逻辑，不管是首屏渲染还是调用this.setState，或者是useState的setXXX方法创建的更新，都会从根节点rootFiber创建一颗fiber树，首先创建根节点的rootFiber节点，这两棵树中都存在着rootFiber节点，会用alternate属性连接，方便两个fiber直接共用一些属性，接下来采用深度优先遍历模拟递归的方式创建整颗fiber树.</p>
+<p><img src="/./images/rootfiber-2cache.png" alt="Fiber树"></p>
+<p>现在我们拥有两颗Fiber树，左边代表页面内容的fiber树，称为current Fiber树。右侧由于触发了更新，在内存中构建的fiber树，称为workInProgress Fiber树，它是根据组件返回的JSX在内存中依次创建Fiber节点并连接在一起构建Fiber树。<br><img src="/./images/rootfiber-update.png" alt="Fiber树"><br>当workInProgress Fiber树完成了渲染（即当workInProgress Fiber树构建完成交给Renderer渲染在页面上后），此时FiberRootNode.current指向了workInProgress Fiber树的根节点rootFiber，于是workInProgress Fiber树的根节点rootFiber就变成了current Fiber树，FiberRootNode.current指向更新后的rootFiber。<br><img src="/./images/rootfiber-afterupdate.png" alt="Fiber树"></p>
+<p>接下来，我们点击p标签，触发一次更新，每次触发更新都会重新创建一颗workInProgress Fiber树。 可以将 current Fiber树的节点称为 current节点，此时 current 的 rootFiber的alternate属性已经指向了一个 rootFiber，所以在创建 workInProgress Fiber树 时会基于这个 rootFiber来创建。在本次更新中，除了rootFiber，APP 与 p 都有对应的current Fiber 存在（alternate指向该fiber在另一次更新时对应的fiber），这种将current Fiber 与本次更新返回的 JSX结构做对比，生成 workInProgress Fiber的过程，就是diff算法。所有首屏渲染与更新最大的区别在于：在创建Fiber树的过程中 是否有diff算法。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">current Fiber树中的Fiber节点被称为current fiber，workInProgress Fiber树中的Fiber节点被称为workInProgress fiber，他们通过alternate属性连接。
+
+currentFiber<span class="token punctuation">.</span>alternate <span class="token operator">===</span> workInProgressFiber<span class="token punctuation">;</span>
+workInProgressFiber<span class="token punctuation">.</span>alternate <span class="token operator">===</span> currentFiber<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="/./images/rootfiber-update01.png" alt="Fiber树"></p>
+<p>当workInProgress Fiber树最终完成了渲染，FiberRootNode.current指向了workInProgress Fiber树的根节点，此时它就变成了current Fiber树。<br><img src="/./images/rootfiber-update02.png" alt="Fiber树"></p>
+<h1 id="React首屏渲染具体执行流程"><a href="#React首屏渲染具体执行流程" class="headerlink" title="React首屏渲染具体执行流程"></a>React首屏渲染具体执行流程</h1><ol>
+<li>调度阶段<br>当首次调用ReactDOM.render时，会创建整个应用的根节点FiberRootNode，<code>FiberRootNode</code>方法就是创建整个FiberRootNode<br><img src="/./images/first-render001.png" alt="首屏渲染"></li>
+</ol>
+<ul>
+<li>createHostRootFiber</li>
+<li>createFiber，它的参数tag为3由 createHostRootFiber中调用createFiber传入<br><img src="/./images/first-render002.png" alt="首屏渲染"></li>
+</ul>
+<ol start="2">
+<li>协调阶段<br><img src="/./images/first-render003.png" alt="首屏渲染"></li>
+</ol>
+<ul>
+<li>scheduleUpdateOnFiber，调度这次更新，当调度成功后，我们会执行这次更新performSyncWorkOnRoot，也就是说从根节点开始这次更新</li>
+<li>创建 workInProgress Fiber树 可以类比为递归的流程，beginWork为<code>递</code>过程，completeWork为<code>归</code>过程。<br><img src="/./images/first-render004.png" alt="首屏渲染"></li>
+<li>renderRootSync就是协调器的执行（render阶段），与它同级的commitRoot代表了这次渲染器的工作入口（commit阶段）<br><img src="/./images/first-render005.png" alt="首屏渲染"></li>
+<li>渲染器的工作入流程：将变化的节点渲染到视图上，before mutation阶段（渲染前），mutation阶段（渲染中），layout阶段（渲染后）<br><img src="/./images/first-render006.png" alt="首屏渲染"></li>
+</ul>
+<h2 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h2><p>JSX和Fiber节点是同一个东西么，它们的关系？<br>React Component、React Element是同一个东西么，他们和JSX有什么关系？</p>
+<h3 id="babel"><a href="#babel" class="headerlink" title="babel"></a>babel</h3><p>@babel&#x2F;plugin-transform-react-jsx将jsx</p>
+<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx"><span class="token comment">// &lt;div>1&lt;/div> 编译后</span>
+React<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="React-createElement"><a href="#React-createElement" class="headerlink" title="React.createElement"></a>React.createElement</h3><p>既然JSX会被编译为React.createElement，让我们看看他做了什么：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">createElement</span><span class="token punctuation">(</span><span class="token parameter">type<span class="token punctuation">,</span> config<span class="token punctuation">,</span> children</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> propName<span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> props <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+  <span class="token comment">// 定义一些字段，key、ref是我们经常使用的</span>
+  <span class="token keyword">let</span> key <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment">// 作为保留属性传递</span>
+  <span class="token keyword">let</span> ref <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment">// 作为保留属性传递</span>
+  <span class="token keyword">let</span> self <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment">// __self作为保留属性传递</span>
+  <span class="token keyword">let</span> source <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment">// __source作为保留属性传递</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>config <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 将 config 处理后赋值给 props</span>
+    <span class="token comment">// ...省略</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">const</span> childrenLength <span class="token operator">=</span> arguments<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">;</span>
+  <span class="token comment">// 处理 children，会被赋值给props.children</span>
+  <span class="token comment">// ...省略</span>
+
+  <span class="token comment">// ...省略</span>
+  <span class="token comment">// 处理 defaultProps  Resolve default props</span>
+  <span class="token comment">// defaultProps来自于React.createElement第一次参数type</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">&amp;&amp;</span> type<span class="token punctuation">.</span>defaultProps<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> defaultProps <span class="token operator">=</span> type<span class="token punctuation">.</span>defaultProps<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>propName <span class="token keyword">in</span> defaultProps<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>props<span class="token punctuation">[</span>propName<span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        props<span class="token punctuation">[</span>propName<span class="token punctuation">]</span> <span class="token operator">=</span> defaultProps<span class="token punctuation">[</span>propName<span class="token punctuation">]</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">return</span> <span class="token function">ReactElement</span><span class="token punctuation">(</span>
+    type<span class="token punctuation">,</span>
+    key<span class="token punctuation">,</span>
+    ref<span class="token punctuation">,</span>
+    self<span class="token punctuation">,</span>
+    source<span class="token punctuation">,</span>
+    ReactCurrentOwner<span class="token punctuation">.</span>current<span class="token punctuation">,</span>
+    props<span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">ReactElement</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">type<span class="token punctuation">,</span> key<span class="token punctuation">,</span> ref<span class="token punctuation">,</span> self<span class="token punctuation">,</span> source<span class="token punctuation">,</span> owner<span class="token punctuation">,</span> props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> element <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 标记这是个 React Element</span>
+    $$<span class="token keyword">typeof</span><span class="token operator">:</span> <span class="token constant">REACT_ELEMENT_TYPE</span><span class="token punctuation">,</span>
+
+    <span class="token literal-property property">type</span><span class="token operator">:</span> type<span class="token punctuation">,</span>
+    <span class="token literal-property property">key</span><span class="token operator">:</span> key<span class="token punctuation">,</span>
+    <span class="token literal-property property">ref</span><span class="token operator">:</span> ref<span class="token punctuation">,</span>
+    <span class="token literal-property property">props</span><span class="token operator">:</span> props<span class="token punctuation">,</span>
+    <span class="token literal-property property">_owner</span><span class="token operator">:</span> owner<span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> element<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>React.createElement最终会调用ReactElement方法返回一个包含组件数据的对象，该对象有个参数$$typeof: REACT_ELEMENT_TYPE标记了该对象是个React Element。</p>
+<p>所以调用React.createElement返回的对象就是React Element么？</p>
+<p>React提供了验证合法React Element的全局API React.isValidElement (opens new window)，我们看下他的实现：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">isValidElement</span><span class="token punctuation">(</span><span class="token parameter">object</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token keyword">typeof</span> object <span class="token operator">===</span> <span class="token string">'object'</span> <span class="token operator">&amp;&amp;</span>
+    object <span class="token operator">!==</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span>
+    object<span class="token punctuation">.</span>$$<span class="token keyword">typeof</span> <span class="token operator">===</span> <span class="token constant">REACT_ELEMENT_TYPE</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以看到，<code>$$typeof === REACT_ELEMENT_TYPE</code>的非null对象就是一个合法的React Element。换言之，在React中，所有JSX在运行时的返回结果（即React.createElement()的返回值&#x2F;调用结果）都是React Element。</p>
+<p>JSX与 Fiber的关系：创建Fiber节点的依据就是 组件返回的JSX对象，JSX是一种描述当前组件内容的数据结构。在更新时，依据存在了一颗current Fiber树，所以在生成 workInProgress Fiber树 时，将组件返回的JSX对象，与这个组件对应的 current Fiber节点做对比，根据对比的结果生成workInProgress Fiber树。这就是JSX与 Fiber的关系，JSX最终会被编译为 React.createElement方法的执行。理论上来说，只要改变React.createElement的方法，就能改变页面最终的渲染结果。</p>
+<h3 id="REACT-DEVTOOLS-GLOBAL-HOOK"><a href="#REACT-DEVTOOLS-GLOBAL-HOOK" class="headerlink" title="REACT_DEVTOOLS_GLOBAL_HOOK"></a><strong>REACT_DEVTOOLS_GLOBAL_HOOK</strong></h3><p>__REACT_DEVTOOLS_GLOBAL_HOOK__对象含有一个renderers，渲染器，急速React-DOM。</p>
+<p><img src="/./images/react-jsx001.png" alt="调试React"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://react.iamkasong.com/preparation/idea.html">React理念</a></li>
+<li><a target="_blank" rel="noopener" href="https://react.iamkasong.com/preparation/oldConstructure.html">React15架构</a></li>
+<li><a target="_blank" rel="noopener" href="https://react.iamkasong.com/preparation/newConstructure.html">React16架构</a></li>
+<li><a target="_blank" rel="noopener" href="https://react.iamkasong.com/process/fiber.html">Fiber架构的实现原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://react.iamkasong.com/process/doubleBuffer.html">Fiber架构的工作原理</a></li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      
+
+    <!-- 
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/izph" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/izph" target="_blank"><span class="text-dark">iZph</span><small class="ml-1x">Front End Developer</small></a></h3>
+        <div>来自HQU、信息与计算科学（数学方向）、前端开发程序员</div>
+      </div>
+    </figure>
+  </div>
+</div>
+ -->
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2022/04/17/front_end/react-mobx6/" title="React+Mobx6.0"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">    <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+        <div class="copyright">
+            
+                            <!-- <div class="publishby">
+        	copyright.theme_by <a href="https://github.com/cofess" target="_blank"> cofess </a>copyright.base_on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+        </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

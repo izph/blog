@@ -93,7 +93,20 @@ koa解析`http://127.0.0.1:3000/api/v1/getUser?a=1&b=2#abc`地址后，会将返
 |  query  |                   查询字符串`?a=1&b=2`                   |      req.query      |    ctx.query    |                             内置，无须依赖                             |
 |   body   | 带有body请求的POST类方法，请求体body内容 |      req.body      | ctx.request.body |          Express依赖bodyparser模块，Koa依赖koa-bodyparser模块          |
 
-## koa写入cookie
+## koa写入
+Koa框架本身集成了Cookie的中间件，方法如下，options对象用于配置
+1. ctx.cookies.get(name, [options])
+2. ctx.cookies.set(name, value, [options])
+3. options对象用于配置
+- maxAge: 一个数字, 表示从 Date.now() 得到的毫秒数, 表示多少毫秒后失效
+- expires: 一个 Date 对象, 表示 cookie 的到期日期 (默认情况下在会话结束时过期).
+- path: 一个字符串, 表示 cookie 的路径 (默认是/).
+- domain: 一个字符串, 指示 cookie 的域 (无默认值).
+- secure: 一个布尔值, 表示 cookie 是否仅通过 HTTPS 发送 (HTTP 下默认为 false, HTTPS 下默认为 true).
+- httpOnly: 一个布尔值,  客户端无法操作cookie (默认为 true).
+- sameSite: 一个布尔值或字符串, 表示该 cookie 是否为 "相同站点" cookie (默认为 false). 可以设置为 'strict', 'lax', 'none', 或 true (映射为'strict').
+- signed: 一个布尔值, 表示是否要对 cookie 进行签名 (默认为 false).  此签名密钥用于检测下次接收 cookie 时的篡改.
+- overwrite: 一个布尔值, 表示是否覆盖以前设置的同名的 cookie (默认是 false). 如果是 true, 在同一个请求中设置相同名称的所有 Cookie（无论路径或域）是否在设置此Cookie 时从 Set-Cookie 消息头中过滤掉.
 
 cookie的value默认是不能中文，可以使用buffer将中文转化后使用（通用的方法）
 
@@ -106,15 +119,40 @@ ctx.cookies.set('name', 'value', {
     httpOnly: true,
     maxAge: 1000 * 30, // 30秒过期
 });
-// maxAge: 一个数字, 表示从 Date.now() 得到的毫秒数.
-// expires: 一个 Date 对象, 表示 cookie 的到期日期 (默认情况下在会话结束时过期).
-// path: 一个字符串, 表示 cookie 的路径 (默认是/).
-// domain: 一个字符串, 指示 cookie 的域 (无默认值).
-// secure: 一个布尔值, 表示 cookie 是否仅通过 HTTPS 发送 (HTTP 下默认为 false, HTTPS 下默认为 true).
-// httpOnly: 一个布尔值,  客户端无法操作cookie (默认为 true).
-// sameSite: 一个布尔值或字符串, 表示该 cookie 是否为 "相同站点" cookie (默认为 false). 可以设置为 'strict', 'lax', 'none', 或 true (映射为 'strict').
-// signed: 一个布尔值, 表示是否要对 cookie 进行签名 (默认为 false).  此签名密钥用于检测下次接收 cookie 时的篡改.
-// overwrite: 一个布尔值, 表示是否覆盖以前设置的同名的 cookie (默认是 false). 如果是 true, 在同一个请求中设置相同名称的所有 Cookie（无论路径或域）是否在设置此Cookie 时从 Set-Cookie 消息头中过滤掉.
+```
+### Cookie例子
+```js
+const Koa = require('koa')
+const app = new Koa()
+const Router = require('koa-router')
+const router = new Router()
+
+router.get('/setCookie', async (ctx) => {
+    ctx.cookies.set(
+        'id',
+        '123456',
+        {
+            domain: '127.0.0.1',              // cookie所在的domain(域名)
+            expires: new Date('2022-10-01'),  // cookie的失效时间
+            httpOnly: false,                  // 是否只用于http请求中获取
+            overwrite: false                  // 是否允许重写
+        }
+    )
+    ctx.body = `设置成功`
+})
+
+router.get('/getCookie', async (ctx) => {
+    const cookie = ctx.cookies.get('id')
+    console.log(cookie)
+    ctx.body = `cookie为：${cookie}`
+})
+
+// 加载路由中间件
+app.use(router.routes())
+
+app.listen(4000, () => {
+    console.log('server is running, port is 4000')
+})
 ```
 
 # koa-router中间件
@@ -179,6 +217,26 @@ router.get('/users/:id',
 ```
 # koa-static静态服务
 静态服务器是通过静态HTTP服务器来提供HTML、JavaScript、CSS文件及图片的托管服务的.Node.js世界里的 koa-static、http-server等模块和常见的Apache、Nginx功能类似。线上通用做法是将静态资源放到CDN上，利用CDN就近访问来提高访问效率。实际开发环境，通过koa-static等模块能快速实现静态服务器功能。
+
+```js
+// koa-static实现静态服务器，static 是一个函数，需要传一个静态资源的路径进去
+const static = require('koa-static'); 
+const path = require('path');
+const Koa = require('koa');
+
+const app = new Koa();
+
+// 静态资源目录static 相对于 入口文件index.js的路径
+
+const staticPath = './static';
+
+// __dirname 是指 当前文件所在的目录
+app.use(static(path.join(__dirname, staticPath)))
+
+app.listen(4000, (err, res) => {
+    console.log("server is running, port is 4000");
+});
+```
 
 koa-static的做法是：
 - 判断请求的文件是否存在，如果存在读取文件返回；如果请求的文件不存在，默认返回当前路径下的index.html
@@ -566,6 +624,60 @@ app.use(router.routes()).use(router.allowedMethods())
 app.listen(3000)
   
 ```
+### 文件上传koa-body和koa-send
+- 后端逻辑
+```js
+const Koa = require('koa')
+const path = require('path')
+const fs = require('fs')
+const static = require('koa-static')
+const Router = require('koa-router')
+// koa文件上传用到的 中间件
+const koaBody = require('koa-body');
+// koa文件  下载 用到的 中间件
+const send = require('koa-send');
+
+const app = new Koa()
+const router = new Router()
+
+const staticPath = './static'
+
+app.use(koaBody({
+  multipart: true,
+  formidable: {
+    maxFileSize: 200 * 1024 * 1024	// 设置上传文件大小最大限制，默认2M
+  }
+}));
+
+// 静态服务器
+app.use(static(
+  path.join(__dirname, staticPath)
+))
+
+app.use(router.routes())
+
+router.post('/upload', async (ctx) => {
+  // 获取文件对象
+  const file = ctx.request.files.file
+  // 读取文件内容
+  const data = fs.readFileSync(file.path);
+  // 保存到服务端
+  fs.writeFileSync(path.join(__dirname, file.name), data);
+  ctx.body = { message: '上传成功！' };
+})
+
+
+router.get('/download/:name', async (ctx) => {
+  const name = ctx.params.name;
+  const path = `${name}`;
+  ctx.attachment(path);
+  await send(ctx, path);
+})
+
+app.listen(4000, () => {
+  console.log('server is running, port is 4000')
+})
+```
 # 在koa中发起请求（node-fetch和axios）
 ## node-fetch
 - [node-fetch](https://www.npmjs.com/package/node-fetch)
@@ -587,6 +699,37 @@ fetch('http://127.0.0.1:3000/users/post',
     }.then(function (json){
         console.log(json)
     }
+```
+- 前端上传文件例子
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>上传</title>
+</head>
+<body>
+   <input type="file" />
+   <button>点击上传</button>
+</body>
+<script>
+  document.querySelector('button').onclick = function () {
+  // 这里会获取一个 files 数组对象 因为是单文件上传取第一个即可
+  let file = document.querySelector('input').files[0];
+  let xhr = new XMLHttpRequest();
+  xhr.open('post', '/upload', true);
+  xhr.onload = function () {
+    let res = JSON.parse(xhr.responseText);
+    console.log(res);
+  }
+  
+  let form = new FormData();
+  form.append('file', file); // 对应 key value
+  xhr.send(form);
+}
+
+</script>
+</html>
 ```
 # API访问鉴权：JSON Web Tokens(JWT)
 
@@ -650,10 +793,152 @@ app.use(conditional());
 app.use(etag());
 ```
 
-### koa-session(会话session)
+## koa-session(会话session)
 
-1. koa-session + ioredis
-2. koa-generic-session + koa-redis(基于redis存储)
+### koa-session + ioredis
+- app.js入口文件
+```js
+const Koa = require('koa');
+const fs = require('fs');
+const Router = require('koa-router')
+const bodyParser = require('koa-bodyparser')
+const session = require('koa-session');
+const Store = require('./store')
+// shortid 工具生成id
+const shortid = require('shortid');
+const app = new Koa();
+const router = new Router()
+
+const redisConfig = {
+    redis: {
+        port: 6379,
+        host: '127.0.0.1',
+        password: '',
+    },
+};
+
+
+const sessionConfig = {
+    // cookie 键名
+    key: 'koa:session',
+    // 过期时间为一天
+    maxAge: 86400000,
+    // 不做签名
+    signed: false,
+    // 提供外部 Store
+    store: new Store(redisConfig),
+    // key 的生成函数
+    genid: () => shortid.generate(),
+};
+
+app.use(session(sessionConfig, app));
+app.use(bodyParser());
+app.use(router.routes());
+
+router.get('/', async (ctx) => {
+    ctx.set({ 'Content-Type': 'text/html' });
+    ctx.body = fs.readFileSync('./index.html');
+})
+
+// 当用户登录时，走这里
+router.post('/login', async (ctx) => {
+    const postData = ctx.request.body  // 获取用户的提交数据
+    if (ctx.session.usr) {
+        ctx.body = `欢迎, ${ctx.session.usr}`;
+    } else {
+        ctx.session = postData;
+        ctx.body = '您第一次登录系统';
+    }
+})
+
+app.listen(4000, () => {
+    console.log('server is running, port is 4000')
+})
+```
+- store.js
+```js
+// Node
+
+const Redis = require('ioredis');
+class RedisStore {
+    constructor(redisConfig) {
+        this.redis = new Redis(redisConfig);
+    }
+    // 获取
+    async get(key) {
+        const data = await this.redis.get(`SESSION:${key}`);
+        return JSON.parse(data);
+    }
+    // 设置
+    async set(key, sess, maxAge) {
+        await this.redis.set(
+            `SESSION:${key}`,
+            JSON.stringify(sess),
+            'EX',
+            maxAge / 1000
+        );
+    }
+    // 销毁
+    async destroy(key) {
+        return await this.redis.del(`SESSION:${key}`);
+    }
+}
+
+module.exports = RedisStore;
+```
+- 前端登录逻辑
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+</head>
+
+<body>
+    <div>
+        <label for="user">用户名：</label>
+        <input type="text" name="user" id="user">
+    </div>
+    <div>
+        <label for="psd">密码：</label>
+        <input type="password" name="psd" id="psd">
+    </div>
+    <button type="button" id="login">登录</button>
+    <h1 id="data"></h1>
+
+    <script>
+        const login = document.getElementById('login');
+        login.addEventListener('click', function (e) {
+            const usr = document.getElementById('user').value;
+            const psd = document.getElementById('psd').value;
+            if (!usr || !psd) {
+                return;
+            }
+            //采用 fetch 发起请求
+            const req = fetch('http://localhost:4000/login', {
+                method: 'post',
+                body: `usr=${usr}&psd=${psd}`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            req.then(stream =>
+                stream.text()
+            ).then(res => {
+                document.getElementById('data').innerText = res;
+            })
+        })
+
+    </script>
+</body>
+
+</html>
+```
+### koa-generic-session + koa-redis(基于redis存储)
 
 - 依赖Redis，因此需要先启动Redis服务器。
 - 通过ctx.session进行会话信息处理。
@@ -665,6 +950,11 @@ const session = require('koa-generic-session')
 const RedisStore = require('koa-redis')
 const app = new Koa()
 
+// app.env 默认是 NODE_ENV 或 "development"
+// app.proxyIpHeader 代理 ip 消息头, 默认为 X - Forwarded - For
+// app.maxIpsCount 从代理 ip 消息头读取的最大 ips, 默认为 0(代表无限)
+
+// app.keys 签名的 cookie 密钥数组
 app.keys = ['keys', 'keykeys'];
 //加入全局中间件
 app.use(session({   
@@ -690,6 +980,80 @@ switch (ctx, path){
 }
 app.listen (8080)
 ```
+### koa-session例子
+
+- 后端使用koa-session
+```js
+const Koa = require('koa');
+const fs = require('fs');
+const Router = require('koa-router');
+
+const bodyParser = require('koa-bodyparser');
+const session = require('koa-session');
+
+const app = new Koa();
+const router = new Router();
+
+const sessionConfig = {
+    // cookie 键名
+    key: 'koa:session',
+    // 过期时间为一天
+    maxAge: 86400000,  // maxAge: session 最大存活周期, 单位 ms, 默认一天。
+    // 不做签名
+    signed: false,     // signed: 默认 true, 会自动给cookie加上一个sha256的签名, 防止篡改和伪造 Cookie 。
+    // autoCommit: 默认 true, 自动将 session 及 sessionid 提交至 header 返回给客户端。 当触发 manuallyCommit 时失效。
+    // overwrite: 默认 true, 是否允许重写。
+    // httpOnly:  默认 true, 防止XSS攻击, 防止恶意脚本代码劫持 session。
+    // rolling: 默认 false, 每次响应刷新 session 有效期。
+    // renew: 默认 false, 在 session 过期时刷新有效期。
+    // secure: 默认 false, 只在 https 中传输。
+    // sameSite: 默认 null, 不设置
+    // store: new sessionStore(redis)，外部存储
+};
+
+
+// logger
+app.use(async (ctx, next) => {
+    await next();
+    // 响应时间
+    const rt = ctx.response.get('X-Response-Time');
+    console.log(`${ctx.method} ${ctx.url} - ${rt}`);
+});
+
+// x-response-time
+app.use(async (ctx, next) => {
+    const start = Date.now();
+    await next();
+    const ms = Date.now() - start;
+    ctx.set('X-Response-Time', `${ms}ms`);
+});
+
+app.use(session(sessionConfig, app));
+app.use(bodyParser())
+app.use(router.routes())
+
+router.get('/', async (ctx) => {
+    ctx.set({ 'Content-Type': 'text/html' });
+    ctx.body = fs.readFileSync('./index.html');
+})
+
+// 当用户登录时，走这里
+router.post('/login', async (ctx) => {
+    const postData = ctx.request.body  // 获取用户的提交数据
+    if (ctx.session.usr) {
+        ctx.body = `欢迎, ${ctx.session.usr}`;
+    } else {
+        ctx.session = postData;
+        ctx.body = '您第一次登录系统';
+    }
+})
+
+app.listen(4000, () => {
+    console.log('server is running, port is 4000')
+})
+
+```
+
 # log4js(日志处理)
 
 - [log4js](https://www.npmjs.com/package/log4js)

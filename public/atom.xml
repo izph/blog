@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-07-07T16:32:29.036Z</updated>
+  <updated>2022-07-25T14:33:42.286Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【React源码】React的设计理念</title>
+    <link href="http://example.com/2022/05/14/front_end/react-idea/"/>
+    <id>http://example.com/2022/05/14/front_end/react-idea/</id>
+    <published>2022-05-14T08:15:20.000Z</published>
+    <updated>2022-07-25T14:33:42.286Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;React简介&quot;&gt;&lt;a href=&quot;#React简介&quot; class=&quot;headerlink&quot; title=&quot;React简介&quot;&gt;&lt;/a&gt;React简介&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;React 是用 JavaScript 构建&lt;code&gt;快速响应&lt;/code&gt;的大</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
   
   <entry>
     <title>React+Mobx6.0</title>
@@ -67,7 +90,7 @@
     <link href="http://example.com/2022/02/21/front_end/koa-base/"/>
     <id>http://example.com/2022/02/21/front_end/koa-base/</id>
     <published>2022-02-20T19:35:10.000Z</published>
-    <updated>2022-07-07T17:33:06.281Z</updated>
+    <updated>2022-07-22T17:11:59.201Z</updated>
     
     
       
