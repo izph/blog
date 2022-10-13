@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-07-25T14:33:42.286Z</updated>
+  <updated>2022-10-13T14:29:22.658Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,143 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>【React源码】React Concurrent模式</title>
+    <link href="http://example.com/2022/09/11/front_end/react-concurrent/"/>
+    <id>http://example.com/2022/09/11/front_end/react-concurrent/</id>
+    <published>2022-09-10T22:32:08.000Z</published>
+    <updated>2022-10-13T14:29:22.658Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;React-Concurrent模式&quot;&gt;&lt;a href=&quot;#React-Concurrent模式&quot; class=&quot;headerlink&quot; title=&quot;React Concurrent模式&quot;&gt;&lt;/a&gt;React Concurrent模式&lt;/h1&gt;&lt;p&gt;日常开发主要</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React Hooks</title>
+    <link href="http://example.com/2022/08/26/front_end/react-hooks/"/>
+    <id>http://example.com/2022/08/26/front_end/react-hooks/</id>
+    <published>2022-08-25T20:12:49.000Z</published>
+    <updated>2022-10-13T14:22:47.708Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;React-Hooks&quot;&gt;&lt;a href=&quot;#React-Hooks&quot; class=&quot;headerlink&quot; title=&quot;React Hooks&quot;&gt;&lt;/a&gt;React Hooks&lt;/h1&gt;&lt;p&gt;functionComponent有自己对应的fiber，fiber</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React状态更新</title>
+    <link href="http://example.com/2022/08/12/front_end/react-updateState/"/>
+    <id>http://example.com/2022/08/12/front_end/react-updateState/</id>
+    <published>2022-08-11T21:55:32.000Z</published>
+    <updated>2022-10-13T14:20:30.022Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;状态更新的整个流程&quot;&gt;&lt;a href=&quot;#状态更新的整个流程&quot; class=&quot;headerlink&quot; title=&quot;状态更新的整个流程&quot;&gt;&lt;/a&gt;状态更新的整个流程&lt;/h1&gt;&lt;h2 id=&quot;更新&quot;&gt;&lt;a href=&quot;#更新&quot; class=&quot;headerlink&quot; </summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React diff算法</title>
+    <link href="http://example.com/2022/07/23/front_end/react-diff/"/>
+    <id>http://example.com/2022/07/23/front_end/react-diff/</id>
+    <published>2022-07-22T20:02:15.000Z</published>
+    <updated>2022-10-13T14:11:14.583Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;diff算法流程概览&quot;&gt;&lt;a href=&quot;#diff算法流程概览&quot; class=&quot;headerlink&quot; title=&quot;diff算法流程概览&quot;&gt;&lt;/a&gt;diff算法流程概览&lt;/h1&gt;&lt;p&gt;一个&lt;code&gt;DOM节点&lt;/code&gt;在某一时刻最多会有4个节点和他相关。</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React commit阶段</title>
+    <link href="http://example.com/2022/07/01/front_end/react-commit/"/>
+    <id>http://example.com/2022/07/01/front_end/react-commit/</id>
+    <published>2022-06-30T22:33:45.000Z</published>
+    <updated>2022-10-13T14:10:59.253Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;commit阶段&quot;&gt;&lt;a href=&quot;#commit阶段&quot; class=&quot;headerlink&quot; title=&quot;commit阶段&quot;&gt;&lt;/a&gt;commit阶段&lt;/h1&gt;&lt;p&gt;&lt;code&gt;commitRoot&lt;/code&gt;方法是&lt;code&gt;commit阶段&lt;/code</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React的render阶段</title>
+    <link href="http://example.com/2022/06/20/front_end/react-render/"/>
+    <id>http://example.com/2022/06/20/front_end/react-render/</id>
+    <published>2022-06-19T19:25:33.000Z</published>
+    <updated>2022-10-13T13:51:03.383Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;React架构&quot;&gt;&lt;a href=&quot;#React架构&quot; class=&quot;headerlink&quot; title=&quot;React架构&quot;&gt;&lt;/a&gt;React架构&lt;/h1&gt;&lt;h2 id=&quot;render阶段&quot;&gt;&lt;a href=&quot;#render阶段&quot; class=&quot;headerli</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
     <title>【React源码】React的设计理念</title>
     <link href="http://example.com/2022/05/14/front_end/react-idea/"/>
     <id>http://example.com/2022/05/14/front_end/react-idea/</id>
     <published>2022-05-14T08:15:20.000Z</published>
-    <updated>2022-07-25T14:33:42.286Z</updated>
+    <updated>2022-10-13T14:09:57.938Z</updated>
     
     
       
@@ -335,28 +467,6 @@
     
     
     <category term="面试" scheme="http://example.com/tags/%E9%9D%A2%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【计算机基础】常见数据结构与算法</title>
-    <link href="http://example.com/2020/05/22/computer_base/algorithm/"/>
-    <id>http://example.com/2020/05/22/computer_base/algorithm/</id>
-    <published>2020-05-22T10:35:29.000Z</published>
-    <updated>2022-07-10T03:54:50.471Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;常用的数据结构&quot;&gt;&lt;a href=&quot;#常用的数据结构&quot; class=&quot;headerlink&quot; title=&quot;常用的数据结构&quot;&gt;&lt;/a&gt;常用的数据结构&lt;/h1&gt;&lt;h2 id=&quot;字符串&quot;&gt;&lt;a href=&quot;#字符串&quot; class=&quot;headerlink&quot; title=</summary>
-      
-    
-    
-    
-    <category term="计算机基础" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
-    
-    
-    <category term="数据结构与算法" scheme="http://example.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   

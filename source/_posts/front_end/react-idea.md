@@ -265,6 +265,7 @@ workInProgressFiber.alternate === currentFiber;
 当首次调用ReactDOM.render时，会创建整个应用的根节点FiberRootNode，`FiberRootNode`方法就是创建整个FiberRootNode
 <img src="/images/front_end/react/first-render001.png">
 - createHostRootFiber
+
 - createFiber，它的参数tag为3由 createHostRootFiber中调用createFiber传入
 <img src="/images/front_end/react/first-render002.png">
 
@@ -283,12 +284,14 @@ workInProgressFiber.alternate === currentFiber;
 <img src="/images/front_end/react/first-render006.png">
 
 ## JSX
-
-JSX和Fiber节点是同一个东西么，它们的关系？
-React Component、React Element是同一个东西么，他们和JSX有什么关系？
+JSX用来描述React组件的内容，JSX的本质：JavsScript的语法扩展。
+- JSX和Fiber节点是同一个东西么，它们的关系？
+- React Component、React Element是同一个东西么，他们和JSX有什么关系？
 
 ### babel
-@babel/plugin-transform-react-jsx将jsx
+JSX语法是如何在JavaScript（或者浏览器）中生效的？JSX会被编译为 React.createElement()，React.createElement()将返回一个叫作“React Element”的JS对象。
+
+@babel/plugin-transform-react-jsx 将jsx 进行编译
 ```jsx
 // <div>1</div> 编译后
 React.createElement("div", null, "1");
@@ -297,9 +300,11 @@ React.createElement("div", null, "1");
 
 既然JSX会被编译为React.createElement，让我们看看他做了什么：
 ```js
+// type节点类型，config组件的属性
 export function createElement(type, config, children) {
+  // 用于存储后面需要用到的元素属性
   let propName;
-
+  // 用于存储元素属性的键值对集合
   const props = {};
   // 定义一些字段，key、ref是我们经常使用的
   let key = null; // 作为保留属性传递
