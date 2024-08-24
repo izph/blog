@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "vuepress dev . --open --host \"localhost\"",
     "start": "vuepress dev . --open --host \"localhost\"",
-    "build": "rimraf ./public && vuepress build .",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && rimraf ./public && vuepress build .",
     "clean": "rimraf ./public",
-    "bash": "npm run clean && bash deploy.sh"
+    "bash": "npm run clean && bash deploy.sh",
+    "deploy": "bash deploy.sh"
   },
   "devDependencies": {
     "vue-template-compiler": "^2.6.14",
