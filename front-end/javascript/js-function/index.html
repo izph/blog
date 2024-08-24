@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JS函数 | iZph</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico">
+    <meta name="description" content="Stick to your original intention and become a better self">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.764ab7ec.css" as="style"><link rel="preload" href="/blog/assets/js/app.aa1760e5.js" as="script"><link rel="preload" href="/blog/assets/js/3.a128813b.js" as="script"><link rel="preload" href="/blog/assets/js/1.78c2236b.js" as="script"><link rel="preload" href="/blog/assets/js/82.6610e142.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.fe554572.js"><link rel="prefetch" href="/blog/assets/js/100.a0a9312d.js"><link rel="prefetch" href="/blog/assets/js/101.845d6d9b.js"><link rel="prefetch" href="/blog/assets/js/102.18e79f7b.js"><link rel="prefetch" href="/blog/assets/js/103.4f8ba6da.js"><link rel="prefetch" href="/blog/assets/js/104.b36428c7.js"><link rel="prefetch" href="/blog/assets/js/105.69d74e9d.js"><link rel="prefetch" href="/blog/assets/js/106.d78d8774.js"><link rel="prefetch" href="/blog/assets/js/107.f5b659fe.js"><link rel="prefetch" href="/blog/assets/js/108.13be40d1.js"><link rel="prefetch" href="/blog/assets/js/109.31252cc2.js"><link rel="prefetch" href="/blog/assets/js/11.06981abc.js"><link rel="prefetch" href="/blog/assets/js/110.1868445f.js"><link rel="prefetch" href="/blog/assets/js/111.67399f15.js"><link rel="prefetch" href="/blog/assets/js/112.40ea2d79.js"><link rel="prefetch" href="/blog/assets/js/113.22adf8d4.js"><link rel="prefetch" href="/blog/assets/js/114.7e61b777.js"><link rel="prefetch" href="/blog/assets/js/12.83aab862.js"><link rel="prefetch" href="/blog/assets/js/13.a95f16fb.js"><link rel="prefetch" href="/blog/assets/js/14.cf8a7eac.js"><link rel="prefetch" href="/blog/assets/js/15.b94f3d6d.js"><link rel="prefetch" href="/blog/assets/js/16.64ec132f.js"><link rel="prefetch" href="/blog/assets/js/17.4f47c576.js"><link rel="prefetch" href="/blog/assets/js/18.0dcc6266.js"><link rel="prefetch" href="/blog/assets/js/19.5aa6102e.js"><link rel="prefetch" href="/blog/assets/js/20.e2bac719.js"><link rel="prefetch" href="/blog/assets/js/21.45416460.js"><link rel="prefetch" href="/blog/assets/js/22.143bf037.js"><link rel="prefetch" href="/blog/assets/js/23.98dca36c.js"><link rel="prefetch" href="/blog/assets/js/24.e854f905.js"><link rel="prefetch" href="/blog/assets/js/25.1e54fd62.js"><link rel="prefetch" href="/blog/assets/js/26.44a55b1d.js"><link rel="prefetch" href="/blog/assets/js/27.934d4182.js"><link rel="prefetch" href="/blog/assets/js/28.87ac3819.js"><link rel="prefetch" href="/blog/assets/js/29.71143d97.js"><link rel="prefetch" href="/blog/assets/js/30.a2166d91.js"><link rel="prefetch" href="/blog/assets/js/31.26bc048b.js"><link rel="prefetch" href="/blog/assets/js/32.dbaff1f3.js"><link rel="prefetch" href="/blog/assets/js/33.4bb9bc8a.js"><link rel="prefetch" href="/blog/assets/js/34.b1d5c66f.js"><link rel="prefetch" href="/blog/assets/js/35.ec0923ca.js"><link rel="prefetch" href="/blog/assets/js/36.28cbad44.js"><link rel="prefetch" href="/blog/assets/js/37.c83c4994.js"><link rel="prefetch" href="/blog/assets/js/38.642eec51.js"><link rel="prefetch" href="/blog/assets/js/39.380ddfcb.js"><link rel="prefetch" href="/blog/assets/js/4.edf1d754.js"><link rel="prefetch" href="/blog/assets/js/40.2731a35f.js"><link rel="prefetch" href="/blog/assets/js/41.e3fdcd10.js"><link rel="prefetch" href="/blog/assets/js/42.f0682353.js"><link rel="prefetch" href="/blog/assets/js/43.bd1bdc66.js"><link rel="prefetch" href="/blog/assets/js/44.7946aa5e.js"><link rel="prefetch" href="/blog/assets/js/45.f1603060.js"><link rel="prefetch" href="/blog/assets/js/46.040f3227.js"><link rel="prefetch" href="/blog/assets/js/47.ca5a7e81.js"><link rel="prefetch" href="/blog/assets/js/48.b12ccd36.js"><link rel="prefetch" href="/blog/assets/js/49.0244aff1.js"><link rel="prefetch" href="/blog/assets/js/5.de3e7804.js"><link rel="prefetch" href="/blog/assets/js/50.4be81f42.js"><link rel="prefetch" href="/blog/assets/js/51.822ac419.js"><link rel="prefetch" href="/blog/assets/js/52.c09840f9.js"><link rel="prefetch" href="/blog/assets/js/53.c4bddd02.js"><link rel="prefetch" href="/blog/assets/js/54.547a085d.js"><link rel="prefetch" href="/blog/assets/js/55.9b6fb73e.js"><link rel="prefetch" href="/blog/assets/js/56.5960f992.js"><link rel="prefetch" href="/blog/assets/js/57.d343dc7c.js"><link rel="prefetch" href="/blog/assets/js/58.031da4e7.js"><link rel="prefetch" href="/blog/assets/js/59.6185447f.js"><link rel="prefetch" href="/blog/assets/js/6.2a248493.js"><link rel="prefetch" href="/blog/assets/js/60.a741977a.js"><link rel="prefetch" href="/blog/assets/js/61.1306195a.js"><link rel="prefetch" href="/blog/assets/js/62.c6acd295.js"><link rel="prefetch" href="/blog/assets/js/63.782baf3e.js"><link rel="prefetch" href="/blog/assets/js/64.22909e1c.js"><link rel="prefetch" href="/blog/assets/js/65.5ba7c028.js"><link rel="prefetch" href="/blog/assets/js/66.5c912cfb.js"><link rel="prefetch" href="/blog/assets/js/67.9857099d.js"><link rel="prefetch" href="/blog/assets/js/68.cc9c5358.js"><link rel="prefetch" href="/blog/assets/js/69.d360162b.js"><link rel="prefetch" href="/blog/assets/js/7.ef3807f5.js"><link rel="prefetch" href="/blog/assets/js/70.52cba0ec.js"><link rel="prefetch" href="/blog/assets/js/71.3950598c.js"><link rel="prefetch" href="/blog/assets/js/72.d01e6ed5.js"><link rel="prefetch" href="/blog/assets/js/73.35f71a51.js"><link rel="prefetch" href="/blog/assets/js/74.20a68d2f.js"><link rel="prefetch" href="/blog/assets/js/75.37f69be6.js"><link rel="prefetch" href="/blog/assets/js/76.66464416.js"><link rel="prefetch" href="/blog/assets/js/77.4b55ff22.js"><link rel="prefetch" href="/blog/assets/js/78.a54a55f6.js"><link rel="prefetch" href="/blog/assets/js/79.4414b756.js"><link rel="prefetch" href="/blog/assets/js/8.b0003db7.js"><link rel="prefetch" href="/blog/assets/js/80.391d6d0d.js"><link rel="prefetch" href="/blog/assets/js/81.0ca571d9.js"><link rel="prefetch" href="/blog/assets/js/83.40f0d9ab.js"><link rel="prefetch" href="/blog/assets/js/84.c283ad6f.js"><link rel="prefetch" href="/blog/assets/js/85.bf59c91d.js"><link rel="prefetch" href="/blog/assets/js/86.fb3ac940.js"><link rel="prefetch" href="/blog/assets/js/87.f8e2ee92.js"><link rel="prefetch" href="/blog/assets/js/88.e01c8dba.js"><link rel="prefetch" href="/blog/assets/js/89.79e71ccd.js"><link rel="prefetch" href="/blog/assets/js/9.4147cd0c.js"><link rel="prefetch" href="/blog/assets/js/90.c2f7dfdf.js"><link rel="prefetch" href="/blog/assets/js/91.29c4b4d7.js"><link rel="prefetch" href="/blog/assets/js/92.e506b1c0.js"><link rel="prefetch" href="/blog/assets/js/93.150eda80.js"><link rel="prefetch" href="/blog/assets/js/94.f381e43d.js"><link rel="prefetch" href="/blog/assets/js/95.b2acad56.js"><link rel="prefetch" href="/blog/assets/js/96.32fab192.js"><link rel="prefetch" href="/blog/assets/js/97.9dcdd0a8.js"><link rel="prefetch" href="/blog/assets/js/98.ece9ceef.js"><link rel="prefetch" href="/blog/assets/js/99.8aaf90f5.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.764ab7ec.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-999d3bb4><div data-v-999d3bb4><div id="loader-wrapper" class="loading-wrapper" data-v-2c578df8 data-v-999d3bb4 data-v-999d3bb4><div class="loader-main" data-v-2c578df8><div data-v-2c578df8></div><div data-v-2c578df8></div><div data-v-2c578df8></div><div data-v-2c578df8></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-067bd032 data-v-999d3bb4 data-v-999d3bb4><h3 class="title" data-v-067bd032 data-v-067bd032>iZph</h3> <p class="description" data-v-067bd032 data-v-067bd032>Stick to your original intention and become a better self</p> <label id="box" class="inputBox" data-v-067bd032 data-v-067bd032><input type="password" value="" data-v-067bd032> <span data-v-067bd032>Konck! Knock!</span> <button data-v-067bd032>OK</button></label> <div class="footer" data-v-067bd032 data-v-067bd032><span data-v-067bd032><i class="iconfont reco-theme" data-v-067bd032></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-067bd032>vuePress-theme-reco</a></span> <span data-v-067bd032><i class="iconfont reco-copyright" data-v-067bd032></i> <a data-v-067bd032><span data-v-067bd032>iZph</span>
+            
+          <span data-v-067bd032>2020 - </span>
+          2024
+        </a></span></div></div> <div class="hide" data-v-999d3bb4><header class="navbar" data-v-999d3bb4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><img src="/blog/z.jpg" alt="iZph" class="logo"> <span class="site-name">iZph</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/html/01-html-note-01.html" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/css/01-css-note-01.html" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><h4>JavaScript</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/02-high-quality-code.html" class="nav-link"><i class="undefined"></i>
+  ECMAScript
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/dom/01-dom-note-01.html" class="nav-link"><i class="undefined"></i>
+  DOM
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/bom/01-bom-note-01.html" class="nav-link"><i class="undefined"></i>
+  BOM
+</a></li></ul></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/react/01-react-bascis.html" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/typescript/01-ts-basics.html" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      Node
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/node/node/01-observer-mode.html" class="nav-link"><i class="undefined"></i>
+  Node
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/node/koa/01-koa-basics.html" class="nav-link"><i class="undefined"></i>
+  Koa
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      工程化
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-network/01-http.html" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-basics/01-computer-operating-system.html" class="nav-link"><i class="undefined"></i>
+  计算机基础
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/browser/01-fe-browser-cache.html" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/webpack/01-webpack-notes-01.html" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/git/01-git-usage.html" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/sql/01-sql-basics.html" class="nav-link"><i class="undefined"></i>
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/performance/01-performance-optimization.html" class="nav-link"><i class="undefined"></i>
+  性能优化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/other/01-vscode-shortcutkey.html" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-document"></i>
+      算法
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/data-structure/01-complexity.html" class="nav-link"><i class="undefined"></i>
+  DataStructure
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/leetcode/02-string.html" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-coding"></i>
+      项目
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/project/yolo-ui/01-yolo-preface.html" class="nav-link"><i class="undefined"></i>
+  yolo-ui
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/project/md-to-html/01-handwritten-md-to-html.html" class="nav-link"><i class="undefined"></i>
+  md-to-html
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/categories/数据结构/" class="nav-link"><i class="undefined"></i>
+  数据结构
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/LeetCode/" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/浏览器/" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/工程化/" class="nav-link"><i class="undefined"></i>
+  工程化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/计算机网络/" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/git/" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/其他/" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/webpack/" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/CSS/" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/HTML/" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/JavaScript/" class="nav-link"><i class="undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/React/" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/TypeScript/" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/项目/" class="nav-link"><i class="undefined"></i>
+  项目
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      联系
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/izph" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-999d3bb4></div> <aside class="sidebar" data-v-999d3bb4><div class="personal-info-wrapper" data-v-e2878dae data-v-999d3bb4><img src="/blog/z.jpg" alt="author-avatar" class="personal-img" data-v-e2878dae> <h3 class="name" data-v-e2878dae>
+    iZph
+  </h3> <div class="num" data-v-e2878dae><div data-v-e2878dae><h3 data-v-e2878dae>104</h3> <h6 data-v-e2878dae>Articles</h6></div> <div data-v-e2878dae><h3 data-v-e2878dae>45</h3> <h6 data-v-e2878dae>Tags</h6></div></div> <ul class="social-links" data-v-e2878dae></ul> <hr data-v-e2878dae></div> <nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/html/01-html-note-01.html" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/css/01-css-note-01.html" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><h4>JavaScript</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/02-high-quality-code.html" class="nav-link"><i class="undefined"></i>
+  ECMAScript
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/dom/01-dom-note-01.html" class="nav-link"><i class="undefined"></i>
+  DOM
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/bom/01-bom-note-01.html" class="nav-link"><i class="undefined"></i>
+  BOM
+</a></li></ul></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/react/01-react-bascis.html" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/typescript/01-ts-basics.html" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      Node
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/node/node/01-observer-mode.html" class="nav-link"><i class="undefined"></i>
+  Node
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/node/koa/01-koa-basics.html" class="nav-link"><i class="undefined"></i>
+  Koa
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      工程化
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-network/01-http.html" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-basics/01-computer-operating-system.html" class="nav-link"><i class="undefined"></i>
+  计算机基础
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/browser/01-fe-browser-cache.html" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/webpack/01-webpack-notes-01.html" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/git/01-git-usage.html" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/sql/01-sql-basics.html" class="nav-link"><i class="undefined"></i>
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/performance/01-performance-optimization.html" class="nav-link"><i class="undefined"></i>
+  性能优化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/other/01-vscode-shortcutkey.html" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-document"></i>
+      算法
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/data-structure/01-complexity.html" class="nav-link"><i class="undefined"></i>
+  DataStructure
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/leetcode/02-string.html" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-coding"></i>
+      项目
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/project/yolo-ui/01-yolo-preface.html" class="nav-link"><i class="undefined"></i>
+  yolo-ui
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/project/md-to-html/01-handwritten-md-to-html.html" class="nav-link"><i class="undefined"></i>
+  md-to-html
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/categories/数据结构/" class="nav-link"><i class="undefined"></i>
+  数据结构
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/LeetCode/" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/浏览器/" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/工程化/" class="nav-link"><i class="undefined"></i>
+  工程化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/计算机网络/" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/git/" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/其他/" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/webpack/" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/CSS/" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/HTML/" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/JavaScript/" class="nav-link"><i class="undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/React/" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/TypeScript/" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/项目/" class="nav-link"><i class="undefined"></i>
+  项目
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      联系
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/izph" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav> <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Javascript</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/front-end/javascript/v8-note/" class="sidebar-link">初识V8底层</a></li><li><a href="/blog/front-end/javascript/high-quality-code/" class="sidebar-link">写出高质量的JS代码</a></li><li><a href="/blog/front-end/javascript/es6-note/" class="sidebar-link">ES6速记</a></li><li><a href="/blog/front-end/javascript/js-basic-norms/" class="sidebar-link">写JavaScript基本规范</a></li><li><a href="/blog/front-end/javascript/js-basic/" class="sidebar-link">易忘的JavaScript基础</a></li><li><a href="/blog/front-end/javascript/js-function/" aria-current="page" class="active sidebar-link">JS函数</a></li><li><a href="/blog/front-end/javascript/object-data-properties/" class="sidebar-link">Object的数据属性</a></li><li><a href="/blog/front-end/javascript/js-error-type/" class="sidebar-link">JavaScript中常见的错误类型</a></li><li><a href="/blog/front-end/javascript/js-string/" class="sidebar-link">JavaScript字符串（笔记）</a></li><li><a href="/blog/front-end/javascript/js-custom-event/" class="sidebar-link">JavaScript自定义事件</a></li><li><a href="/blog/front-end/javascript/window-note/" class="sidebar-link">Window 笔记</a></li><li><a href="/blog/front-end/javascript/eventLoop/" class="sidebar-link">EventLoop事件循环(长话短说)</a></li><li><a href="/blog/front-end/javascript/js-decorator/" class="sidebar-link">JavaScript装饰器</a></li><li><a href="/blog/front-end/javascript/js-handwritten-01/" class="sidebar-link">JavaScript手写（一）</a></li><li><a href="/blog/front-end/javascript/js-handwritten-02/" class="sidebar-link">JavaScript手写（二）</a></li><li><a href="/blog/front-end/javascript/js-toString-valueOf/" class="sidebar-link">简要分析toString和valueOf</a></li><li><a href="/blog/front-end/javascript/js-interview/" class="sidebar-link">JavaScript面试</a></li><li><a href="/blog/front-end/javascript/transform-between-tree-list/" class="sidebar-link">JavaScript树形结构转化（笔记）</a></li><li><a href="/blog/front-end/javascript/websocket-usage/" class="sidebar-link">简述WebSocket的使用</a></li><li><a href="/blog/front-end/javascript/js-garbage-collection/" class="sidebar-link">简述JS垃圾回收</a></li><li><a href="/blog/front-end/javascript/routing-principle/" class="sidebar-link">前端路由原理</a></li><li><a href="/blog/front-end/javascript/js-event-flow/" class="sidebar-link">事件流</a></li><li><a href="/blog/front-end/javascript/array-method-encapsulation/" class="sidebar-link">数组方法</a></li><li><a href="/blog/front-end/javascript/js-async-task-scheduler/" class="sidebar-link">JavaScript异步任务调度器</a></li><li><a href="/blog/front-end/javascript/promise-note/" class="sidebar-link">Promise</a></li><li><a href="/blog/front-end/javascript/mobile-click-delay/" class="sidebar-link">移动端点击事件延迟300ms的问题</a></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-067bd032 data-v-999d3bb4><h3 class="title" data-v-067bd032 data-v-067bd032>JS函数</h3> <!----> <label id="box" class="inputBox" data-v-067bd032 data-v-067bd032><input type="password" value="" data-v-067bd032> <span data-v-067bd032>Konck! Knock!</span> <button data-v-067bd032>OK</button></label> <div class="footer" data-v-067bd032 data-v-067bd032><span data-v-067bd032><i class="iconfont reco-theme" data-v-067bd032></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-067bd032>vuePress-theme-reco</a></span> <span data-v-067bd032><i class="iconfont reco-copyright" data-v-067bd032></i> <a data-v-067bd032><span data-v-067bd032>iZph</span>
+            
+          <span data-v-067bd032>2020 - </span>
+          2024
+        </a></span></div></div> <div data-v-999d3bb4><main class="page"><section><div class="page-title"><h1 class="title">JS函数</h1> <div data-v-10e19382><i class="iconfont reco-account" data-v-10e19382><span data-v-10e19382>iZph</span></i> <i class="iconfont reco-date" data-v-10e19382><span data-v-10e19382>9/19/2020</span></i> <!----> <i class="tags iconfont reco-tag" data-v-10e19382><span class="tag-item" data-v-10e19382>前端</span><span class="tag-item" data-v-10e19382>JavaScript</span></i></div></div> <div class="theme-reco-content content__default"><h1 id="记录我所了解的js函数"><a href="#记录我所了解的js函数" class="header-anchor">#</a> 记录我所了解的JS函数</h1> <h2 id="_1-javascript函数内置的部分属性"><a href="#_1-javascript函数内置的部分属性" class="header-anchor">#</a> 1. JavaScript函数内置的部分属性</h2> <p>JavaScript函数内置了一部分属性，如name为函数名，length为函数参数长度，caller则表示调用函数的对象，即函数的执行环境，如果函数的执行环境为window，则返回null。</p> <h2 id="_2-函数的声明-function-a-和-函数表达式-普通函数没有写返回值-默认返回undefined"><a href="#_2-函数的声明-function-a-和-函数表达式-普通函数没有写返回值-默认返回undefined" class="header-anchor">#</a> 2. 函数的声明(function a(){}) 和 函数表达式，普通函数没有写返回值，默认返回undefined</h2> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 这是一个匿名函数，内部可以调用test_inner()</span>
+<span class="token keyword">var</span> <span class="token function-variable function">test</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">test_inner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	<span class="token function">test_inner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 外部调用，引用报错Uncaught ReferenceError：test_inner is not define</span>
+<span class="token function">test_inner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+<span class="token comment">// 函数字面量，匿名函数表达式，一个匿名函数</span>
+<span class="token keyword">var</span> <span class="token function-variable function">test</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment">// test是一个变量名</span>
+  
+<span class="token comment">// 箭头函数也是一个匿名函数，test是一个变量名</span>
+<span class="token keyword">var</span> <span class="token function-variable function">test</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h3 id="_3-函数表达式变量提升-和-普通变量声明一样-var"><a href="#_3-函数表达式变量提升-和-普通变量声明一样-var" class="header-anchor">#</a> 3. 函数表达式变量提升 和 普通变量声明一样(var)</h3> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token function">helper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 报错</span>
+<span class="token keyword">var</span> <span class="token function-variable function">helper</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// GO &amp; AO 作用域</span>
+<span class="token comment">// var helper; </span>
+<span class="token comment">// helper(); // 此时的 helper 是undefined  所以报错</span>
+<span class="token comment">// helper = function() {</span>
+<span class="token comment">//     console.log(1);</span>
+<span class="token comment">//}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h3 id="_4-同名的两个函数声明-后面覆盖前面-同名的函数和变量声明-函数声明优先"><a href="#_4-同名的两个函数声明-后面覆盖前面-同名的函数和变量声明-函数声明优先" class="header-anchor">#</a> 4. 同名的两个函数声明，后面覆盖前面，同名的函数和变量声明，函数声明优先</h3> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">// 最后的声明为函数声明， 因此a此时为函数体，打印函数a</span>
+<span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 执行 a 函数，输出10</span>
+<span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token comment">// 3 赋给a</span>
+<span class="token keyword">function</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">// 3</span>
+a <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span> <span class="token comment">// 6赋给a，不是一个函数，故下方执行throw error</span>
+<span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// throw error</span>
+
+
+<span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'foo1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// foo2</span>
+
+<span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'foo2'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// foo2</span>
+<span class="token comment">// 打印的结果却是两个 foo2，同名的两个函数声明，后面覆盖前面</span>
+<span class="token comment">// foo()调用了两次</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token parameter">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">function</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> <span class="token function-variable function">b</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> 
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 结果解释</span>
+f <span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment">// 传入2给参数a，但是由于函数和变量的提升，改变了参数a的值，函数和变量提升同名时，函数优先</span>
+<span class="token number">1</span>
+<span class="token number">1</span>
+<span class="token function">f</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>  <span class="token comment">// 为什么是匿名函数？ var b = function(){}，函数字面量就是一个匿名函数</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h2 id="记录函数被调用的次数"><a href="#记录函数被调用的次数" class="header-anchor">#</a> 记录函数被调用的次数</h2> <p>给函数定义一个count属性，用来跟踪函数的调用次数</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 1、 函数属性计数</span>
+<span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;Hi&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 计算调用次数</span>
+  test<span class="token punctuation">.</span>count<span class="token operator">++</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+test<span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment">// 初始值</span>
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Hi</span>
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Hi</span>
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Hi</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>test<span class="token punctuation">.</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 3</span>
+
+
+<span class="token comment">// 2、 闭包</span>
+<span class="token keyword">function</span> <span class="token function">makeCounter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">function</span> <span class="token function">counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    counter<span class="token punctuation">.</span>count<span class="token operator">++</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  counter<span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> counter<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">let</span> counter <span class="token operator">=</span> <span class="token function">makeCounter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>counter<span class="token punctuation">.</span>count<span class="token punctuation">)</span> <span class="token comment">// 3</span>
+
+
+<span class="token comment">// 属性是绑定到函数的，很容易访问到这个属性</span>
+counter<span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>       <span class="token comment">// 将 count 设置为 10</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 输出10  加完之后就是11</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br></div></div><h2 id="构造函数"><a href="#构造函数" class="header-anchor">#</a> 构造函数</h2> <h3 id="_1、new构造函数时会发生下面这几步"><a href="#_1、new构造函数时会发生下面这几步" class="header-anchor">#</a> 1、new构造函数时会发生下面这几步</h3> <ol><li>首先创建一个新对象，这个新对象的__proto__属性指向构造函数的prototype属性</li> <li>此时构造函数执行环境的this指向这个新对象</li> <li>执行构造函数中的代码，一般是通过this给新对象添加新的成员属性或方法。</li> <li>最后返回这个新对象。</li></ol> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">Test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token class-name">__proto__</span><span class="token punctuation">.</span>constructor <span class="token operator">===</span> Test<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'izph'</span><span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> <span class="token number">18</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// Chrome控制台会输出以下内容</span>
+<span class="token comment">// {}</span>
+<span class="token comment">// true</span>
+<span class="token comment">// {&quot;name&quot;: &quot;izph&quot;,&quot;age&quot;: 18}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><h3 id="_2、实现一个new"><a href="#_2、实现一个new" class="header-anchor">#</a> 2、实现一个new</h3> <p>实现一个new也就意味着不能用new关键字，那么要完成这么一系列步骤，当然是通过函数实现了</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// func是构造函数，...args是需要传给构造函数的参数</span>
+<span class="token keyword">function</span> <span class="token function">myNew</span><span class="token punctuation">(</span><span class="token parameter">func<span class="token punctuation">,</span> <span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  	<span class="token comment">// 创建一个空对象，并且指定原型为func.prototype</span>
+    <span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    obj<span class="token punctuation">.</span>__proto__ <span class="token operator">=</span> func<span class="token punctuation">.</span>prototype<span class="token punctuation">;</span>
+  	<span class="token comment">// new构造函数时要执行函数，同时指定this</span>
+    <span class="token function">func</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> <span class="token operator">...</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token comment">// 最后return这个对象</span>
+    <span class="token keyword">return</span> obj<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// func是构造函数，...args是需要传给构造函数的参数</span>
+<span class="token keyword">function</span> <span class="token function">myNew</span><span class="token punctuation">(</span><span class="token parameter">func<span class="token punctuation">,</span> <span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 创建一个空对象，并且指定原型为func.prototype</span>
+  <span class="token keyword">var</span> obj <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>func<span class="token punctuation">.</span>prototype<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// new构造函数时要执行函数，同时指定this</span>
+  <span class="token comment">// 添加属性到新创建的obj上, 并获取obj函数执行的结果.</span>
+  <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">func</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> <span class="token operator">...</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 如果执行结果有返回值并且是一个对象, 返回执行的结果, 否则, 返回新创建的对象</span>
+  <span class="token keyword">return</span> <span class="token keyword">typeof</span> result <span class="token operator">===</span> <span class="token string">'object'</span> <span class="token operator">?</span> result <span class="token operator">:</span> newObj<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 验证myNew</span>
+<span class="token keyword">function</span> <span class="token function">Test</span><span class="token punctuation">(</span><span class="token parameter">name<span class="token punctuation">,</span> age</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">myNew</span><span class="token punctuation">(</span>Test<span class="token punctuation">,</span> <span class="token string">'小明'</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// Chrome控制台会输出以下内容</span>
+<span class="token comment">// Test {name: &quot;小明&quot;, age: 18}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">//  new 构造函数版</span>
+<span class="token keyword">function</span> <span class="token function">Car</span><span class="token punctuation">(</span><span class="token parameter">color<span class="token punctuation">,</span> brand</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token comment">// new 的时候, </span>
+  	<span class="token comment">// this:{</span>
+		<span class="token comment">// 		__proto__: Car.prototype</span>
+		<span class="token comment">// }</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>color <span class="token operator">=</span> color<span class="token punctuation">;</span>
+  	<span class="token keyword">this</span><span class="token punctuation">.</span>brand <span class="token operator">=</span> brand<span class="token punctuation">;</span>
+  	<span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+  	<span class="token comment">// return this;</span>
+    <span class="token comment">// 当我们return一个普通类型数据时，不会影响结果，依然会返回new出来的这个新对象。返回原始类型不生效</span>
+  	<span class="token comment">// return的是引用类型的时候，会返回这个引用类型，如{}, [], function(){}</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">Car</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token number">200</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> car <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Car</span><span class="token punctuation">(</span><span class="token string">&quot;red&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;宝马&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>car<span class="token punctuation">.</span>value<span class="token punctuation">)</span> <span class="token comment">// 100, car实例查找的顺序是 构造函数 -&gt; 构造函数的原型, </span>
+<span class="token comment">// 如果构造函数没有，则通过car.__proto__属性(Car.prototype)去原型对象查找！！！</span>
+<span class="token comment">// __proto__只是一个属性，用来指向原型对象，只在浏览器中使用</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>car<span class="token punctuation">.</span>__proto__<span class="token punctuation">.</span>value<span class="token punctuation">)</span> <span class="token comment">// 200， car.__proto__指向 Car.prototype</span>
+
+<span class="token keyword">delete</span> car<span class="token punctuation">.</span>value<span class="token punctuation">;</span>  <span class="token comment">// 只能删除实例 构造函数Car的value，Car.prototype原型对象上的无法删除</span>
+car<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token number">300</span><span class="token punctuation">;</span> <span class="token comment">// 只能修改构造函数Car的value，Car.prototype原型对象上的无法修改</span>
+<span class="token class-name">Car</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token punctuation">{</span>
+		<span class="token literal-property property">constructor</span><span class="token operator">:</span> Car<span class="token punctuation">,</span>
+  	<span class="token operator">...</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 如果是 实例化car2 之后 再 修改 Car.prototype</span>
+<span class="token comment">// 此时 car2的__proto__属性存的是没修改之前的:{ time: 3}</span>
+<span class="token class-name">Car</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>time <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> car2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Car</span><span class="token punctuation">(</span><span class="token string">&quot;black&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;奥迪&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Car</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token punctuation">{</span>  <span class="token comment">// 重写</span>
+		<span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">4</span>
+<span class="token punctuation">}</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>car2<span class="token punctuation">.</span>time<span class="token punctuation">)</span> <span class="token comment">// 3, 也就是说 new实例化对象的时候  就指定了</span>
+<span class="token comment">// __proto__:{</span>
+<span class="token comment">// 	time: 3,</span>
+<span class="token comment">//   constructor: Car</span>
+<span class="token comment">// }, 之后修改不受影响</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br></div></div><h2 id="构造函数的继承"><a href="#构造函数的继承" class="header-anchor">#</a> 构造函数的继承</h2> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 原型继承</span>
+<span class="token comment">// 说明：将子类的原型挂载到父类上；</span>
+<span class="token comment">// 优点： 父类构造函数和原型上的 方法可以复用</span>
+<span class="token comment">// 缺点：1. 子类 new 出来的实例，父类的所有引用属性会被所有子类共享，更改一个子类的引用属性，其他子类会受影响.</span>
+<span class="token comment">//      父类的基本数据类型 也会被共享， 但是 更改一个子类的基本数据属性，其他子类  不受影响</span>
+<span class="token comment">//  2.子类型实例不能给父类型构造函数传参</span>
+<span class="token keyword">function</span> <span class="token function">Parent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>isShow <span class="token operator">=</span> <span class="token boolean">true</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>info <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;yhd&quot;</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">age</span><span class="token operator">:</span> <span class="token number">18</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">Parent</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">getInfo</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>info<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>isShow<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">Child</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token class-name">Child</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Parent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> Child1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Child</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Child1<span class="token punctuation">.</span>info<span class="token punctuation">.</span>gender <span class="token operator">=</span> <span class="token string">&quot;男&quot;</span><span class="token punctuation">;</span>
+Child1<span class="token punctuation">.</span><span class="token function">getInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// {name: &quot;yhd&quot;, age: 18, gender: &quot;男&quot;}</span>
+<span class="token keyword">let</span> child2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Child</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+child2<span class="token punctuation">.</span><span class="token function">getInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// {name: &quot;yhd&quot;, age: 18, gender: &quot;男&quot;}</span>
+child2<span class="token punctuation">.</span>isShow <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>child1<span class="token punctuation">.</span>isShow<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>child2<span class="token punctuation">.</span>isShow<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// false</span>
+<span class="token comment">// 构造函数继承（call&amp;apply）</span>
+<span class="token comment">// 说明：直接利用call或者apply方法将父类构造函数的this绑定为子类构造函数的this就可以；</span>
+<span class="token comment">// 优点： 可以在子类构造函数中向父类传参数， 父类的引用属性不会被共享。修改子类的引用属性，其他子类不影响</span>
+<span class="token comment">// 缺点：无法继承  父类 原型链上的属性与方法（不能访问Parent2.prototype上定义的方法）；只能继承父类构函数的属性</span>
+<span class="token keyword">function</span> <span class="token function">Parent2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'parent2'</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">Parent2</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">say</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">Child2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">Parent2</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>  <span class="token comment">// 构造函数继承核心代码</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">let</span> c2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Child2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>c2<span class="token punctuation">)</span>
+<span class="token comment">// 父类的方法可以复用</span>
+<span class="token comment">// 可以在Child构造函数中向Parent构造函数中传参</span>
+<span class="token comment">// 父类构造函数中的引用属性不会被共享</span>
+
+<span class="token comment">// 组合继承</span>
+<span class="token comment">// 父类的方法可以复用</span>
+<span class="token comment">// 可以在Child构造函数中向Parent构造函数中传参</span>
+<span class="token comment">// 父类构造函数中的引用属性不会被共享</span>
+<span class="token keyword">function</span> <span class="token function">Parent3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'parent3'</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">Parent3</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">say</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">Child3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">Parent3</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">Child3</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Parent3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Child3</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> Child3<span class="token punctuation">;</span>
+
+
+<span class="token comment">// 4 寄生组合继承</span>
+<span class="token comment">// 说明：解决组合继承重复属性的问题，直接将子类的原型等于父类的原型，或者是用Object.create继承原型但不执行父类构造函数；</span>
+<span class="token comment">// 注意处理子类实例的 constructor 指向问题，new Parent1()也有这个问题；</span>
+
+<span class="token comment">// 优点：</span>
+
+<span class="token comment">// 只调用一次父类构造函数</span>
+<span class="token comment">// Child可以向Parent传参</span>
+<span class="token comment">// 父类方法可以复用</span>
+<span class="token comment">// 父类的引用属性不会被共享</span>
+<span class="token comment">// 寄生式组合继承可以算是引用类型继承的最佳模式</span>
+<span class="token keyword">function</span> <span class="token function">Parent4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'parent4'</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">Parent4</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">say</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">Child4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">Parent4</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//父类的显示原型  赋值给 子类的显示原型</span>
+<span class="token comment">// 或 Child4.prototype = Object.create(Parent4.prototype)</span>
+<span class="token class-name">Child4</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token class-name">Parent4</span><span class="token punctuation">.</span>prototype<span class="token punctuation">;</span>
+<span class="token comment">// Child4.prototype.test = 'test'; //缺陷： Parent4.prototype 也会被修改</span>
+<span class="token comment">// 解决: 定义一个中间的构造函数，将这个 构造函数的实例 赋值给 Child4.prototype</span>
+
+<span class="token comment">//修复重写子类原型导致子类constructor属性被修改</span>
+<span class="token class-name">Child4</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> Child4<span class="token punctuation">;</span>
+<span class="token keyword">let</span> child4_1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Child4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> child4_2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Child4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ES6</span>
+<span class="token keyword">class</span> <span class="token class-name">Parent5</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Parent5'</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">Child5</span> <span class="token keyword">extends</span> <span class="token class-name">Parent5</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//通过super()调用父类构造函数</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token string">&quot;Child5&quot;</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br></div></div></div></section> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">5/14/2022, 10:37:34 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev"><a href="/blog/front-end/javascript/js-basic/" class="prev">
+            易忘的JavaScript基础
+          </a></span> <span class="next"><a href="/blog/front-end/javascript/object-data-properties/">
+            Object的数据属性
+          </a></span></p></div> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-92abcef6><li class="level-2" data-v-92abcef6><a href="/blog/front-end/javascript/js-function/#_1-javascript函数内置的部分属性" class="sidebar-link reco-side-_1-javascript函数内置的部分属性" data-v-92abcef6>1. JavaScript函数内置的部分属性</a></li><li class="level-2" data-v-92abcef6><a href="/blog/front-end/javascript/js-function/#_2-函数的声明-function-a-和-函数表达式-普通函数没有写返回值-默认返回undefined" class="sidebar-link reco-side-_2-函数的声明-function-a-和-函数表达式-普通函数没有写返回值-默认返回undefined" data-v-92abcef6>2. 函数的声明(function a(){}) 和 函数表达式，普通函数没有写返回值，默认返回undefined</a></li><li class="level-3" data-v-92abcef6><a href="/blog/front-end/javascript/js-function/#_3-函数表达式变量提升-和-普通变量声明一样-var" class="sidebar-link reco-side-_3-函数表达式变量提升-和-普通变量声明一样-var" data-v-92abcef6>3. 函数表达式变量提升 和 普通变量声明一样(var)</a></li><li class="level-3" data-v-92abcef6><a href="/blog/front-end/javascript/js-function/#_4-同名的两个函数声明-后面覆盖前面-同名的函数和变量声明-函数声明优先" class="sidebar-link reco-side-_4-同名的两个函数声明-后面覆盖前面-同名的函数和变量声明-函数声明优先" data-v-92abcef6>4. 同名的两个函数声明，后面覆盖前面，同名的函数和变量声明，函数声明优先</a></li><li class="level-2" data-v-92abcef6><a href="/blog/front-end/javascript/js-function/#记录函数被调用的次数" class="sidebar-link reco-side-记录函数被调用的次数" data-v-92abcef6>记录函数被调用的次数</a></li><li class="level-2" data-v-92abcef6><a href="/blog/front-end/javascript/js-function/#构造函数" class="sidebar-link reco-side-构造函数" data-v-92abcef6>构造函数</a></li><li class="level-3" data-v-92abcef6><a href="/blog/front-end/javascript/js-function/#_1、new构造函数时会发生下面这几步" class="sidebar-link reco-side-_1、new构造函数时会发生下面这几步" data-v-92abcef6>1、new构造函数时会发生下面这几步</a></li><li class="level-3" data-v-92abcef6><a href="/blog/front-end/javascript/js-function/#_2、实现一个new" class="sidebar-link reco-side-_2、实现一个new" data-v-92abcef6>2、实现一个new</a></li><li class="level-2" data-v-92abcef6><a href="/blog/front-end/javascript/js-function/#构造函数的继承" class="sidebar-link reco-side-构造函数的继承" data-v-92abcef6>构造函数的继承</a></li></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-a008c6ba data-v-a008c6ba><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-a008c6ba><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-a008c6ba></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-a008c6ba></path></svg></div></div></div>
+    <script src="/blog/assets/js/app.aa1760e5.js" defer></script><script src="/blog/assets/js/3.a128813b.js" defer></script><script src="/blog/assets/js/1.78c2236b.js" defer></script><script src="/blog/assets/js/82.6610e142.js" defer></script>
+  </body>
+</html>

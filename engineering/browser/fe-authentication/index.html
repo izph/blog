@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>前端鉴权笔记 | iZph</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico">
+    <meta name="description" content="Stick to your original intention and become a better self">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.764ab7ec.css" as="style"><link rel="preload" href="/blog/assets/js/app.aa1760e5.js" as="script"><link rel="preload" href="/blog/assets/js/3.a128813b.js" as="script"><link rel="preload" href="/blog/assets/js/1.78c2236b.js" as="script"><link rel="preload" href="/blog/assets/js/17.4f47c576.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.fe554572.js"><link rel="prefetch" href="/blog/assets/js/100.a0a9312d.js"><link rel="prefetch" href="/blog/assets/js/101.845d6d9b.js"><link rel="prefetch" href="/blog/assets/js/102.18e79f7b.js"><link rel="prefetch" href="/blog/assets/js/103.4f8ba6da.js"><link rel="prefetch" href="/blog/assets/js/104.b36428c7.js"><link rel="prefetch" href="/blog/assets/js/105.69d74e9d.js"><link rel="prefetch" href="/blog/assets/js/106.d78d8774.js"><link rel="prefetch" href="/blog/assets/js/107.f5b659fe.js"><link rel="prefetch" href="/blog/assets/js/108.13be40d1.js"><link rel="prefetch" href="/blog/assets/js/109.31252cc2.js"><link rel="prefetch" href="/blog/assets/js/11.06981abc.js"><link rel="prefetch" href="/blog/assets/js/110.1868445f.js"><link rel="prefetch" href="/blog/assets/js/111.67399f15.js"><link rel="prefetch" href="/blog/assets/js/112.40ea2d79.js"><link rel="prefetch" href="/blog/assets/js/113.22adf8d4.js"><link rel="prefetch" href="/blog/assets/js/114.7e61b777.js"><link rel="prefetch" href="/blog/assets/js/12.83aab862.js"><link rel="prefetch" href="/blog/assets/js/13.a95f16fb.js"><link rel="prefetch" href="/blog/assets/js/14.cf8a7eac.js"><link rel="prefetch" href="/blog/assets/js/15.b94f3d6d.js"><link rel="prefetch" href="/blog/assets/js/16.64ec132f.js"><link rel="prefetch" href="/blog/assets/js/18.0dcc6266.js"><link rel="prefetch" href="/blog/assets/js/19.5aa6102e.js"><link rel="prefetch" href="/blog/assets/js/20.e2bac719.js"><link rel="prefetch" href="/blog/assets/js/21.45416460.js"><link rel="prefetch" href="/blog/assets/js/22.143bf037.js"><link rel="prefetch" href="/blog/assets/js/23.98dca36c.js"><link rel="prefetch" href="/blog/assets/js/24.e854f905.js"><link rel="prefetch" href="/blog/assets/js/25.1e54fd62.js"><link rel="prefetch" href="/blog/assets/js/26.44a55b1d.js"><link rel="prefetch" href="/blog/assets/js/27.934d4182.js"><link rel="prefetch" href="/blog/assets/js/28.87ac3819.js"><link rel="prefetch" href="/blog/assets/js/29.71143d97.js"><link rel="prefetch" href="/blog/assets/js/30.a2166d91.js"><link rel="prefetch" href="/blog/assets/js/31.26bc048b.js"><link rel="prefetch" href="/blog/assets/js/32.dbaff1f3.js"><link rel="prefetch" href="/blog/assets/js/33.4bb9bc8a.js"><link rel="prefetch" href="/blog/assets/js/34.b1d5c66f.js"><link rel="prefetch" href="/blog/assets/js/35.ec0923ca.js"><link rel="prefetch" href="/blog/assets/js/36.28cbad44.js"><link rel="prefetch" href="/blog/assets/js/37.c83c4994.js"><link rel="prefetch" href="/blog/assets/js/38.642eec51.js"><link rel="prefetch" href="/blog/assets/js/39.380ddfcb.js"><link rel="prefetch" href="/blog/assets/js/4.edf1d754.js"><link rel="prefetch" href="/blog/assets/js/40.2731a35f.js"><link rel="prefetch" href="/blog/assets/js/41.e3fdcd10.js"><link rel="prefetch" href="/blog/assets/js/42.f0682353.js"><link rel="prefetch" href="/blog/assets/js/43.bd1bdc66.js"><link rel="prefetch" href="/blog/assets/js/44.7946aa5e.js"><link rel="prefetch" href="/blog/assets/js/45.f1603060.js"><link rel="prefetch" href="/blog/assets/js/46.040f3227.js"><link rel="prefetch" href="/blog/assets/js/47.ca5a7e81.js"><link rel="prefetch" href="/blog/assets/js/48.b12ccd36.js"><link rel="prefetch" href="/blog/assets/js/49.0244aff1.js"><link rel="prefetch" href="/blog/assets/js/5.de3e7804.js"><link rel="prefetch" href="/blog/assets/js/50.4be81f42.js"><link rel="prefetch" href="/blog/assets/js/51.822ac419.js"><link rel="prefetch" href="/blog/assets/js/52.c09840f9.js"><link rel="prefetch" href="/blog/assets/js/53.c4bddd02.js"><link rel="prefetch" href="/blog/assets/js/54.547a085d.js"><link rel="prefetch" href="/blog/assets/js/55.9b6fb73e.js"><link rel="prefetch" href="/blog/assets/js/56.5960f992.js"><link rel="prefetch" href="/blog/assets/js/57.d343dc7c.js"><link rel="prefetch" href="/blog/assets/js/58.031da4e7.js"><link rel="prefetch" href="/blog/assets/js/59.6185447f.js"><link rel="prefetch" href="/blog/assets/js/6.2a248493.js"><link rel="prefetch" href="/blog/assets/js/60.a741977a.js"><link rel="prefetch" href="/blog/assets/js/61.1306195a.js"><link rel="prefetch" href="/blog/assets/js/62.c6acd295.js"><link rel="prefetch" href="/blog/assets/js/63.782baf3e.js"><link rel="prefetch" href="/blog/assets/js/64.22909e1c.js"><link rel="prefetch" href="/blog/assets/js/65.5ba7c028.js"><link rel="prefetch" href="/blog/assets/js/66.5c912cfb.js"><link rel="prefetch" href="/blog/assets/js/67.9857099d.js"><link rel="prefetch" href="/blog/assets/js/68.cc9c5358.js"><link rel="prefetch" href="/blog/assets/js/69.d360162b.js"><link rel="prefetch" href="/blog/assets/js/7.ef3807f5.js"><link rel="prefetch" href="/blog/assets/js/70.52cba0ec.js"><link rel="prefetch" href="/blog/assets/js/71.3950598c.js"><link rel="prefetch" href="/blog/assets/js/72.d01e6ed5.js"><link rel="prefetch" href="/blog/assets/js/73.35f71a51.js"><link rel="prefetch" href="/blog/assets/js/74.20a68d2f.js"><link rel="prefetch" href="/blog/assets/js/75.37f69be6.js"><link rel="prefetch" href="/blog/assets/js/76.66464416.js"><link rel="prefetch" href="/blog/assets/js/77.4b55ff22.js"><link rel="prefetch" href="/blog/assets/js/78.a54a55f6.js"><link rel="prefetch" href="/blog/assets/js/79.4414b756.js"><link rel="prefetch" href="/blog/assets/js/8.b0003db7.js"><link rel="prefetch" href="/blog/assets/js/80.391d6d0d.js"><link rel="prefetch" href="/blog/assets/js/81.0ca571d9.js"><link rel="prefetch" href="/blog/assets/js/82.6610e142.js"><link rel="prefetch" href="/blog/assets/js/83.40f0d9ab.js"><link rel="prefetch" href="/blog/assets/js/84.c283ad6f.js"><link rel="prefetch" href="/blog/assets/js/85.bf59c91d.js"><link rel="prefetch" href="/blog/assets/js/86.fb3ac940.js"><link rel="prefetch" href="/blog/assets/js/87.f8e2ee92.js"><link rel="prefetch" href="/blog/assets/js/88.e01c8dba.js"><link rel="prefetch" href="/blog/assets/js/89.79e71ccd.js"><link rel="prefetch" href="/blog/assets/js/9.4147cd0c.js"><link rel="prefetch" href="/blog/assets/js/90.c2f7dfdf.js"><link rel="prefetch" href="/blog/assets/js/91.29c4b4d7.js"><link rel="prefetch" href="/blog/assets/js/92.e506b1c0.js"><link rel="prefetch" href="/blog/assets/js/93.150eda80.js"><link rel="prefetch" href="/blog/assets/js/94.f381e43d.js"><link rel="prefetch" href="/blog/assets/js/95.b2acad56.js"><link rel="prefetch" href="/blog/assets/js/96.32fab192.js"><link rel="prefetch" href="/blog/assets/js/97.9dcdd0a8.js"><link rel="prefetch" href="/blog/assets/js/98.ece9ceef.js"><link rel="prefetch" href="/blog/assets/js/99.8aaf90f5.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.764ab7ec.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-999d3bb4><div data-v-999d3bb4><div id="loader-wrapper" class="loading-wrapper" data-v-2c578df8 data-v-999d3bb4 data-v-999d3bb4><div class="loader-main" data-v-2c578df8><div data-v-2c578df8></div><div data-v-2c578df8></div><div data-v-2c578df8></div><div data-v-2c578df8></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-067bd032 data-v-999d3bb4 data-v-999d3bb4><h3 class="title" data-v-067bd032 data-v-067bd032>iZph</h3> <p class="description" data-v-067bd032 data-v-067bd032>Stick to your original intention and become a better self</p> <label id="box" class="inputBox" data-v-067bd032 data-v-067bd032><input type="password" value="" data-v-067bd032> <span data-v-067bd032>Konck! Knock!</span> <button data-v-067bd032>OK</button></label> <div class="footer" data-v-067bd032 data-v-067bd032><span data-v-067bd032><i class="iconfont reco-theme" data-v-067bd032></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-067bd032>vuePress-theme-reco</a></span> <span data-v-067bd032><i class="iconfont reco-copyright" data-v-067bd032></i> <a data-v-067bd032><span data-v-067bd032>iZph</span>
+            
+          <span data-v-067bd032>2020 - </span>
+          2024
+        </a></span></div></div> <div class="hide" data-v-999d3bb4><header class="navbar" data-v-999d3bb4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><img src="/blog/z.jpg" alt="iZph" class="logo"> <span class="site-name">iZph</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/html/01-html-note-01.html" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/css/01-css-note-01.html" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><h4>JavaScript</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/02-high-quality-code.html" class="nav-link"><i class="undefined"></i>
+  ECMAScript
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/dom/01-dom-note-01.html" class="nav-link"><i class="undefined"></i>
+  DOM
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/bom/01-bom-note-01.html" class="nav-link"><i class="undefined"></i>
+  BOM
+</a></li></ul></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/react/01-react-bascis.html" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/typescript/01-ts-basics.html" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      Node
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/node/node/01-observer-mode.html" class="nav-link"><i class="undefined"></i>
+  Node
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/node/koa/01-koa-basics.html" class="nav-link"><i class="undefined"></i>
+  Koa
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      工程化
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-network/01-http.html" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-basics/01-computer-operating-system.html" class="nav-link"><i class="undefined"></i>
+  计算机基础
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/browser/01-fe-browser-cache.html" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/webpack/01-webpack-notes-01.html" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/git/01-git-usage.html" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/sql/01-sql-basics.html" class="nav-link"><i class="undefined"></i>
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/performance/01-performance-optimization.html" class="nav-link"><i class="undefined"></i>
+  性能优化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/other/01-vscode-shortcutkey.html" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-document"></i>
+      算法
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/data-structure/01-complexity.html" class="nav-link"><i class="undefined"></i>
+  DataStructure
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/leetcode/02-string.html" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-coding"></i>
+      项目
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/project/yolo-ui/01-yolo-preface.html" class="nav-link"><i class="undefined"></i>
+  yolo-ui
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/project/md-to-html/01-handwritten-md-to-html.html" class="nav-link"><i class="undefined"></i>
+  md-to-html
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/categories/数据结构/" class="nav-link"><i class="undefined"></i>
+  数据结构
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/LeetCode/" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/浏览器/" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/工程化/" class="nav-link"><i class="undefined"></i>
+  工程化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/计算机网络/" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/git/" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/其他/" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/webpack/" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/CSS/" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/HTML/" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/JavaScript/" class="nav-link"><i class="undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/React/" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/TypeScript/" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/项目/" class="nav-link"><i class="undefined"></i>
+  项目
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      联系
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/izph" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-999d3bb4></div> <aside class="sidebar" data-v-999d3bb4><div class="personal-info-wrapper" data-v-e2878dae data-v-999d3bb4><img src="/blog/z.jpg" alt="author-avatar" class="personal-img" data-v-e2878dae> <h3 class="name" data-v-e2878dae>
+    iZph
+  </h3> <div class="num" data-v-e2878dae><div data-v-e2878dae><h3 data-v-e2878dae>104</h3> <h6 data-v-e2878dae>Articles</h6></div> <div data-v-e2878dae><h3 data-v-e2878dae>45</h3> <h6 data-v-e2878dae>Tags</h6></div></div> <ul class="social-links" data-v-e2878dae></ul> <hr data-v-e2878dae></div> <nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/html/01-html-note-01.html" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/css/01-css-note-01.html" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><h4>JavaScript</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/02-high-quality-code.html" class="nav-link"><i class="undefined"></i>
+  ECMAScript
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/dom/01-dom-note-01.html" class="nav-link"><i class="undefined"></i>
+  DOM
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/bom/01-bom-note-01.html" class="nav-link"><i class="undefined"></i>
+  BOM
+</a></li></ul></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/react/01-react-bascis.html" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/typescript/01-ts-basics.html" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      Node
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/node/node/01-observer-mode.html" class="nav-link"><i class="undefined"></i>
+  Node
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/node/koa/01-koa-basics.html" class="nav-link"><i class="undefined"></i>
+  Koa
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      工程化
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-network/01-http.html" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-basics/01-computer-operating-system.html" class="nav-link"><i class="undefined"></i>
+  计算机基础
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/browser/01-fe-browser-cache.html" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/webpack/01-webpack-notes-01.html" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/git/01-git-usage.html" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/sql/01-sql-basics.html" class="nav-link"><i class="undefined"></i>
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/performance/01-performance-optimization.html" class="nav-link"><i class="undefined"></i>
+  性能优化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/other/01-vscode-shortcutkey.html" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-document"></i>
+      算法
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/data-structure/01-complexity.html" class="nav-link"><i class="undefined"></i>
+  DataStructure
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/leetcode/02-string.html" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-coding"></i>
+      项目
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/project/yolo-ui/01-yolo-preface.html" class="nav-link"><i class="undefined"></i>
+  yolo-ui
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/project/md-to-html/01-handwritten-md-to-html.html" class="nav-link"><i class="undefined"></i>
+  md-to-html
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/categories/数据结构/" class="nav-link"><i class="undefined"></i>
+  数据结构
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/LeetCode/" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/浏览器/" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/工程化/" class="nav-link"><i class="undefined"></i>
+  工程化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/计算机网络/" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/git/" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/其他/" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/webpack/" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/CSS/" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/HTML/" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/JavaScript/" class="nav-link"><i class="undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/React/" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/TypeScript/" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/项目/" class="nav-link"><i class="undefined"></i>
+  项目
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      联系
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/izph" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav> <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Browser</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/engineering/browser/fe-browser-cache/" class="sidebar-link">前端浏览器缓存</a></li><li><a href="/blog/engineering/browser/fe-authentication/" aria-current="page" class="active sidebar-link">前端鉴权笔记</a></li><li><a href="/blog/engineering/browser/fe-security/" class="sidebar-link">前端安全</a></li><li><a href="/blog/engineering/browser/http-request/" class="sidebar-link">前后端联调</a></li><li><a href="/blog/engineering/browser/browser-render/" class="sidebar-link">浏览器渲染</a></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-067bd032 data-v-999d3bb4><h3 class="title" data-v-067bd032 data-v-067bd032>前端鉴权笔记</h3> <!----> <label id="box" class="inputBox" data-v-067bd032 data-v-067bd032><input type="password" value="" data-v-067bd032> <span data-v-067bd032>Konck! Knock!</span> <button data-v-067bd032>OK</button></label> <div class="footer" data-v-067bd032 data-v-067bd032><span data-v-067bd032><i class="iconfont reco-theme" data-v-067bd032></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-067bd032>vuePress-theme-reco</a></span> <span data-v-067bd032><i class="iconfont reco-copyright" data-v-067bd032></i> <a data-v-067bd032><span data-v-067bd032>iZph</span>
+            
+          <span data-v-067bd032>2020 - </span>
+          2024
+        </a></span></div></div> <div data-v-999d3bb4><main class="page"><section><div class="page-title"><h1 class="title">前端鉴权笔记</h1> <div data-v-10e19382><i class="iconfont reco-account" data-v-10e19382><span data-v-10e19382>iZph</span></i> <i class="iconfont reco-date" data-v-10e19382><span data-v-10e19382>4/10/2021</span></i> <!----> <i class="tags iconfont reco-tag" data-v-10e19382><span class="tag-item" data-v-10e19382>浏览器</span></i></div></div> <div class="theme-reco-content content__default"><h1 id="前端鉴权笔记"><a href="#前端鉴权笔记" class="header-anchor">#</a> 前端鉴权笔记</h1> <h2 id="域名区别"><a href="#域名区别" class="header-anchor">#</a> 域名区别</h2> <ul><li>顶级域名就是一级域名，比如 .com .org .cn。如 https://juejin.cn/ 中的.cn是顶级域名，也是一级域名，juejin.cn 是二级域名。</li> <li>https://www.yuque.com/ 中的 www.yuque.com 和 host.yuque.com 同为三级域名（只是人们习惯使用www为前缀的三级域名作为网站的主域名入口）</li></ul> <h2 id="认证-authentication"><a href="#认证-authentication" class="header-anchor">#</a> 认证: Authentication</h2> <p>互联网中的认证：</p> <ul><li>用户名密码登录</li> <li>邮箱发送登录链接</li> <li>手机号接收验证码</li> <li>数字验证码，滑动验证、图片文字验证码</li></ul> <h2 id="授权-authorization"><a href="#授权-authorization" class="header-anchor">#</a> 授权: Authorization</h2> <ul><li>实现授权的方式有：cookie、session、token、OAuth</li></ul> <h2 id="凭证-credentials"><a href="#凭证-credentials" class="header-anchor">#</a> 凭证: Credentials</h2> <p>实现认证和授权的前提是需要一种媒介（证书）来标记访问者的身份</p> <h2 id="前端存储"><a href="#前端存储" class="header-anchor">#</a> 前端存储</h2> <ol><li>全局对象window，刷新页面就没了</li> <li>localStorage、sessionStorage无论怎么刷新，只要浏览器没清掉或者过期，就一直拿着这个状态。</li> <li>cookie: Response中返回头的set-cookie 直接存储到浏览器上（ Set-Cookie由服务器发送，它包含在响应请求的头部中），前端可以自己创建 cookie，如果服务端创建的 cookie 没加HttpOnly，那前端可以修改后端返回的 cookie。调用document.cookie可以创建、修改 cookie，和 HTTP 一样，一次document.cookie能且只能操作一个 cookie。
+浏览器发起请求时，会自动把 cookie 通过 HTTP 请求头的 Cookie 字段，带给接口
+（注意，只有cookie的 domain 和 path与 请求的URL匹配才会发送这个cookie）
+（默认跨域请求是不携带cookie）</li></ol> <ul><li>一级域名相同，二级域名不相同，且cookie在一级域名下，可以设置document.domain = 一级域名，就可以携带cookie。</li> <li>一级域名不同，可以配置XMLHttpRequest请求头的 withCredentials 为 true 来允许ajax请求时携带cookie。服务器server端要在 <strong>响应的header</strong> 中设置配置
+Access-Control-Allow-Credentials为true
+response.setHeader(&quot;Access-Control-Allow-Credentials&quot;, &quot;true&quot;);
+当服务器端 Access-Control-Allow-Credentials = true时，
+参数Access-Control-Allow-Origin 的值不能为 '*' ，需要重新设置——<strong>把请求的域Origin填写到响应的Header信息里（即谁访问我，我允许谁）</strong>
+response.setHeader(&quot;Access-Control-Allow-Origin&quot;, request.getHeader(&quot;Origin&quot;));</li> <li>Set-Cookie Header 响应头的格式如下所示：</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>Set-Cookie: &lt;name&gt;=&lt;value&gt;[; &lt;name&gt;=&lt;value&gt;]...
+            [; expires=&lt;date&gt;][; domain=&lt;domain_name&gt;]
+            [; path=&lt;some_path&gt;][; secure][; httponly][;SameSite]
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ul><li>expires/max-age =<code>&lt;date&gt;</code>: 设置cookie的有效期，如果cookie 超过 date 所表示的日期时，cookie将失效。 如果没有设置这个选项，那么cookie将在浏览器关闭时失效。
+另外，浏览器根据本地时间，决定 Cookie 是否过期，由于本地时间是不精确的，所以没有办法保证 Cookie 一定会在服务器指定的时间过期。</li> <li>Max-Age：指定从现在开始 Cookie 存在的秒数，比如60 * 60 * 24 * 365（即一年）。过了这个时间以后，浏览器就不再保留这个 Cookie。
+如果同时指定了Expires和Max-Age，那么Max-Age的值将优先生效。
+如果Set-Cookie字段没有指定Expires或Max-Age属性，那么这个 Cookie 就是 Session Cookie，即它只在本次对话存在，一旦用户关闭浏览器，浏览器就不会再保留这个 Cookie。</li> <li>domain=&lt;domain_name&gt; : .taobao.com(a.taobao.com和b.taobao.com都可以访问)，但是不能设置成taobao.com，这样是不允许的携带cookies</li> <li>path=&lt;some_path&gt;: 一般是 /
+(注：临时cookie (没有expires参数的cookie) 不能带有domain选项。)
+当客户端发送一个http请求时，会将有效的cookie一起发送给服务器。
+如果一个cookie的domain和path参数和URL匹配，那么这个cookie就是有效的。</li> <li>secure: secure属性指定浏览器只有在加密协议 HTTPS 下，才能将这个 Cookie 发送到服务器。
+另一方面，如果当前协议是 HTTP，浏览器会自动忽略服务器发来的Secure属性。该属性只是一个开关，不需要指定值。如果通信是 HTTPS 协议，该开关自动打开。</li> <li>httponly : 表示cookie不能被客户端脚本获取到。HttpOnly属性指定该 Cookie 无法通过 JavaScript 脚本拿到，主要是Document.cookie属性、XMLHttpRequest对象和 Request API 都拿不到该属性。这样就防止了该 Cookie 被脚本读到，只有浏览器发出 HTTP 请求时，才会带上该 Cookie。
+（但还是能通过 Application 中手动修改 cookie，所以只是在一定程度上可以防止 XSS 攻击，不是绝对的安全）有助于避免 XSS 攻击。（防止通过srcipt标签里面的代码获取cookie）</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>Set-Cookie: 
+username=jimu; domain=jimu.com; path=/blog; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>一次性 set 多个cookie，多给几个Set-Cookie 头（一次 HTTP 请求中允许重复）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>Set-Cookie: username=jimu; domain=jimu.com
+Set-Cookie: height=180; domain=me.jimu.com
+Set-Cookie: weight=80; domain=me.jimu.com
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p><img src="/blog/assets/img/httpheaders04.b9ef5fa9.png" alt="image.png">
+604800秒等于七天</p> <ul><li>SameSite:  2020年2 月份发布的 Chrome 80 版本中默认屏蔽了第三方的 Cookie，SameSite默认为lax。SameSite 属性可以让 Cookie 在跨站请求时不会被发送，从而可以阻止跨站请求伪造攻击（CSRF），限制了一些第三方的广告。
+<ul><li>Strict：仅允许一方请求携带 Cookie，即浏览器将只发送相同站点请求的 Cookie，即当前网页 URL 与请求目标 URL 完全一致。</li> <li>Lax：允许部分第三方请求携带 Cookie</li> <li>None无论是否跨站都会发送 Cookie，Chrome80以下默认是 None 的，Chrome80 后默认是 Lax。</li> <li>SameSite带来的改变
+<img src="/blog/assets/img/samesite05.42dafb18.png" alt="image.png">
+从上图可以看出，对大部分 web 应用而言，Post 表单，iframe，AJAX，Image 这四种情况从以前的跨站会发送三方 Cookie，变成了不发送。
+<strong>Post表单</strong>：应该的，学 CSRF 总会举表单的例子。
+<strong>iframe</strong>：iframe 嵌入的 web 应用有很多是跨站的，都会受到影响。
+<strong>AJAX</strong>：可能会影响部分前端取值的行为和结果。
+<strong>Image</strong>：图片一般放 CDN，大部分情况不需要 Cookie，故影响有限。但如果引用了需要鉴权的图片，可能会受到影响。
+除了这些还有 <strong>script</strong> 的方式，这种方式也不会发送 Cookie，像淘宝的大部分请求都是 jsonp，如果涉及到跨站也有可能会被影响。
+<strong>需要注意的地方</strong>：HTTP 接口不支持 SameSite=none如果你想加 SameSite=none 属性，那么该 Cookie 就必须同时加上 Secure 属性，表示只有在 HTTPS 协议下该 Cookie 才会被发送。需要 UA 检测，部分浏览器不能加 SameSite=none</li></ul></li></ul> <h3 id="跨域和跨站"><a href="#跨域和跨站" class="header-anchor">#</a> 跨域和跨站</h3> <p>首先要理解的一点就是跨站和跨域是不同的。同站(same-site)和跨站(cross-site)、第一方(first-party)和第三方(third-party)是等价的。但是与浏览器同源策略（SOP）中的「同源(same-origin)、跨域(cross-origin)」是完全不同的概念。</p> <p>举几个例子，www.taobao.com 和 www.baidu.com 是跨站，www.a.taobao.com 和 www.b.taobao.com 是同站，a.github.io 和 b.github.io 是跨站(注意是跨站)。  <strong>.com 和 .giuhub.io 是顶级域名</strong>，a.github.io 和 b.github.io 是中的a、b是二级域名</p> <h2 id="服务端-session"><a href="#服务端-session" class="header-anchor">#</a> 服务端 session</h2> <p><img src="/blog/assets/img/session06.41850a2c.png" alt=""></p> <ul><li>浏览器登录发送账号密码(加密过的)，服务端查用户库，校验用户</li> <li>服务端把用户登录状态存为 Session，生成一个 sessionId</li> <li>通过登录接口返回，把 sessionId  <strong>set-cookie</strong> 到 cookie 上</li> <li>此后浏览器再请求业务接口，sessionId 随 cookie 带上</li> <li>服务端查 sessionId 校验 session</li> <li>成功后正常做业务处理，返回结果</li></ul> <h3 id="session-的存储方式"><a href="#session-的存储方式" class="header-anchor">#</a> Session 的存储方式</h3> <ul><li>Redis（推荐）：内存型数据库。以 key-value 的形式存，访问快。</li> <li>内存/缓存：直接放到变量里。一旦服务重启，就全没了</li> <li>数据库：普通数据库，性能不高。</li></ul> <p>Session 的过期和销毁很简单，只要把存储的session 数据销毁就可以。</p> <h4 id="优点"><a href="#优点" class="header-anchor">#</a> 优点：</h4> <ul><li>较安全：客户端每次请求时无需发送身份信息，只需发送 SessionID。</li> <li>较高效：服务端无需每次处理请求时都要验证身份信息，只需通过 SessionID 查询 Session对象。</li></ul> <h4 id="缺点"><a href="#缺点" class="header-anchor">#</a> 缺点：</h4> <ul><li>扩展性差，Session 对象保存在服务端，如果是保存在多个服务器上，有一致性问题，
+如果保存在单个服务器上，无法适应用户增长。</li> <li>基于 Cookie 的 SessionID 不能跨域共享，同一用户的多个客户端（如浏览器客户端和 APP不能共享 SessionId。</li> <li>基于 Cookie 的 SessionID 易被截获生成 CSRF 攻击。</li></ul> <h2 id="应用方案-token-不存在数据库里面的"><a href="#应用方案-token-不存在数据库里面的" class="header-anchor">#</a> 应用方案：token，不存在数据库里面的</h2> <p>session 的维护给服务端造成很大困扰，我们必须找地方存放它，又要考虑分布式的问题，甚至要单独为了它启用一套 Redis 集群。有没有更好的办法？
+<img src="/blog/assets/img/token07.3b49856f.png" alt="">
+token 的流程是这样的：token不一定放在cookie里面，可以放在localstorage里，拼接上。</p> <ul><li>用户登录，服务端校验账号密码，获得用户信息</li> <li>把用户信息、token（秘钥） 配置编码成 token，通过 cookie set 到浏览器</li> <li>此后用户请求业务接口，通过 cookie 携带 token</li> <li>接口校验 token 有效性，进行正常业务接口处理</li></ul> <p><strong>客户端token的存储方式</strong>：web 应用的主流方式仍是放在 cookie 里
+<strong>token 的过期</strong>：如何控制 token 的有效期呢？把「过期时间」和数据一起塞进去，验证时判断就好。token的编码一般是base64
+<strong>防篡改</strong>：将数据和秘钥一起用加密算法加密</p> <p>基于token 的用户认证是一种服务端无状态的认证方式，服务端不用存放 token 数据。用解析 token 的计算时间换取 session 的存储空间，从而减轻服务器的压力，减少频繁的查询数据库</p> <h2 id="jwt"><a href="#jwt" class="header-anchor">#</a> JWT</h2> <p>JSON Web Token（简称 JWT）是目前最流行的<strong>跨域认证</strong>解决方案</p> <ul><li>用户输入用户名/密码登录，服务端认证成功后，会返回给客户端一个 JWT</li> <li>客户端将 token 保存到本地（通常使用 localstorage，也可以使用 cookie）</li> <li>当用户希望访问一个受保护的路由或者资源的时候，需要请求头的 Authorization 字段中使用Bearer 模式添加 JWT，其内容看起来是下面这样</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>Authorization: Bearer &lt;token&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li>服务端的保护路由将会检查请求头 Authorization 中的 JWT 信息，如果合法，则允许用户的行为</li> <li>因为 JWT 是自包含的（内部包含了一些会话信息），因此减少了需要查询数据库的需要</li> <li>因为 JWT 并不使用 Cookie 的，所以你可以使用任何域名提供你的 API 服务而不需要担心跨域资源共享问题（CORS）</li> <li>因为用户的状态不再存储在服务端的内存中，所以这是一种无状态的认证机制</li></ul> <h3 id="jwt-的使用方式"><a href="#jwt-的使用方式" class="header-anchor">#</a> JWT 的使用方式</h3> <ul><li>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage</li></ul> <h2 id="单点登录"><a href="#单点登录" class="header-anchor">#</a> 单点登录</h2> <p>但当我们业务线越来越多，就会有更多业务系统分散到不同域名（主域名）下，就需要「一次登录，全线通用」的能力，叫做「单点登录」。</p> <h3 id="虚假的单点登录-主域名相同"><a href="#虚假的单点登录-主域名相同" class="header-anchor">#</a> 虚假的单点登录（主域名相同）</h3> <p>简单的，如果业务系统都在同一主域名下，比如wenku.baidu.com（百度文库）、tieba.baidu.com（百度贴吧）。可以直接把 cookie的domain设置为主域名.baidu.com。</p> <h3 id="真实的单点登录-主域名不同"><a href="#真实的单点登录-主域名不同" class="header-anchor">#</a> 真实的单点登录（主域名不同）</h3> <p>比如滴滴这么潮的公司，同时拥有
+didichuxing.com (滴滴出行)
+xiaojukeji.com(小桔科技)
+didiglobal.com(滴滴共享汽车) 等域名，种 cookie 是完全绕不开的。
+这要能实现「一次登录，全线通用」，才是真正的单点登录。
+这种场景下，我们需要独立的认证服务，通常被称为 SSO。</p> <h2 id="一次「从-a-系统引发登录-到-b-系统不用登录」的完整流程"><a href="#一次「从-a-系统引发登录-到-b-系统不用登录」的完整流程" class="header-anchor">#</a> 一次「从 A 系统引发登录，到 B 系统不用登录」的完整流程</h2> <p><img src="https://cdn.nlark.com/yuque/0/2021/webp/12755606/1636962180152-5d91e3f4-a9de-4173-bc54-57b991b8529f.webp#clientId=ub5f3e578-696b-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;id=uc8999ebb&amp;margin=[object Object]&amp;originHeight=2102&amp;originWidth=1814&amp;originalType=url&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=stroke&amp;taskId=uad747ec3-f9a5-4541-a8b1-d0de7db73ef&amp;title=" alt=""></p> <ul><li>用户进入 A 系统，没有登录凭证（ticket），A 系统给他跳到 SSO</li> <li>SSO 没登录过，也就没有 sso 系统下没有凭证（注意这个和前面 A ticket 是两回事），输入账号密码登录</li> <li>SSO 账号密码验证成功，通过接口返回做两件事：一是种下 sso 系统下凭证（记录用户在 SSO 登录状态）；二是下发一个 ticket</li> <li>客户端拿到 ticket，保存起来，带着请求系统 A 接口</li> <li>系统 A 校验 ticket，成功后正常处理业务请求</li> <li>此时用户第一次进入系统 B，没有登录凭证（ticket），B 系统给他跳到 SSO</li> <li>SSO 登录过，系统下有凭证，不用再次登录，只需要下发 ticket</li> <li>客户端拿到 ticket，保存起来，带着请求系统 B 接口</li></ul> <p>对浏览器来说，SSO 域下返回的数据要怎么存，才能在访问 A 的时候带上？浏览器对跨域有严格限制，cookie、localStorage 等方式都是有域限制的。
+这就需要也只能由 A 提供 A 域下存储凭证的能力。一般我们是这么做的：
+<img src="https://cdn.nlark.com/yuque/0/2021/webp/12755606/1636962897889-1f9fe59d-dc2e-4f32-8091-9cc93837bdb1.webp#clientId=ub5f3e578-696b-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;id=uc79e26d5&amp;margin=[object Object]&amp;originHeight=2422&amp;originWidth=2068&amp;originalType=url&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=stroke&amp;taskId=uf5e9b215-3f60-49b1-8687-11767557dba&amp;title=" alt="">
+图中我们通过颜色把浏览器当前所处的域名标记出来。注意图中灰底文字说明部分的变化。</p> <ul><li>在 SSO 域下，SSO 不是通过接口把 ticket 直接返回，而是通过一个带 code 的 URL 重定向到系统 A 的接口上，这个接口通常在 A 向 SSO 注册时约定</li> <li>浏览器被重定向到 A 域下，带着 code 访问了 A 的 callback 接口，callback 接口通过 code 换取 ticket</li> <li>这个 code 不同于 ticket，code 是一次性的，暴露在 URL 中，只为了传一下换 ticket，换完就失效</li> <li>callback 接口拿到 ticket 后，在自己的域下 set cookie 成功</li> <li>在后续请求中，只需要把 cookie 中的 ticket 解析出来，去 SSO 验证就好</li> <li>访问 B 系统也是一样</li></ul> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <ul><li>HTTP 是无状态的，为了维持前后请求，需要前端存储标记</li> <li>cookie 是一种完善的标记方式，通过 HTTP 头或 js 操作，有对应的安全策略，是大多数状态管理方案的基石</li> <li>session 是一种状态管理方案，前端通过 cookie 存储 id，后端存储数据，但后端要处理分布式问题</li> <li>token 是另一种状态管理方案，相比于 session 不需要后端存储，数据全部存在前端，解放后端，释放灵活性</li> <li>token 的编码技术，通常基于 base64，或增加加密算法防篡改，jwt 是一种成熟的编码方案</li> <li>在复杂系统中，token 可通过 service token、refresh token 的分权，同时满足安全性和用户体验</li> <li>session 和 token 的对比就是「用不用cookie」和「后端存不存」的对比</li> <li>单点登录要求不同域下的系统「一次登录，全线通用」，通常由独立的 SSO 系统记录登录状态、下发 ticket，各业务系统配合存储和认证 ticket</li></ul> <h3 id="参考"><a href="#参考" class="header-anchor">#</a> 参考</h3> <p><a href="https://juejin.cn/post/6898630134530752520" target="_blank" rel="noopener noreferrer">前端鉴权<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></div></section> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">5/14/2022, 10:37:34 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev"><a href="/blog/engineering/browser/fe-browser-cache/" class="prev">
+            前端浏览器缓存
+          </a></span> <span class="next"><a href="/blog/engineering/browser/fe-security/">
+            前端安全
+          </a></span></p></div> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-92abcef6><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#域名区别" class="sidebar-link reco-side-域名区别" data-v-92abcef6>域名区别</a></li><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#认证-authentication" class="sidebar-link reco-side-认证-authentication" data-v-92abcef6>认证: Authentication</a></li><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#授权-authorization" class="sidebar-link reco-side-授权-authorization" data-v-92abcef6>授权: Authorization</a></li><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#凭证-credentials" class="sidebar-link reco-side-凭证-credentials" data-v-92abcef6>凭证: Credentials</a></li><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#前端存储" class="sidebar-link reco-side-前端存储" data-v-92abcef6>前端存储</a></li><li class="level-3" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#跨域和跨站" class="sidebar-link reco-side-跨域和跨站" data-v-92abcef6>跨域和跨站</a></li><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#服务端-session" class="sidebar-link reco-side-服务端-session" data-v-92abcef6>服务端 session</a></li><li class="level-3" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#session-的存储方式" class="sidebar-link reco-side-session-的存储方式" data-v-92abcef6>Session 的存储方式</a></li><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#应用方案-token-不存在数据库里面的" class="sidebar-link reco-side-应用方案-token-不存在数据库里面的" data-v-92abcef6>应用方案：token，不存在数据库里面的</a></li><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#jwt" class="sidebar-link reco-side-jwt" data-v-92abcef6>JWT</a></li><li class="level-3" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#jwt-的使用方式" class="sidebar-link reco-side-jwt-的使用方式" data-v-92abcef6>JWT 的使用方式</a></li><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#单点登录" class="sidebar-link reco-side-单点登录" data-v-92abcef6>单点登录</a></li><li class="level-3" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#虚假的单点登录-主域名相同" class="sidebar-link reco-side-虚假的单点登录-主域名相同" data-v-92abcef6>虚假的单点登录（主域名相同）</a></li><li class="level-3" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#真实的单点登录-主域名不同" class="sidebar-link reco-side-真实的单点登录-主域名不同" data-v-92abcef6>真实的单点登录（主域名不同）</a></li><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#一次「从-a-系统引发登录-到-b-系统不用登录」的完整流程" class="sidebar-link reco-side-一次「从-a-系统引发登录-到-b-系统不用登录」的完整流程" data-v-92abcef6>一次「从 A 系统引发登录，到 B 系统不用登录」的完整流程</a></li><li class="level-2" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#总结" class="sidebar-link reco-side-总结" data-v-92abcef6>总结</a></li><li class="level-3" data-v-92abcef6><a href="/blog/engineering/browser/fe-authentication/#参考" class="sidebar-link reco-side-参考" data-v-92abcef6>参考</a></li></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-a008c6ba data-v-a008c6ba><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-a008c6ba><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-a008c6ba></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-a008c6ba></path></svg></div></div></div>
+    <script src="/blog/assets/js/app.aa1760e5.js" defer></script><script src="/blog/assets/js/3.a128813b.js" defer></script><script src="/blog/assets/js/1.78c2236b.js" defer></script><script src="/blog/assets/js/17.4f47c576.js" defer></script>
+  </body>
+</html>

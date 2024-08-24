@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>webpack笔记（二） | iZph</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico">
+    <meta name="description" content="Stick to your original intention and become a better self">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.764ab7ec.css" as="style"><link rel="preload" href="/blog/assets/js/app.aa1760e5.js" as="script"><link rel="preload" href="/blog/assets/js/3.a128813b.js" as="script"><link rel="preload" href="/blog/assets/js/1.78c2236b.js" as="script"><link rel="preload" href="/blog/assets/js/72.d01e6ed5.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.fe554572.js"><link rel="prefetch" href="/blog/assets/js/100.a0a9312d.js"><link rel="prefetch" href="/blog/assets/js/101.845d6d9b.js"><link rel="prefetch" href="/blog/assets/js/102.18e79f7b.js"><link rel="prefetch" href="/blog/assets/js/103.4f8ba6da.js"><link rel="prefetch" href="/blog/assets/js/104.b36428c7.js"><link rel="prefetch" href="/blog/assets/js/105.69d74e9d.js"><link rel="prefetch" href="/blog/assets/js/106.d78d8774.js"><link rel="prefetch" href="/blog/assets/js/107.f5b659fe.js"><link rel="prefetch" href="/blog/assets/js/108.13be40d1.js"><link rel="prefetch" href="/blog/assets/js/109.31252cc2.js"><link rel="prefetch" href="/blog/assets/js/11.06981abc.js"><link rel="prefetch" href="/blog/assets/js/110.1868445f.js"><link rel="prefetch" href="/blog/assets/js/111.67399f15.js"><link rel="prefetch" href="/blog/assets/js/112.40ea2d79.js"><link rel="prefetch" href="/blog/assets/js/113.22adf8d4.js"><link rel="prefetch" href="/blog/assets/js/114.7e61b777.js"><link rel="prefetch" href="/blog/assets/js/12.83aab862.js"><link rel="prefetch" href="/blog/assets/js/13.a95f16fb.js"><link rel="prefetch" href="/blog/assets/js/14.cf8a7eac.js"><link rel="prefetch" href="/blog/assets/js/15.b94f3d6d.js"><link rel="prefetch" href="/blog/assets/js/16.64ec132f.js"><link rel="prefetch" href="/blog/assets/js/17.4f47c576.js"><link rel="prefetch" href="/blog/assets/js/18.0dcc6266.js"><link rel="prefetch" href="/blog/assets/js/19.5aa6102e.js"><link rel="prefetch" href="/blog/assets/js/20.e2bac719.js"><link rel="prefetch" href="/blog/assets/js/21.45416460.js"><link rel="prefetch" href="/blog/assets/js/22.143bf037.js"><link rel="prefetch" href="/blog/assets/js/23.98dca36c.js"><link rel="prefetch" href="/blog/assets/js/24.e854f905.js"><link rel="prefetch" href="/blog/assets/js/25.1e54fd62.js"><link rel="prefetch" href="/blog/assets/js/26.44a55b1d.js"><link rel="prefetch" href="/blog/assets/js/27.934d4182.js"><link rel="prefetch" href="/blog/assets/js/28.87ac3819.js"><link rel="prefetch" href="/blog/assets/js/29.71143d97.js"><link rel="prefetch" href="/blog/assets/js/30.a2166d91.js"><link rel="prefetch" href="/blog/assets/js/31.26bc048b.js"><link rel="prefetch" href="/blog/assets/js/32.dbaff1f3.js"><link rel="prefetch" href="/blog/assets/js/33.4bb9bc8a.js"><link rel="prefetch" href="/blog/assets/js/34.b1d5c66f.js"><link rel="prefetch" href="/blog/assets/js/35.ec0923ca.js"><link rel="prefetch" href="/blog/assets/js/36.28cbad44.js"><link rel="prefetch" href="/blog/assets/js/37.c83c4994.js"><link rel="prefetch" href="/blog/assets/js/38.642eec51.js"><link rel="prefetch" href="/blog/assets/js/39.380ddfcb.js"><link rel="prefetch" href="/blog/assets/js/4.edf1d754.js"><link rel="prefetch" href="/blog/assets/js/40.2731a35f.js"><link rel="prefetch" href="/blog/assets/js/41.e3fdcd10.js"><link rel="prefetch" href="/blog/assets/js/42.f0682353.js"><link rel="prefetch" href="/blog/assets/js/43.bd1bdc66.js"><link rel="prefetch" href="/blog/assets/js/44.7946aa5e.js"><link rel="prefetch" href="/blog/assets/js/45.f1603060.js"><link rel="prefetch" href="/blog/assets/js/46.040f3227.js"><link rel="prefetch" href="/blog/assets/js/47.ca5a7e81.js"><link rel="prefetch" href="/blog/assets/js/48.b12ccd36.js"><link rel="prefetch" href="/blog/assets/js/49.0244aff1.js"><link rel="prefetch" href="/blog/assets/js/5.de3e7804.js"><link rel="prefetch" href="/blog/assets/js/50.4be81f42.js"><link rel="prefetch" href="/blog/assets/js/51.822ac419.js"><link rel="prefetch" href="/blog/assets/js/52.c09840f9.js"><link rel="prefetch" href="/blog/assets/js/53.c4bddd02.js"><link rel="prefetch" href="/blog/assets/js/54.547a085d.js"><link rel="prefetch" href="/blog/assets/js/55.9b6fb73e.js"><link rel="prefetch" href="/blog/assets/js/56.5960f992.js"><link rel="prefetch" href="/blog/assets/js/57.d343dc7c.js"><link rel="prefetch" href="/blog/assets/js/58.031da4e7.js"><link rel="prefetch" href="/blog/assets/js/59.6185447f.js"><link rel="prefetch" href="/blog/assets/js/6.2a248493.js"><link rel="prefetch" href="/blog/assets/js/60.a741977a.js"><link rel="prefetch" href="/blog/assets/js/61.1306195a.js"><link rel="prefetch" href="/blog/assets/js/62.c6acd295.js"><link rel="prefetch" href="/blog/assets/js/63.782baf3e.js"><link rel="prefetch" href="/blog/assets/js/64.22909e1c.js"><link rel="prefetch" href="/blog/assets/js/65.5ba7c028.js"><link rel="prefetch" href="/blog/assets/js/66.5c912cfb.js"><link rel="prefetch" href="/blog/assets/js/67.9857099d.js"><link rel="prefetch" href="/blog/assets/js/68.cc9c5358.js"><link rel="prefetch" href="/blog/assets/js/69.d360162b.js"><link rel="prefetch" href="/blog/assets/js/7.ef3807f5.js"><link rel="prefetch" href="/blog/assets/js/70.52cba0ec.js"><link rel="prefetch" href="/blog/assets/js/71.3950598c.js"><link rel="prefetch" href="/blog/assets/js/73.35f71a51.js"><link rel="prefetch" href="/blog/assets/js/74.20a68d2f.js"><link rel="prefetch" href="/blog/assets/js/75.37f69be6.js"><link rel="prefetch" href="/blog/assets/js/76.66464416.js"><link rel="prefetch" href="/blog/assets/js/77.4b55ff22.js"><link rel="prefetch" href="/blog/assets/js/78.a54a55f6.js"><link rel="prefetch" href="/blog/assets/js/79.4414b756.js"><link rel="prefetch" href="/blog/assets/js/8.b0003db7.js"><link rel="prefetch" href="/blog/assets/js/80.391d6d0d.js"><link rel="prefetch" href="/blog/assets/js/81.0ca571d9.js"><link rel="prefetch" href="/blog/assets/js/82.6610e142.js"><link rel="prefetch" href="/blog/assets/js/83.40f0d9ab.js"><link rel="prefetch" href="/blog/assets/js/84.c283ad6f.js"><link rel="prefetch" href="/blog/assets/js/85.bf59c91d.js"><link rel="prefetch" href="/blog/assets/js/86.fb3ac940.js"><link rel="prefetch" href="/blog/assets/js/87.f8e2ee92.js"><link rel="prefetch" href="/blog/assets/js/88.e01c8dba.js"><link rel="prefetch" href="/blog/assets/js/89.79e71ccd.js"><link rel="prefetch" href="/blog/assets/js/9.4147cd0c.js"><link rel="prefetch" href="/blog/assets/js/90.c2f7dfdf.js"><link rel="prefetch" href="/blog/assets/js/91.29c4b4d7.js"><link rel="prefetch" href="/blog/assets/js/92.e506b1c0.js"><link rel="prefetch" href="/blog/assets/js/93.150eda80.js"><link rel="prefetch" href="/blog/assets/js/94.f381e43d.js"><link rel="prefetch" href="/blog/assets/js/95.b2acad56.js"><link rel="prefetch" href="/blog/assets/js/96.32fab192.js"><link rel="prefetch" href="/blog/assets/js/97.9dcdd0a8.js"><link rel="prefetch" href="/blog/assets/js/98.ece9ceef.js"><link rel="prefetch" href="/blog/assets/js/99.8aaf90f5.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.764ab7ec.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-999d3bb4><div data-v-999d3bb4><div id="loader-wrapper" class="loading-wrapper" data-v-2c578df8 data-v-999d3bb4 data-v-999d3bb4><div class="loader-main" data-v-2c578df8><div data-v-2c578df8></div><div data-v-2c578df8></div><div data-v-2c578df8></div><div data-v-2c578df8></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-067bd032 data-v-999d3bb4 data-v-999d3bb4><h3 class="title" data-v-067bd032 data-v-067bd032>iZph</h3> <p class="description" data-v-067bd032 data-v-067bd032>Stick to your original intention and become a better self</p> <label id="box" class="inputBox" data-v-067bd032 data-v-067bd032><input type="password" value="" data-v-067bd032> <span data-v-067bd032>Konck! Knock!</span> <button data-v-067bd032>OK</button></label> <div class="footer" data-v-067bd032 data-v-067bd032><span data-v-067bd032><i class="iconfont reco-theme" data-v-067bd032></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-067bd032>vuePress-theme-reco</a></span> <span data-v-067bd032><i class="iconfont reco-copyright" data-v-067bd032></i> <a data-v-067bd032><span data-v-067bd032>iZph</span>
+            
+          <span data-v-067bd032>2020 - </span>
+          2024
+        </a></span></div></div> <div class="hide" data-v-999d3bb4><header class="navbar" data-v-999d3bb4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><img src="/blog/z.jpg" alt="iZph" class="logo"> <span class="site-name">iZph</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/html/01-html-note-01.html" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/css/01-css-note-01.html" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><h4>JavaScript</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/02-high-quality-code.html" class="nav-link"><i class="undefined"></i>
+  ECMAScript
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/dom/01-dom-note-01.html" class="nav-link"><i class="undefined"></i>
+  DOM
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/bom/01-bom-note-01.html" class="nav-link"><i class="undefined"></i>
+  BOM
+</a></li></ul></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/react/01-react-bascis.html" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/typescript/01-ts-basics.html" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      Node
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/node/node/01-observer-mode.html" class="nav-link"><i class="undefined"></i>
+  Node
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/node/koa/01-koa-basics.html" class="nav-link"><i class="undefined"></i>
+  Koa
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      工程化
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-network/01-http.html" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-basics/01-computer-operating-system.html" class="nav-link"><i class="undefined"></i>
+  计算机基础
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/browser/01-fe-browser-cache.html" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/webpack/01-webpack-notes-01.html" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/git/01-git-usage.html" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/sql/01-sql-basics.html" class="nav-link"><i class="undefined"></i>
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/performance/01-performance-optimization.html" class="nav-link"><i class="undefined"></i>
+  性能优化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/other/01-vscode-shortcutkey.html" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-document"></i>
+      算法
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/data-structure/01-complexity.html" class="nav-link"><i class="undefined"></i>
+  DataStructure
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/leetcode/02-string.html" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-coding"></i>
+      项目
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/project/yolo-ui/01-yolo-preface.html" class="nav-link"><i class="undefined"></i>
+  yolo-ui
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/project/md-to-html/01-handwritten-md-to-html.html" class="nav-link"><i class="undefined"></i>
+  md-to-html
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/categories/数据结构/" class="nav-link"><i class="undefined"></i>
+  数据结构
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/LeetCode/" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/浏览器/" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/工程化/" class="nav-link"><i class="undefined"></i>
+  工程化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/计算机网络/" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/git/" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/其他/" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/webpack/" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/CSS/" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/HTML/" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/JavaScript/" class="nav-link"><i class="undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/React/" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/TypeScript/" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/项目/" class="nav-link"><i class="undefined"></i>
+  项目
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      联系
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/izph" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-999d3bb4></div> <aside class="sidebar" data-v-999d3bb4><div class="personal-info-wrapper" data-v-e2878dae data-v-999d3bb4><img src="/blog/z.jpg" alt="author-avatar" class="personal-img" data-v-e2878dae> <h3 class="name" data-v-e2878dae>
+    iZph
+  </h3> <div class="num" data-v-e2878dae><div data-v-e2878dae><h3 data-v-e2878dae>104</h3> <h6 data-v-e2878dae>Articles</h6></div> <div data-v-e2878dae><h3 data-v-e2878dae>45</h3> <h6 data-v-e2878dae>Tags</h6></div></div> <ul class="social-links" data-v-e2878dae></ul> <hr data-v-e2878dae></div> <nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/html/01-html-note-01.html" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/css/01-css-note-01.html" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><h4>JavaScript</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/02-high-quality-code.html" class="nav-link"><i class="undefined"></i>
+  ECMAScript
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/dom/01-dom-note-01.html" class="nav-link"><i class="undefined"></i>
+  DOM
+</a></li><li class="dropdown-subitem"><a href="/blog/docs/front-end/javascript/bom/01-bom-note-01.html" class="nav-link"><i class="undefined"></i>
+  BOM
+</a></li></ul></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/react/01-react-bascis.html" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/front-end/typescript/01-ts-basics.html" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-blog"></i>
+      Node
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/node/node/01-observer-mode.html" class="nav-link"><i class="undefined"></i>
+  Node
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/node/koa/01-koa-basics.html" class="nav-link"><i class="undefined"></i>
+  Koa
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      工程化
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-network/01-http.html" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/computer-basics/01-computer-operating-system.html" class="nav-link"><i class="undefined"></i>
+  计算机基础
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/browser/01-fe-browser-cache.html" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/webpack/01-webpack-notes-01.html" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/git/01-git-usage.html" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/sql/01-sql-basics.html" class="nav-link"><i class="undefined"></i>
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/performance/01-performance-optimization.html" class="nav-link"><i class="undefined"></i>
+  性能优化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/engineering/other/01-vscode-shortcutkey.html" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-document"></i>
+      算法
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/data-structure/01-complexity.html" class="nav-link"><i class="undefined"></i>
+  DataStructure
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/algorithm/leetcode/02-string.html" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-coding"></i>
+      项目
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/docs/project/yolo-ui/01-yolo-preface.html" class="nav-link"><i class="undefined"></i>
+  yolo-ui
+</a></li><li class="dropdown-item"><!----> <a href="/blog/docs/project/md-to-html/01-handwritten-md-to-html.html" class="nav-link"><i class="undefined"></i>
+  md-to-html
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/categories/数据结构/" class="nav-link"><i class="undefined"></i>
+  数据结构
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/LeetCode/" class="nav-link"><i class="undefined"></i>
+  LeetCode
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/浏览器/" class="nav-link"><i class="undefined"></i>
+  浏览器
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/工程化/" class="nav-link"><i class="undefined"></i>
+  工程化
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/计算机网络/" class="nav-link"><i class="undefined"></i>
+  计算机网络
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/git/" class="nav-link"><i class="undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/其他/" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/webpack/" class="nav-link"><i class="undefined"></i>
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/后端/" class="nav-link"><i class="undefined"></i>
+  后端
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/CSS/" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/HTML/" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/JavaScript/" class="nav-link"><i class="undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/React/" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/TypeScript/" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/blog/categories/项目/" class="nav-link"><i class="undefined"></i>
+  项目
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      联系
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/izph" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav> <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Webpack</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/engineering/webpack/webpack-notes-01/" class="sidebar-link">webpack笔记（一）</a></li><li><a href="/blog/engineering/webpack/webpack-notes-02/" aria-current="page" class="active sidebar-link">webpack笔记（二）</a></li><li><a href="/blog/engineering/webpack/webpack-advanced/" class="sidebar-link">webpack进阶用法</a></li><li><a href="/blog/engineering/webpack/webpack-ssr/" class="sidebar-link">webpack实现ssr打包</a></li><li><a href="/blog/engineering/webpack/webpack-build-config/" class="sidebar-link">可维护的webpack构建配置</a></li><li><a href="/blog/engineering/webpack/webpack-speed-volume/" class="sidebar-link">webpack构建速度和优化体积</a></li><li><a href="/blog/engineering/webpack/webpack-source-code/" class="sidebar-link">通过源码掌握webpack打包原理</a></li><li><a href="/blog/engineering/webpack/webpack-loader-plugin/" class="sidebar-link">实现loader和plugin</a></li><li><a href="/blog/engineering/webpack/webpack-five/" class="sidebar-link">webpack5</a></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-067bd032 data-v-999d3bb4><h3 class="title" data-v-067bd032 data-v-067bd032>webpack笔记（二）</h3> <!----> <label id="box" class="inputBox" data-v-067bd032 data-v-067bd032><input type="password" value="" data-v-067bd032> <span data-v-067bd032>Konck! Knock!</span> <button data-v-067bd032>OK</button></label> <div class="footer" data-v-067bd032 data-v-067bd032><span data-v-067bd032><i class="iconfont reco-theme" data-v-067bd032></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-067bd032>vuePress-theme-reco</a></span> <span data-v-067bd032><i class="iconfont reco-copyright" data-v-067bd032></i> <a data-v-067bd032><span data-v-067bd032>iZph</span>
+            
+          <span data-v-067bd032>2020 - </span>
+          2024
+        </a></span></div></div> <div data-v-999d3bb4><main class="page" style="padding-right:0;"><section><div class="page-title"><h1 class="title">webpack笔记（二）</h1> <div data-v-10e19382><i class="iconfont reco-account" data-v-10e19382><span data-v-10e19382>iZph</span></i> <i class="iconfont reco-date" data-v-10e19382><span data-v-10e19382>3/27/2021</span></i> <!----> <i class="tags iconfont reco-tag" data-v-10e19382><span class="tag-item" data-v-10e19382>工程化</span><span class="tag-item" data-v-10e19382>webpack</span></i></div></div> <div class="theme-reco-content content__default"><h1 id="webpack笔记"><a href="#webpack笔记" class="header-anchor">#</a> Webpack笔记</h1> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token punctuation">{</span> resolve <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'path'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> HtmlWebpackPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'html-webpack-plugin'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> MiniCssExtractPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'mini-css-extract-plugin'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> OptimizeCssAssetsWebpackPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'optimize-css-assets-webpack-plugin'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 压缩css</span>
+
+<span class="token keyword">const</span> WorkboxWebpackPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'workbox-webpack-plugin'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> AddAssetHtmlWebpackPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'add-asset-html-webpack-plugin'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 每次执行npm run build 会发现dist文件夹里会残留上次打包的文件，</span>
+<span class="token comment">// 这里我们推荐一个plugin来帮我们在打包输出前清空文件夹clean-webpack-plugin</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> CleanWebpackPlugin <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'clean-webpack-plugin'</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">/*
+  PWA: 渐进式网络开发应用程序(离线可访问)
+    workbox --&gt; workbox-webpack-plugin
+*/</span>
+
+<span class="token comment">// 一个入口文件index.js，它又引入了其他css、js依赖文件，这些依赖最终</span>
+<span class="token comment">// 和入口文件形成一个文件，我们叫这个为chunk，也叫代码块</span>
+
+<span class="token comment">/*
+  缓存：
+    babel缓存   开起babel缓存，不然每一次都需要babel转化
+      cacheDirectory: true
+      --&gt; 让第二次打包构建速度更快
+  
+    文件资源缓存  hash
+      hash: 每次wepack构建时会生成一个唯一的hash值。只要构建，都会发送变化
+        问题: 因为js和css同时使用一个hash值。
+          如果重新打包，会导致所有缓存失效。（可能我却只改动一个文件）
+      chunkhash：根据chunk生成的hash值。如果打包来源于同一个chunk，那么hash值就一样
+
+        问题: js和css的hash值还是一样的
+          因为css是在js中被引入的，所以同属于一个chunk
+
+      contenthash: 根据文件的内容生成hash值。不同的文件hash值一定不一样 
+  
+      维护hsah值的变化，就能知道这个文件有没有更新（就是说有没有修改这个文件的代码）
+
+      --&gt; 让代码上线运行缓存更好使用
+*/</span>
+
+
+<span class="token comment">/* tree shaking 树摇、树震
+  tree shaking：去除无用代码（去除无用的js、cssdiam） 其实就是按需导入
+    没有用到的资源 就不引用、不加载
+    即使在文件里面引入了，但是没有使用，也不会加载
+    没有用到的资源 也不会打包的压缩文件中！
+
+    前提：1. 必须使用ES6模块化  2. 开启production环境
+    （只要满足这个两个条件，默认开启tree shaking）
+    作用: 减少代码体积
+
+    在package.json中配置 
+      &quot;sideEffects&quot;: false 所有代码都没有副作用（都可以进行tree shaking）
+        问题：可能会把css / @babel/polyfill （副作用）文件干掉
+
+      &quot;sideEffects&quot;: [&quot;*.css&quot;, &quot;*.less&quot;]  标记css、less不使用tree shaking
+*/</span>
+
+
+<span class="token comment">// 定义nodejs环境变量：决定使用browserslist的哪个环境</span>
+process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">=</span> <span class="token string">'production'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 复用loader</span>
+<span class="token keyword">const</span> commonCssLoader <span class="token operator">=</span> <span class="token punctuation">[</span>
+  MiniCssExtractPlugin<span class="token punctuation">.</span>loader<span class="token punctuation">,</span>
+  <span class="token string">'css-loader'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    <span class="token comment">// 还需要在package.json中定义browserslist</span>
+    <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'postcss-loader'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">ident</span><span class="token operator">:</span> <span class="token string">'postcss'</span><span class="token punctuation">,</span>
+      <span class="token function-variable function">plugins</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">[</span><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'postcss-preset-env'</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 单入口</span>
+  <span class="token comment">// entry: './src/js/index.js',</span>
+
+  <span class="token comment">// 现在多入口，代码分割 code split</span>
+  <span class="token comment">// 有多少个入口文件，就会输出多少个bundle</span>
+  <span class="token literal-property property">entry</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">index</span><span class="token operator">:</span> <span class="token string">'./src/js/index.js'</span><span class="token punctuation">,</span> <span class="token comment">//输出index</span>
+    <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token string">'./src/js/test.js'</span><span class="token punctuation">,</span><span class="token comment">// 输出test</span>
+    <span class="token literal-property property">main</span><span class="token operator">:</span> <span class="token string">'./src/js/tets2.js'</span> <span class="token comment">// 输出main  在output的filename设置[name]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">output</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">// filename: 'js/built.[contenthash:10].js', // 10位hash值</span>
+    <span class="token literal-property property">filename</span><span class="token operator">:</span> <span class="token string">'js/[name].[contenthash:10].js'</span><span class="token punctuation">,</span> <span class="token comment">// 10位hash值, name取原来的文件名</span>
+    <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'build'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token comment">// loader</span>
+  <span class="token literal-property property">module</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">rules</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.css$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token literal-property property">use</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">'style-loader'</span><span class="token punctuation">,</span> <span class="token comment">//添加到head</span>
+          <span class="token string">'css-loader'</span><span class="token punctuation">,</span> <span class="token comment">// 将css添加到js中</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+      <span class="token comment">// 以下loader只会匹配一个</span>
+      <span class="token comment">// 注意：不能有两个配置处理同一种类型文件</span>
+      <span class="token comment">// 在oneOf里面只会匹配一个 处理同种文件的loader，</span>
+      <span class="token punctuation">{</span> <span class="token literal-property property">oneOf</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+      <span class="token punctuation">{</span>
+        <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.css$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token literal-property property">use</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token comment">// 创建style标签，将样式放入</span>
+          <span class="token comment">// 'style-loader', </span>
+          <span class="token comment">// 这个loader取代style-loader。作用：提取js中的css成单独文件</span>
+          MiniCssExtractPlugin<span class="token punctuation">.</span>loader<span class="token punctuation">,</span>
+          <span class="token comment">// 将css文件整合到js文件中</span>
+          <span class="token string">'css-loader'</span><span class="token punctuation">,</span>
+          <span class="token comment">/*
+      css兼容性处理：postcss --&gt; postcss-loader postcss-preset-env
+ 
+      帮postcss找到package.json中browserslist里面的配置，通过配置加载指定的css兼容性样式
+ 
+      &quot;browserslist&quot;: {
+        // 开发环境 --&gt; 设置node环境变量：process.env.NODE_ENV = development
+        &quot;development&quot;: [
+          &quot;last 1 chrome version&quot;,
+          &quot;last 1 firefox version&quot;,
+          &quot;last 1 safari version&quot;
+        ],
+        // 生产环境：默认是看生产环境
+        &quot;production&quot;: [
+          &quot;&gt;0.2%&quot;,
+          &quot;not dead&quot;,
+          &quot;not op_mini all&quot;
+        ]
+      }
+    */</span>
+          <span class="token comment">// 使用loader的默认配置</span>
+          <span class="token comment">// 'postcss-loader',</span>
+          <span class="token comment">// 修改loader的配置</span>
+          <span class="token punctuation">{</span>
+            <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'postcss-loader'</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token literal-property property">ident</span><span class="token operator">:</span> <span class="token string">'postcss'</span><span class="token punctuation">,</span>
+              <span class="token function-variable function">plugins</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">[</span>
+                <span class="token comment">// postcss的插件</span>
+                <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'postcss-preset-env'</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+              <span class="token punctuation">]</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.less</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token literal-property property">use</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token operator">...</span>commonCssLoader<span class="token punctuation">,</span> <span class="token string">'less-loader'</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token comment">// 问题：默认处理不了html中img图片</span>
+        <span class="token comment">// 处理图片资源</span>
+        <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.(jpg|png|gif)$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token comment">// 使用一个loader</span>
+        <span class="token comment">// 下载 url-loader file-loader</span>
+        <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'url-loader'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token comment">// 图片大小小于8kb，就会被base64处理</span>
+          <span class="token comment">// 优点: 减少请求数量（减轻服务器压力）</span>
+          <span class="token comment">// 缺点：图片体积会更大（文件请求速度更慢）</span>
+          <span class="token literal-property property">limit</span><span class="token operator">:</span> <span class="token number">8</span> <span class="token operator">*</span> <span class="token number">1024</span><span class="token punctuation">,</span>
+          <span class="token comment">// 问题：因为url-loader默认使用es6模块化解析，而html-loader引入图片是commonjs</span>
+          <span class="token comment">// 解析时会出问题：[object Module]</span>
+          <span class="token comment">// 解决：关闭url-loader的es6模块化，使用commonjs解析</span>
+          <span class="token literal-property property">esModule</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+          <span class="token comment">// 给图片进行重命名</span>
+          <span class="token comment">// [hash:10]取图片的hash的前10位</span>
+          <span class="token comment">// [ext]取文件原来扩展名</span>
+          <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'[contenthash:10].[ext]'</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">outputPath</span><span class="token operator">:</span> <span class="token string">'imgs'</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.html$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token comment">// 处理html文件的img图片（负责引入img，从而能被url-loader进行处理）</span>
+        <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'html-loader'</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment">// 打包其他资源(除了html/js/css资源以外的资源)</span>
+      <span class="token punctuation">{</span>
+        <span class="token comment">// 排除css/js/html资源</span>
+        <span class="token comment">// 不是use</span>
+        <span class="token literal-property property">exclude</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.(css|js|html|less)$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'file-loader'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'[contenthash:10].[ext]'</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">outputPath</span><span class="token operator">:</span> <span class="token string">'media'</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment">/*
+      语法检查： eslint-loader  eslint
+        注意：只检查自己写的源代码，第三方的库是不用检查的
+        设置检查规则：
+          package.json中eslintConfig中设置~
+            &quot;eslintConfig&quot;: {
+              &quot;extends&quot;: &quot;airbnb-base&quot;
+            }
+          airbnb --&gt; eslint-config-airbnb-base  eslint-plugin-import eslint
+    */</span>
+
+      <span class="token comment">/*
+  正常来讲，一个文件只能被一个loader处理。
+  当一个文件要被多个loader处理，那么一定要指定loader执行的先后顺序：
+    先执行eslint 在执行babel
+*/</span>
+      <span class="token punctuation">{</span>
+        <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.js$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token literal-property property">exclude</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">node_modules</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+
+        <span class="token comment">// 优先执行</span>
+        <span class="token literal-property property">enforce</span><span class="token operator">:</span> <span class="token string">'pre'</span><span class="token punctuation">,</span>
+
+        <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'eslint-loader'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token comment">// 自动修复eslint的错误</span>
+          <span class="token literal-property property">fix</span><span class="token operator">:</span> <span class="token boolean">true</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment">/*
+      js兼容性处理：babel-loader @babel/core 
+        1. 基本js兼容性处理 --&gt; @babel/preset-env
+          问题：只能转换基本语法，如promise高级语法不能转换
+        2. 全部js兼容性处理 --&gt; @babel/polyfill  
+          问题：我只要解决部分兼容性问题，但是将所有兼容性代码全部引入，体积太大了~
+        3. 需要做兼容性处理的就做：按需加载  --&gt; core-js
+    */</span>
+      <span class="token punctuation">{</span>
+        <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.js$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token literal-property property">exclude</span><span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">node_modules</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
+        <span class="token comment">// 同时使用多个loader  用use数组，多个可以直接配置</span>
+        <span class="token literal-property property">use</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token comment">/* 
+              开启多线程打包。 
+              进程启动大概为600ms，进程通信也有开销。
+              只有工作消耗时间比较长，才需要多线程打包
+          */</span>
+          <span class="token punctuation">{</span>
+            <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'thread-loader'</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token literal-property property">workers</span><span class="token operator">:</span> <span class="token number">2</span> <span class="token comment">// 进程2个</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token literal-property property">loader</span><span class="token operator">:</span> <span class="token string">'babel-loader'</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token comment">// 预设：指示babel做怎么样的兼容性处理</span>
+              <span class="token literal-property property">presets</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">[</span>
+                  <span class="token string">'@babel/preset-env'</span><span class="token punctuation">,</span>
+                  <span class="token punctuation">{</span>
+                    <span class="token comment">// 按需加载</span>
+                    <span class="token literal-property property">useBuiltIns</span><span class="token operator">:</span> <span class="token string">'usage'</span><span class="token punctuation">,</span>
+                    <span class="token comment">// 指定core-js版本</span>
+                    <span class="token literal-property property">corejs</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                      <span class="token literal-property property">version</span><span class="token operator">:</span> <span class="token number">3</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    <span class="token comment">// 指定兼容性做到哪个版本浏览器</span>
+                    <span class="token literal-property property">targets</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                      <span class="token literal-property property">chrome</span><span class="token operator">:</span> <span class="token string">'60'</span><span class="token punctuation">,</span>
+                      <span class="token literal-property property">firefox</span><span class="token operator">:</span> <span class="token string">'60'</span><span class="token punctuation">,</span>
+                      <span class="token literal-property property">ie</span><span class="token operator">:</span> <span class="token string">'9'</span><span class="token punctuation">,</span>
+                      <span class="token literal-property property">safari</span><span class="token operator">:</span> <span class="token string">'10'</span><span class="token punctuation">,</span>
+                      <span class="token literal-property property">edge</span><span class="token operator">:</span> <span class="token string">'17'</span>
+                    <span class="token punctuation">}</span>
+                  <span class="token punctuation">}</span>
+                <span class="token punctuation">]</span>
+              <span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+              <span class="token comment">// 开启babel缓存</span>
+              <span class="token comment">// 第二次构建时，会读取之前的缓存, 速度会更快一点</span>
+              <span class="token literal-property property">cacheDirectory</span><span class="token operator">:</span> <span class="token boolean">true</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token comment">// plugins的配置</span>
+    <span class="token comment">// html-webpack-plugin</span>
+    <span class="token comment">// 功能：默认会创建一个空的HTML，自动引入打包输出的所有资源（JS/CSS）</span>
+    <span class="token comment">// 需求：需要有结构的HTML文件</span>
+    <span class="token keyword">new</span> <span class="token class-name">HtmlWebpackPlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token comment">// 复制 './src/index.html' 文件，并自动引入打包输出的所有资源（JS/CSS）</span>
+      <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token string">'./src/index.html'</span><span class="token punctuation">,</span>
+      <span class="token comment">// 压缩html代码</span>
+      <span class="token literal-property property">minify</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 移除空格</span>
+        <span class="token literal-property property">collapseWhitespace</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        <span class="token comment">// 移除注释</span>
+        <span class="token literal-property property">removeComments</span><span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">//提取js中的css成单独文件</span>
+    <span class="token keyword">new</span> <span class="token class-name">MiniCssExtractPlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token comment">// 对输出的css文件进行重命名</span>
+      <span class="token literal-property property">filename</span><span class="token operator">:</span> <span class="token string">'css/built.css'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 打包输出前清空文件夹clean-webpack-plugin</span>
+    <span class="token keyword">new</span> <span class="token class-name">CleanWebpackPlugin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 压缩css</span>
+    <span class="token keyword">new</span> <span class="token class-name">OptimizeCssAssetsWebpackPlugin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 离线访问PWA</span>
+    <span class="token keyword">new</span> <span class="token class-name">WorkboxWebpackPlugin<span class="token punctuation">.</span>GenerateSW</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token comment">/*
+        1. 帮助serviceworker快速启动
+        2. 删除旧的 serviceworker
+ 
+        生成一个 serviceworker 配置文件~
+      */</span>
+      <span class="token literal-property property">clientsClaim</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">skipWaiting</span><span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 告诉webpack哪些库不参与打包，同时使用时的名称也得变~</span>
+    <span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>DllReferencePlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token literal-property property">manifest</span><span class="token operator">:</span> <span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'dll/manifest.json'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 将某个文件打包输出去，并在html中自动引入该资源</span>
+    <span class="token keyword">new</span> <span class="token class-name">AddAssetHtmlWebpackPlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token literal-property property">filepath</span><span class="token operator">:</span> <span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'dll/jquery.js'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token comment">/*
+  1. 可以将node_modules中代码单独打包一个chunk最终输出（单入口）
+  2. 自动分析多入口文件的chunk中，有没有公共的文件。如果有会打包成单独一个chunk
+*/</span>
+  <span class="token literal-property property">optimization</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">splitChunks</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token comment">// 解决代码引入的复用问题，不会重复打包多次</span>
+      <span class="token literal-property property">chunks</span><span class="token operator">:</span> <span class="token string">'all'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+  <span class="token literal-property property">mode</span><span class="token operator">:</span> <span class="token string">&quot;development&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// 生产环境下会自动压缩js代码</span>
+  <span class="token comment">//mode: 'production',</span>
+
+
+  <span class="token comment">// 开发服务器 devServer：用来自动化（自动编译，自动打开浏览器，自动刷新浏览器~~）</span>
+  <span class="token comment">// 特点：只会在内存中编译打包，不会有任何输出</span>
+  <span class="token comment">// 启动devServer指令为：npx webpack-dev-server</span>
+  <span class="token comment">// devServer只能在 开发环境使用，生产环境不需要</span>
+  <span class="token literal-property property">devServer</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 项目构建后路径</span>
+    <span class="token literal-property property">contentBase</span><span class="token operator">:</span> <span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'build'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 启动gzip压缩</span>
+    <span class="token literal-property property">compress</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token comment">// 端口号</span>
+    <span class="token literal-property property">port</span><span class="token operator">:</span> <span class="token number">3000</span><span class="token punctuation">,</span>
+    <span class="token comment">// 自动打开浏览器</span>
+    <span class="token literal-property property">open</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// 开启HMR功能(webpack优化配置)</span>
+    <span class="token comment">// 当修改了webpack配置，新配置要想生效，必须重新webpack服务</span>
+    <span class="token literal-property property">hot</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token comment">// HMR只能在 开发环境使用，生产环境不需要</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token comment">// 拒绝XXX包 被打包进来，再用cdn 引进来(srcipt标签引入、link引入)</span>
+  <span class="token comment">// CDN内容分发网络，分布式存放静态资源，缓解服务器压力，</span>
+  <span class="token comment">// 就近获取资源，加快访问速度</span>
+  <span class="token comment">// 我们开发过程中，如果发现某些包需要用cdn引入进来，就可以使用externals</span>
+  <span class="token literal-property property">externals</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 拒绝jQuery被打包进来</span>
+    <span class="token literal-property property">jquery</span><span class="token operator">:</span> <span class="token string">'jQuery'</span>
+    <span class="token comment">// jquery: '$'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">devtool</span><span class="token operator">:</span> <span class="token string">'eval-source-map'</span> <span class="token comment">//source-map(生成)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/*
+  source-map: 一种 提供源代码到构建后代码映射 技术 （如果构建后代码出错了，通过映射可以追踪源代码错误）
+
+    [inline-|hidden-|eval-][nosources-][cheap-[module-]]source-map
+
+    source-map：外部, 生成xxx.js.map文件
+      显示出 错误代码准确信息 和 源代码的错误位置
+
+    inline-source-map：内联
+      只生成一个内联source-map
+
+      错误代码准确信息 和 源代码的错误位置
+
+    eval-source-map：内联
+    每一个文件都生成对应的source-map，都在eval
+    错误代码准确信息 和 源代码的错误位置(文件后面会多一个hash值，print.js?8d3a)
+
+    hidden-source-map：外部    为了隐藏源代码而诞生的
+      错误代码错误原因，但是没有源代码的错误位置
+      不能追踪源代码错误，只能提示到构建后代码的错误位置
+
+    nosources-source-map：外部    为了隐藏源代码而诞生的
+      错误代码准确信息, 但是没有任何源代码信息(找不到任何代码信息)
+
+    cheap-source-map：外部
+      错误代码准确信息 和 源代码的错误位置 
+      只能精确的行的错误，不能精确到列
+      （比如第四行只是后面的一个代码错误，但是是整行报错，而source-map可以准确提示哪一行
+        的那一列出错了，同一行没错误的分号(;) 不提示错误
+      ）
+
+    cheap-module-source-map：外部
+      错误代码准确信息 和 源代码的错误位置 
+
+      有module，会将loader的source map加入
+
+    内联 和 外部的区别：1. 外部生成了文件，内联没有 2. 内联构建速度更快
+
+    开发环境：速度快，调试更友好
+      速度快(eval&gt;inline&gt;cheap&gt;...)
+        eval-cheap-souce-map  (有cheap 只精确到行)
+        eval-source-map
+      调试更友好  
+        souce-map
+        cheap-module-souce-map(module会将loader的source map加入)
+        cheap-souce-map
+
+      --&gt; eval-source-map(调试最友好)  / eval-cheap-module-souce-map(调试性能最友好)
+        react脚手架默认使用的是 eval-source-map
+
+    生产环境：源代码要不要隐藏? 调试要不要更友好
+      内联会让代码体积变大，所以在生产环境不用内联，
+      我们要让体积变小，就不要内联，而采用外联的方式
+      nosources-source-map 全部隐藏（源码和构建后的代码都会隐藏）
+      hidden-source-map 只隐藏源代码，会提示构建后代码错误信息
+
+      --&gt; source-map(调试友好) / cheap-module-souce-map（cheap的速度会快一点）
+
+  
+*/</span>
+
+
+
+
+
+<span class="token comment">/*
+  后端服务器代码
+  启动服务器指令：
+    npm i nodemon -g
+    nodemon server.js
+
+    node server.js
+  访问服务器地址：
+    http://localhost:3000
+
+*/</span>
+<span class="token keyword">const</span> express <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'express'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">express</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// express.static向外暴露静态资源</span>
+<span class="token comment">// maxAge 资源缓存的最大时间，单位ms</span>
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>express<span class="token punctuation">.</span><span class="token function">static</span><span class="token punctuation">(</span><span class="token string">'build'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">maxAge</span><span class="token operator">:</span> <span class="token number">1000</span> <span class="token operator">*</span> <span class="token number">3600</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+
+<span class="token comment">// ES10 通过JS代码 ，将某个文件单独打包成一个chunk</span>
+<span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">'./test'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'加载失败'</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/*
+  通过js代码，让某个文件被单独打包成一个chunk
+  import动态导入语法：能将某个文件单独打包
+*/</span>
+<span class="token comment">/* webpackChunkName: 'test' */</span>  <span class="token comment">// 魔法注释当注解用了,标注打包后的文件名为test</span>
+<span class="token comment">// 类似路由的懒加载</span>
+<span class="token keyword">import</span><span class="token punctuation">(</span><span class="token comment">/* webpackChunkName: 'test' */</span><span class="token string">'./test'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> mul<span class="token punctuation">,</span> count <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 文件加载成功~</span>
+    <span class="token comment">// eslint-disable-next-line</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">mul</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// eslint-disable-next-line</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'文件加载失败~'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// eslint-disable-next-line</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+
+<span class="token comment">// 懒加载~：当文件需要使用时才加载~  initator显示的 也是 (prefetch cache) </span>
+<span class="token comment">// 预加载 prefetch：会在使用之前，提前加载js文件</span>
+<span class="token comment">// 正常加载可以认为是并行加载（同一时间加载多个文件）</span>
+
+<span class="token comment">// 预加载 prefetch：等其他资源加载完毕，浏览器空闲了，再偷偷加载资源</span>
+<span class="token comment">// 预加载是刷新的时候一上来就会加载，等我们触发的时候 会获取之前的(prefetch cache)，</span>
+<span class="token comment">// 制造出了一个重新加载的假象</span>
+<span class="token comment">// initator显示的是(prefetch cache)</span>
+
+<span class="token comment">//  将import('./test') 放到异步函数，就是懒加载.</span>
+<span class="token comment">//  懒加载必定会分割代码，生成新的chunk</span>
+<span class="token keyword">import</span><span class="token punctuation">(</span><span class="token comment">/* webpackChunkName: 'test', webpackPrefetch: true */</span><span class="token string">'./test'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> mul <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">mul</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token comment">// CDN用来托管静态资源，就近获取，加快访问速度，缓解服务器压力</span>
+<span class="token comment">// 还可以防止一些网络的攻击</span>
+<span class="token comment">// cdn的原理是：</span>
+<span class="token comment">// 本地DNS系统解析的时候，发现该URL对应的是一个CDN专用的DNS服务器，</span>
+<span class="token comment">// 将解析权利交给了 专门处理CDN的DNS服务处理</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br><span class="line-number">188</span><br><span class="line-number">189</span><br><span class="line-number">190</span><br><span class="line-number">191</span><br><span class="line-number">192</span><br><span class="line-number">193</span><br><span class="line-number">194</span><br><span class="line-number">195</span><br><span class="line-number">196</span><br><span class="line-number">197</span><br><span class="line-number">198</span><br><span class="line-number">199</span><br><span class="line-number">200</span><br><span class="line-number">201</span><br><span class="line-number">202</span><br><span class="line-number">203</span><br><span class="line-number">204</span><br><span class="line-number">205</span><br><span class="line-number">206</span><br><span class="line-number">207</span><br><span class="line-number">208</span><br><span class="line-number">209</span><br><span class="line-number">210</span><br><span class="line-number">211</span><br><span class="line-number">212</span><br><span class="line-number">213</span><br><span class="line-number">214</span><br><span class="line-number">215</span><br><span class="line-number">216</span><br><span class="line-number">217</span><br><span class="line-number">218</span><br><span class="line-number">219</span><br><span class="line-number">220</span><br><span class="line-number">221</span><br><span class="line-number">222</span><br><span class="line-number">223</span><br><span class="line-number">224</span><br><span class="line-number">225</span><br><span class="line-number">226</span><br><span class="line-number">227</span><br><span class="line-number">228</span><br><span class="line-number">229</span><br><span class="line-number">230</span><br><span class="line-number">231</span><br><span class="line-number">232</span><br><span class="line-number">233</span><br><span class="line-number">234</span><br><span class="line-number">235</span><br><span class="line-number">236</span><br><span class="line-number">237</span><br><span class="line-number">238</span><br><span class="line-number">239</span><br><span class="line-number">240</span><br><span class="line-number">241</span><br><span class="line-number">242</span><br><span class="line-number">243</span><br><span class="line-number">244</span><br><span class="line-number">245</span><br><span class="line-number">246</span><br><span class="line-number">247</span><br><span class="line-number">248</span><br><span class="line-number">249</span><br><span class="line-number">250</span><br><span class="line-number">251</span><br><span class="line-number">252</span><br><span class="line-number">253</span><br><span class="line-number">254</span><br><span class="line-number">255</span><br><span class="line-number">256</span><br><span class="line-number">257</span><br><span class="line-number">258</span><br><span class="line-number">259</span><br><span class="line-number">260</span><br><span class="line-number">261</span><br><span class="line-number">262</span><br><span class="line-number">263</span><br><span class="line-number">264</span><br><span class="line-number">265</span><br><span class="line-number">266</span><br><span class="line-number">267</span><br><span class="line-number">268</span><br><span class="line-number">269</span><br><span class="line-number">270</span><br><span class="line-number">271</span><br><span class="line-number">272</span><br><span class="line-number">273</span><br><span class="line-number">274</span><br><span class="line-number">275</span><br><span class="line-number">276</span><br><span class="line-number">277</span><br><span class="line-number">278</span><br><span class="line-number">279</span><br><span class="line-number">280</span><br><span class="line-number">281</span><br><span class="line-number">282</span><br><span class="line-number">283</span><br><span class="line-number">284</span><br><span class="line-number">285</span><br><span class="line-number">286</span><br><span class="line-number">287</span><br><span class="line-number">288</span><br><span class="line-number">289</span><br><span class="line-number">290</span><br><span class="line-number">291</span><br><span class="line-number">292</span><br><span class="line-number">293</span><br><span class="line-number">294</span><br><span class="line-number">295</span><br><span class="line-number">296</span><br><span class="line-number">297</span><br><span class="line-number">298</span><br><span class="line-number">299</span><br><span class="line-number">300</span><br><span class="line-number">301</span><br><span class="line-number">302</span><br><span class="line-number">303</span><br><span class="line-number">304</span><br><span class="line-number">305</span><br><span class="line-number">306</span><br><span class="line-number">307</span><br><span class="line-number">308</span><br><span class="line-number">309</span><br><span class="line-number">310</span><br><span class="line-number">311</span><br><span class="line-number">312</span><br><span class="line-number">313</span><br><span class="line-number">314</span><br><span class="line-number">315</span><br><span class="line-number">316</span><br><span class="line-number">317</span><br><span class="line-number">318</span><br><span class="line-number">319</span><br><span class="line-number">320</span><br><span class="line-number">321</span><br><span class="line-number">322</span><br><span class="line-number">323</span><br><span class="line-number">324</span><br><span class="line-number">325</span><br><span class="line-number">326</span><br><span class="line-number">327</span><br><span class="line-number">328</span><br><span class="line-number">329</span><br><span class="line-number">330</span><br><span class="line-number">331</span><br><span class="line-number">332</span><br><span class="line-number">333</span><br><span class="line-number">334</span><br><span class="line-number">335</span><br><span class="line-number">336</span><br><span class="line-number">337</span><br><span class="line-number">338</span><br><span class="line-number">339</span><br><span class="line-number">340</span><br><span class="line-number">341</span><br><span class="line-number">342</span><br><span class="line-number">343</span><br><span class="line-number">344</span><br><span class="line-number">345</span><br><span class="line-number">346</span><br><span class="line-number">347</span><br><span class="line-number">348</span><br><span class="line-number">349</span><br><span class="line-number">350</span><br><span class="line-number">351</span><br><span class="line-number">352</span><br><span class="line-number">353</span><br><span class="line-number">354</span><br><span class="line-number">355</span><br><span class="line-number">356</span><br><span class="line-number">357</span><br><span class="line-number">358</span><br><span class="line-number">359</span><br><span class="line-number">360</span><br><span class="line-number">361</span><br><span class="line-number">362</span><br><span class="line-number">363</span><br><span class="line-number">364</span><br><span class="line-number">365</span><br><span class="line-number">366</span><br><span class="line-number">367</span><br><span class="line-number">368</span><br><span class="line-number">369</span><br><span class="line-number">370</span><br><span class="line-number">371</span><br><span class="line-number">372</span><br><span class="line-number">373</span><br><span class="line-number">374</span><br><span class="line-number">375</span><br><span class="line-number">376</span><br><span class="line-number">377</span><br><span class="line-number">378</span><br><span class="line-number">379</span><br><span class="line-number">380</span><br><span class="line-number">381</span><br><span class="line-number">382</span><br><span class="line-number">383</span><br><span class="line-number">384</span><br><span class="line-number">385</span><br><span class="line-number">386</span><br><span class="line-number">387</span><br><span class="line-number">388</span><br><span class="line-number">389</span><br><span class="line-number">390</span><br><span class="line-number">391</span><br><span class="line-number">392</span><br><span class="line-number">393</span><br><span class="line-number">394</span><br><span class="line-number">395</span><br><span class="line-number">396</span><br><span class="line-number">397</span><br><span class="line-number">398</span><br><span class="line-number">399</span><br><span class="line-number">400</span><br><span class="line-number">401</span><br><span class="line-number">402</span><br><span class="line-number">403</span><br><span class="line-number">404</span><br><span class="line-number">405</span><br><span class="line-number">406</span><br><span class="line-number">407</span><br><span class="line-number">408</span><br><span class="line-number">409</span><br><span class="line-number">410</span><br><span class="line-number">411</span><br><span class="line-number">412</span><br><span class="line-number">413</span><br><span class="line-number">414</span><br><span class="line-number">415</span><br><span class="line-number">416</span><br><span class="line-number">417</span><br><span class="line-number">418</span><br><span class="line-number">419</span><br><span class="line-number">420</span><br><span class="line-number">421</span><br><span class="line-number">422</span><br><span class="line-number">423</span><br><span class="line-number">424</span><br><span class="line-number">425</span><br><span class="line-number">426</span><br><span class="line-number">427</span><br><span class="line-number">428</span><br><span class="line-number">429</span><br><span class="line-number">430</span><br><span class="line-number">431</span><br><span class="line-number">432</span><br><span class="line-number">433</span><br><span class="line-number">434</span><br><span class="line-number">435</span><br><span class="line-number">436</span><br><span class="line-number">437</span><br><span class="line-number">438</span><br><span class="line-number">439</span><br><span class="line-number">440</span><br><span class="line-number">441</span><br><span class="line-number">442</span><br><span class="line-number">443</span><br><span class="line-number">444</span><br><span class="line-number">445</span><br><span class="line-number">446</span><br><span class="line-number">447</span><br><span class="line-number">448</span><br><span class="line-number">449</span><br><span class="line-number">450</span><br><span class="line-number">451</span><br><span class="line-number">452</span><br><span class="line-number">453</span><br><span class="line-number">454</span><br><span class="line-number">455</span><br><span class="line-number">456</span><br><span class="line-number">457</span><br><span class="line-number">458</span><br><span class="line-number">459</span><br><span class="line-number">460</span><br><span class="line-number">461</span><br><span class="line-number">462</span><br><span class="line-number">463</span><br><span class="line-number">464</span><br><span class="line-number">465</span><br><span class="line-number">466</span><br><span class="line-number">467</span><br><span class="line-number">468</span><br><span class="line-number">469</span><br><span class="line-number">470</span><br><span class="line-number">471</span><br><span class="line-number">472</span><br><span class="line-number">473</span><br><span class="line-number">474</span><br><span class="line-number">475</span><br><span class="line-number">476</span><br><span class="line-number">477</span><br><span class="line-number">478</span><br><span class="line-number">479</span><br><span class="line-number">480</span><br><span class="line-number">481</span><br><span class="line-number">482</span><br><span class="line-number">483</span><br><span class="line-number">484</span><br><span class="line-number">485</span><br><span class="line-number">486</span><br><span class="line-number">487</span><br><span class="line-number">488</span><br><span class="line-number">489</span><br><span class="line-number">490</span><br><span class="line-number">491</span><br><span class="line-number">492</span><br><span class="line-number">493</span><br><span class="line-number">494</span><br><span class="line-number">495</span><br><span class="line-number">496</span><br><span class="line-number">497</span><br><span class="line-number">498</span><br><span class="line-number">499</span><br><span class="line-number">500</span><br><span class="line-number">501</span><br><span class="line-number">502</span><br><span class="line-number">503</span><br><span class="line-number">504</span><br><span class="line-number">505</span><br><span class="line-number">506</span><br><span class="line-number">507</span><br><span class="line-number">508</span><br><span class="line-number">509</span><br><span class="line-number">510</span><br></div></div></div></section> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">5/14/2022, 10:37:34 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev"><a href="/blog/engineering/webpack/webpack-notes-01/" class="prev">
+            webpack笔记（一）
+          </a></span> <span class="next"><a href="/blog/engineering/webpack/webpack-advanced/">
+            webpack进阶用法
+          </a></span></p></div> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:0;" data-v-92abcef6></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-a008c6ba data-v-a008c6ba><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-a008c6ba><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-a008c6ba></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-a008c6ba></path></svg></div></div></div>
+    <script src="/blog/assets/js/app.aa1760e5.js" defer></script><script src="/blog/assets/js/3.a128813b.js" defer></script><script src="/blog/assets/js/1.78c2236b.js" defer></script><script src="/blog/assets/js/72.d01e6ed5.js" defer></script>
+  </body>
+</html>

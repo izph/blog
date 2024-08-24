@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>前端点点滴滴</title>
+  <icon>https://www.gravatar.com/avatar/67ef84fd6756926a6e78ac20429736f2</icon>
+  <subtitle>坚持初衷，成为更好的自己</subtitle>
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2022-10-13T14:29:22.658Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>zhongph</name>
+    <email>izph@foxmail.com</email>
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【React源码】React Concurrent模式</title>
+    <link href="http://example.com/2022/09/11/front_end/react-concurrent/"/>
+    <id>http://example.com/2022/09/11/front_end/react-concurrent/</id>
+    <published>2022-09-10T22:32:08.000Z</published>
+    <updated>2022-10-13T14:29:22.658Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;React-Concurrent模式&quot;&gt;&lt;a href=&quot;#React-Concurrent模式&quot; class=&quot;headerlink&quot; title=&quot;React Concurrent模式&quot;&gt;&lt;/a&gt;React Concurrent模式&lt;/h1&gt;&lt;p&gt;日常开发主要</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React Hooks</title>
+    <link href="http://example.com/2022/08/26/front_end/react-hooks/"/>
+    <id>http://example.com/2022/08/26/front_end/react-hooks/</id>
+    <published>2022-08-25T20:12:49.000Z</published>
+    <updated>2022-10-13T14:22:47.708Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;React-Hooks&quot;&gt;&lt;a href=&quot;#React-Hooks&quot; class=&quot;headerlink&quot; title=&quot;React Hooks&quot;&gt;&lt;/a&gt;React Hooks&lt;/h1&gt;&lt;p&gt;functionComponent有自己对应的fiber，fiber</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React状态更新</title>
+    <link href="http://example.com/2022/08/12/front_end/react-updateState/"/>
+    <id>http://example.com/2022/08/12/front_end/react-updateState/</id>
+    <published>2022-08-11T21:55:32.000Z</published>
+    <updated>2022-10-13T14:20:30.022Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;状态更新的整个流程&quot;&gt;&lt;a href=&quot;#状态更新的整个流程&quot; class=&quot;headerlink&quot; title=&quot;状态更新的整个流程&quot;&gt;&lt;/a&gt;状态更新的整个流程&lt;/h1&gt;&lt;h2 id=&quot;更新&quot;&gt;&lt;a href=&quot;#更新&quot; class=&quot;headerlink&quot; </summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React diff算法</title>
+    <link href="http://example.com/2022/07/23/front_end/react-diff/"/>
+    <id>http://example.com/2022/07/23/front_end/react-diff/</id>
+    <published>2022-07-22T20:02:15.000Z</published>
+    <updated>2022-10-13T14:11:14.583Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;diff算法流程概览&quot;&gt;&lt;a href=&quot;#diff算法流程概览&quot; class=&quot;headerlink&quot; title=&quot;diff算法流程概览&quot;&gt;&lt;/a&gt;diff算法流程概览&lt;/h1&gt;&lt;p&gt;一个&lt;code&gt;DOM节点&lt;/code&gt;在某一时刻最多会有4个节点和他相关。</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React commit阶段</title>
+    <link href="http://example.com/2022/07/01/front_end/react-commit/"/>
+    <id>http://example.com/2022/07/01/front_end/react-commit/</id>
+    <published>2022-06-30T22:33:45.000Z</published>
+    <updated>2022-10-13T17:24:21.712Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;commit阶段&quot;&gt;&lt;a href=&quot;#commit阶段&quot; class=&quot;headerlink&quot; title=&quot;commit阶段&quot;&gt;&lt;/a&gt;commit阶段&lt;/h1&gt;&lt;p&gt;&lt;code&gt;commitRoot&lt;/code&gt;方法是&lt;code&gt;commit阶段&lt;/code</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React的render阶段</title>
+    <link href="http://example.com/2022/06/20/front_end/react-render/"/>
+    <id>http://example.com/2022/06/20/front_end/react-render/</id>
+    <published>2022-06-19T19:25:33.000Z</published>
+    <updated>2022-10-13T17:15:34.844Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;render阶段&quot;&gt;&lt;a href=&quot;#render阶段&quot; class=&quot;headerlink&quot; title=&quot;render阶段&quot;&gt;&lt;/a&gt;render阶段&lt;/h1&gt;&lt;p&gt;&lt;code&gt;render阶段&lt;/code&gt;开始于&lt;code&gt;performSyncWorkO</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【React源码】React的设计理念</title>
+    <link href="http://example.com/2022/05/14/front_end/react-idea/"/>
+    <id>http://example.com/2022/05/14/front_end/react-idea/</id>
+    <published>2022-05-14T08:15:20.000Z</published>
+    <updated>2022-10-13T16:38:53.261Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;React简介&quot;&gt;&lt;a href=&quot;#React简介&quot; class=&quot;headerlink&quot; title=&quot;React简介&quot;&gt;&lt;/a&gt;React简介&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;React 是用 JavaScript 构建&lt;code&gt;快速响应&lt;/code&gt;的大</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React+Mobx6.0</title>
+    <link href="http://example.com/2022/04/17/front_end/react-mobx6/"/>
+    <id>http://example.com/2022/04/17/front_end/react-mobx6/</id>
+    <published>2022-04-16T18:05:10.000Z</published>
+    <updated>2022-07-07T16:32:29.036Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;mobx入门&quot;&gt;&lt;a href=&quot;#mobx入门&quot; class=&quot;headerlink&quot; title=&quot;mobx入门&quot;&gt;&lt;/a&gt;mobx入门&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;在 Mobx6 中不推荐使用装饰器语法，因为它不是 ES 标准&lt;/li&gt;
+&lt;li&gt;mobx：mo</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何搭建一个通用的基础组件库</title>
+    <link href="http://example.com/2022/03/30/engineering/component-library/"/>
+    <id>http://example.com/2022/03/30/engineering/component-library/</id>
+    <published>2022-03-29T20:39:18.000Z</published>
+    <updated>2022-07-10T09:18:13.112Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;作为一名前端程序员，一直以来，我都只是停留在会使用各种优秀的组件库，包括开源和公司内部自研的，从来没有了解过这些组件库是如何开发的。直到现在</summary>
+      
+    
+    
+    
+    <category term="工程化" scheme="http://example.com/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Koa 基础开发</title>
+    <link href="http://example.com/2022/02/21/front_end/koa-base/"/>
+    <id>http://example.com/2022/02/21/front_end/koa-base/</id>
+    <published>2022-02-20T19:35:10.000Z</published>
+    <updated>2022-07-22T17:11:59.201Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://koa.bootcss.com/#&quot;&gt;koa官网文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;koa是一个基于http模块进行封装的框架，koa本身没有内置任何中间件，需要手动下载中间件（约定了中间件的写法），可以用来做服务端接口，也可以做接口的转发和聚合，</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="Node" scheme="http://example.com/tags/Node/"/>
+    
+    <category term="Koa" scheme="http://example.com/tags/Koa/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Node 知识梳理（一）</title>
+    <link href="http://example.com/2022/01/06/front_end/node-base/"/>
+    <id>http://example.com/2022/01/06/front_end/node-base/</id>
+    <published>2022-01-05T22:15:33.000Z</published>
+    <updated>2022-07-08T14:22:02.526Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;Node 是一个基于谷歌V8引擎的一个JavaScript运行环境（runtime运行时），是服务端的运行环境。&lt;/li&gt;
+&lt;li&gt;Node 的特点是事件驱动、非阻塞式 I&amp;#x2F;O（input&amp;#x2F;output）、单线程。触发一次事件，执行回调，是事</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="Node" scheme="http://example.com/tags/Node/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TypeScript 知识汇总</title>
+    <link href="http://example.com/2021/12/28/front_end/typescript/"/>
+    <id>http://example.com/2021/12/28/front_end/typescript/</id>
+    <published>2021-12-27T18:32:14.000Z</published>
+    <updated>2022-07-08T14:26:34.275Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;TypeScript-基本使用&quot;&gt;&lt;a href=&quot;#TypeScript-基本使用&quot; class=&quot;headerlink&quot; title=&quot;TypeScript 基本使用&quot;&gt;&lt;/a&gt;TypeScript 基本使用&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;htt</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="TypeScript" scheme="http://example.com/tags/TypeScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React Hooks 总结</title>
+    <link href="http://example.com/2021/07/14/front_end/reacthooks/"/>
+    <id>http://example.com/2021/07/14/front_end/reacthooks/</id>
+    <published>2021-07-14T12:02:11.000Z</published>
+    <updated>2022-07-10T09:29:39.454Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;为什么要设计Hooks，Hooks有什么优势？&quot;&gt;&lt;a href=&quot;#为什么要设计Hooks，Hooks有什么优势？&quot; class=&quot;headerlink&quot; title=&quot;为什么要设计Hooks，Hooks有什么优势？&quot;&gt;&lt;/a&gt;为什么要设计Hooks，Hooks</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【webpack】手写loader和plugin</title>
+    <link href="http://example.com/2021/03/24/engineering/loader-and-plugin/"/>
+    <id>http://example.com/2021/03/24/engineering/loader-and-plugin/</id>
+    <published>2021-03-24T12:10:21.000Z</published>
+    <updated>2022-07-08T17:48:18.429Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;loader&quot;&gt;&lt;a href=&quot;#loader&quot; class=&quot;headerlink&quot; title=&quot;loader&quot;&gt;&lt;/a&gt;loader&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;loader的作用：loader可以看成为一个转换器，将非js&amp;#x2F;json的文件转化为可</summary>
+      
+    
+    
+    
+    <category term="工程化" scheme="http://example.com/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+    
+    <category term="Webpack" scheme="http://example.com/tags/Webpack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【webpack】如何成为一名webpack配置工程师</title>
+    <link href="http://example.com/2021/02/10/engineering/webpack-base/"/>
+    <id>http://example.com/2021/02/10/engineering/webpack-base/</id>
+    <published>2021-02-09T20:33:11.000Z</published>
+    <updated>2022-07-09T03:02:13.997Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Webpack基础&quot;&gt;&lt;a href=&quot;#Webpack基础&quot; class=&quot;headerlink&quot; title=&quot;Webpack基础&quot;&gt;&lt;/a&gt;Webpack基础&lt;/h1&gt;&lt;h2 id=&quot;为什么需要构建工具，它有什么作用？&quot;&gt;&lt;a href=&quot;#为什么需要构建工</summary>
+      
+    
+    
+    
+    <category term="工程化" scheme="http://example.com/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+    
+    <category term="Webpack" scheme="http://example.com/tags/Webpack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【前端工程化】从0-1搭建react脚手架</title>
+    <link href="http://example.com/2021/01/26/engineering/build-cli/"/>
+    <id>http://example.com/2021/01/26/engineering/build-cli/</id>
+    <published>2021-01-25T19:29:58.000Z</published>
+    <updated>2022-07-09T16:04:02.310Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;h1 id=&quot;介绍模块的使用&quot;&gt;&lt;a href=&quot;#介绍模块的使用&quot; class=&quot;headerlink&quot; title=&quot;介绍模块的使用&quot;&gt;&lt;/</summary>
+      
+    
+    
+    
+    <category term="工程化" scheme="http://example.com/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>localStorage、sessionStorage和cookie的区别</title>
+    <link href="http://example.com/2021/01/15/front_end/browser-cache/"/>
+    <id>http://example.com/2021/01/15/front_end/browser-cache/</id>
+    <published>2021-01-15T10:22:49.000Z</published>
+    <updated>2022-07-04T14:36:54.588Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;localStorage-和-sessionStorage&quot;&gt;&lt;a href=&quot;#localStorage-和-sessionStorage&quot; class=&quot;headerlink&quot; title=&quot;localStorage 和 sessionStorage&quot;&gt;&lt;/a</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="浏览器" scheme="http://example.com/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【JavaScript】写出高质量的JS代码</title>
+    <link href="http://example.com/2020/12/20/front_end/high-quality-code/"/>
+    <id>http://example.com/2020/12/20/front_end/high-quality-code/</id>
+    <published>2020-12-20T11:28:51.000Z</published>
+    <updated>2022-07-04T14:38:08.454Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;尽量少用全局变量，带来的第三方的 JavaScript 库、不同js文件同名变量的冲突。&lt;/li&gt;
+&lt;li&gt;尽量使用 &amp;#x3D;&amp;#x3D;&amp;#x3D; ，减少&amp;#x3D;&amp;#x3D;的隐式转化&lt;/li&gt;
+&lt;li&gt;构造函数和组件首字母要大写，其他一般采取小驼峰</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="JavaScript" scheme="http://example.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【JavaScript】Object对象常用方法</title>
+    <link href="http://example.com/2020/11/10/front_end/js-object/"/>
+    <id>http://example.com/2020/11/10/front_end/js-object/</id>
+    <published>2020-11-10T10:22:34.000Z</published>
+    <updated>2022-07-07T15:03:51.447Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Object-defineProperty&quot;&gt;&lt;a href=&quot;#Object-defineProperty&quot; class=&quot;headerlink&quot; title=&quot;Object.defineProperty&quot;&gt;&lt;/a&gt;Object.defineProperty&lt;/</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="JavaScript" scheme="http://example.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端面试八股文</title>
+    <link href="http://example.com/2020/08/22/interview/interview01/"/>
+    <id>http://example.com/2020/08/22/interview/interview01/</id>
+    <published>2020-08-22T12:05:02.000Z</published>
+    <updated>2022-07-09T17:38:16.516Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;前端面试复习&quot;&gt;&lt;a href=&quot;#前端面试复习&quot; class=&quot;headerlink&quot; title=&quot;前端面试复习&quot;&gt;&lt;/a&gt;前端面试复习&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://juejin.cn/post/6844903776512393</summary>
+      
+    
+    
+    
+    <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="面试" scheme="http://example.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
+  
+</feed>
