@@ -8,3 +8,5 @@ test/.temp/**/*
 log
 .idea/ 
 dist
+public
+public/*
